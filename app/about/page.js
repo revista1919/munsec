@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-
+import Image from 'next/image';
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
@@ -27,7 +27,7 @@ export default function About() {
       <section className="relative h-[90vh] sm:h-[80vh] md:h-[70vh] min-h-[600px] sm:min-h-[500px] flex items-center justify-center bg-[#0F172A] overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
-          <img 
+          <Image
             src="/munsec-about.jpg" 
             alt="Asamblea MUNSEC" 
             className="w-full h-full object-cover opacity-90 sm:opacity-100 scale-100 hover:scale-100 transition-transform duration-7000"

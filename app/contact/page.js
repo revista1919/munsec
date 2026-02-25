@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-
+import Image from 'next/image';
 // --- CONFIGURACIÓN DEL CORREO (EDITAR AQUÍ CUANDO CAMBIE) ---
 const CONTACT_EMAIL = "munsec.chile@gmail.com";
 // -----------------------------------------------------------

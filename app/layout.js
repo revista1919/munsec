@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 
 export default function RootLayout({ children }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -135,8 +136,8 @@ export default function RootLayout({ children }) {
               {/* Brand Column */}
               <div className="col-span-1 md:col-span-2 flex flex-col items-start">
                 <div className="mb-6">
-                  <img 
-                    src="./munsec.png" 
+                  <Image 
+                    src="/munsec.png" 
                     alt="MUNSEC Logo" 
                     className="h-20 w-auto object-contain brightness-110" 
                   />

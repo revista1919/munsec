@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from 'framer-motion';
-
+import Image from 'next/image';
 const archives = [
   {
     year: "2025",
@@ -48,7 +48,7 @@ export default function Gallery() {
               >
                 {/* Imagen de Fondo / Overlay */}
                 <div className="aspect-video relative overflow-hidden bg-slate-900">
-                  <img 
+                  <Image
                     src={item.coverImage} 
                     alt={`MUNSEC ${item.year}`}
                     className="w-full h-full object-cover opacity-60 grayscale group-hover:scale-105 group-hover:grayscale-0 transition-all duration-1000"

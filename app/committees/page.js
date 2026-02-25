@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from 'framer-motion';
-
+import Image from 'next/image';
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
@@ -39,7 +39,7 @@ export default function Committees() {
             <div className="md:col-span-5">
               <div className="aspect-square bg-slate-200 relative overflow-hidden group">
                 {/* Imagen Asamblea General */}
-                <img 
+                <Image
                   src="https://st4.depositphotos.com/1005647/24727/i/450/depositphotos_247273236-stock-photo-new-york-usa-feb-2019.jpg"
                   alt="Asamblea General de la ONU - Nueva York"
                   className="w-full h-full object-cover"
@@ -105,7 +105,7 @@ export default function Committees() {
             <div className="md:col-span-5 order-1 md:order-2">
               <div className="aspect-square bg-[#0F172A] relative overflow-hidden group">
                 {/* Imagen Consejo de Seguridad */}
-                <img 
+                <Image
                   src="https://upload.wikimedia.org/wikipedia/commons/c/c6/Dmitry_Medvedev_in_the_United_States_24_September_2009-8.jpg"
                   alt="Consejo de Seguridad de la ONU - Dmitry Medvedev en Estados Unidos, 24 Septiembre 2009"
                   className="w-full h-full object-cover opacity-90"

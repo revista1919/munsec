@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from 'framer-motion';
-
+import Image from 'next/image';
 // --- CONFIGURACIÓN DE ALIANZAS (EDITAR AQUÍ PARA AGREGAR MÁS) ---
 const PARTNERS_DATA = [
   {
@@ -69,7 +69,7 @@ export default function Partners() {
                   <div>
                     <div className="h-16 w-32 mb-10 flex items-center grayscale">
                       {/* Logo con fallback visual si no existe la imagen */}
-                      <img 
+                      <Image
                         src={partner.logo} 
                         alt={partner.name} 
                         className="max-h-full max-w-full object-contain"
@@ -94,7 +94,7 @@ export default function Partners() {
                   {partner.hasTeamPhoto ? (
                     <div className="h-full flex flex-col">
                       <div className="flex-grow overflow-hidden relative group">
-                        <img 
+                        <Image
                           src={partner.teamPhoto} 
                           alt={`Equipo MUNSEC en ${partner.name}`}
                           className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000"

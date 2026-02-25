@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-
+import Image from 'next/image';
 // Animaciones más lentas y fluidas para un tono más sobrio
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -25,7 +25,7 @@ export default function Home() {
       <section className="relative min-h-screen flex items-center justify-center bg-[#0F172A]">
         {/* Background Image con tratamiento de imagen "Documental" */}
         <div className="absolute inset-0 z-0">
-          <img 
+          <Image
             src="/munsec.jpg" 
             alt="Asamblea MUNSEC" 
             className="w-full h-full object-cover opacity-40 grayscale-[30%]"
@@ -127,7 +127,7 @@ export default function Home() {
               className="relative order-1 lg:order-2"
             >
               <div className="aspect-[4/3] border border-slate-100 p-4">
-                <img 
+                <Image
                   src="/munsec-debate.jpg" 
                   alt="Debate en MUNSEC" 
                   className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"

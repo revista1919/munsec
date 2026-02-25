@@ -54,7 +54,11 @@
   .container-custom {
     @apply max-w-7xl mx-auto px-6 md:px-12;
   }
-
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
   .section-title {
     @apply font-serif text-4xl md:text-5xl text-[#1E3A5F] mb-6;
   }

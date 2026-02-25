@@ -2,6 +2,11 @@
 const nextConfig = {
   output: 'export',
   trailingSlash: true,
-  images: { unoptimized: true },
+  images: { 
+    unoptimized: true 
+  },
+  basePath: '/munsec',
+  assetPrefix: '/munsec/',
 };
+
 module.exports = nextConfig;

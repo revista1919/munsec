@@ -46,10 +46,7 @@ export default function RootLayout({ children }) {
           }`}
         >
           <div className="container-custom flex justify-between items-center">
-            {/* Logo placeholder o nombre en Header si lo necesitas */}
-            <Link href="/" className="font-serif text-2xl font-bold text-[#1E3A5F]">
-              MUNSEC
-            </Link>
+           
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-8">

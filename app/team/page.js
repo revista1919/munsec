@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import Image from 'next/image';
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
@@ -44,6 +45,8 @@ const TeamMember = ({ name, role, bio, index }) => {
     threshold: 0.1,
   });
 
+  const imageSrc = `/team/${name.toLowerCase().replace(/ /g, '-')}.jpg`;
+
   return (
     <motion.div 
       ref={ref}
@@ -54,14 +57,23 @@ const TeamMember = ({ name, role, bio, index }) => {
       className="group relative w-full max-w-[280px] mx-auto sm:max-w-none"
     >
       <div className="aspect-[3/4] bg-slate-100 overflow-hidden mb-4 sm:mb-6 border border-slate-200 relative">
-        <motion.img 
-          src={`/team/${name.toLowerCase().replace(' ', '-')}.jpg`} 
-          alt={name}
-          className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-          onError={(e) => { e.target.src = "https://via.placeholder.com/600x800?text=MUNSEC"; }}
+        <motion.div
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.6 }}
-        />
+          className="w-full h-full relative"
+        >
+          <Image 
+            src={imageSrc}
+            alt={name}
+            fill
+            sizes="(max-width: 640px) 280px, (max-width: 1024px) 33vw, 280px"
+            className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+            onError={(e) => {
+              // Fallback para cuando la imagen no existe
+              e.target.src = "https://via.placeholder.com/600x800?text=MUNSEC";
+            }}
+          />
+        </motion.div>
         <motion.div 
           className="absolute inset-0 bg-[#4A90E2]/0 group-hover:bg-[#4A90E2]/5 transition-colors duration-700"
           initial={false}
@@ -148,14 +160,22 @@ export default function Team() {
             animate={groupInView ? "visible" : "hidden"}
             className="relative aspect-video bg-slate-100 overflow-hidden border border-slate-200"
           >
-            <motion.img 
-              src="/team-full.jpg" 
-              alt="Equipo MUNSEC" 
-              className="w-full h-full object-cover opacity-80"
-              onError={(e) => { e.target.src = "https://via.placeholder.com/1920x1080?text=Fotografía+Equipo+MUNSEC"; }}
+            <motion.div
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.6 }}
-            />
+              className="w-full h-full relative"
+            >
+              <Image 
+                src="/team-full.jpg" 
+                alt="Equipo MUNSEC" 
+                fill
+                sizes="(max-width: 1280px) 100vw, 1280px"
+                className="object-cover opacity-80"
+                onError={(e) => {
+                  e.target.src = "https://via.placeholder.com/1920x1080?text=Fotografía+Equipo+MUNSEC";
+                }}
+              />
+            </motion.div>
             <motion.div 
               className="absolute bottom-4 left-4 sm:bottom-8 sm:left-8 bg-white p-3 sm:p-6 border border-slate-200 shadow-sm"
               initial={{ opacity: 0, x: -15 }}

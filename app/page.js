@@ -207,10 +207,10 @@ export default function Home() {
                 ¿Te interesa?
               </span>
               <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-slate-900 mb-6 md:mb-8">
-                Sumate a la próxima edición
+                Súmate a la próxima edición
               </h2>
               <p className="text-slate-600 mb-8 md:mb-12 max-w-xl mx-auto text-sm leading-relaxed px-4 md:px-0">
-                Las inscripciones para MUNSEC 2025 están abiertas. Si tenés entre 14 y 18 años y querés vivir la experiencia, este es tu momento.
+                Revisa si las inscripciones para MUNSEC están abiertas. Si tienes entre 14 y 18 años y quieres vivir la experiencia, este es tu momento.
               </p>
               <div className="flex flex-col md:flex-row gap-4 md:gap-8 justify-center items-stretch md:items-center px-4 md:px-0">
                 <Link href="/register" className="bg-slate-900 text-white px-8 md:px-12 py-4 text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-slate-800 transition-all w-full md:w-auto text-center">

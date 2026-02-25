@@ -129,7 +129,7 @@ export default function RootLayout({ children }) {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
               {/* Brand */}
               <div className="col-span-1 md:col-span-2">
-                <img src="/munsec.png" alt="MUNSEC" className="h-16 w-auto brightness-100" />
+                <img src="./munsec.png" alt="MUNSEC" className="h-16 w-auto brightness-100" />
 
                 <p className="text-gray-300 text-sm leading-relaxed max-w-md">
                   Somos el modelo de Naciones Unidas para estudiantes de secundaria en Chile. 

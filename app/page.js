@@ -128,7 +128,7 @@ export default function Home() {
             >
               <div className="aspect-[4/3] border border-slate-100 p-4">
                 <img 
-                  src="/munsec-debate.jpg" 
+                  src="./munsec-debate.jpg" 
                   alt="Debate en MUNSEC" 
                   className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
                 />

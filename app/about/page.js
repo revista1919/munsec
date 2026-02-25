@@ -28,7 +28,7 @@ export default function About() {
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <img 
-            src="/munsec-about.jpg" 
+            src="./munsec-about.jpg" 
             alt="Asamblea MUNSEC" 
             className="w-full h-full object-cover opacity-90 sm:opacity-100 scale-100 hover:scale-100 transition-transform duration-7000"
           />

@@ -149,7 +149,7 @@ export default function Team() {
             className="relative aspect-video bg-slate-100 overflow-hidden border border-slate-200"
           >
             <motion.img 
-              src="/team-full.jpg" 
+              src="./team-full.jpg" 
               alt="Equipo MUNSEC" 
               className="w-full h-full object-cover opacity-80"
               onError={(e) => { e.target.src = "https://via.placeholder.com/1920x1080?text=Fotografía+Equipo+MUNSEC"; }}

@@ -26,7 +26,7 @@ export default function Home() {
         {/* Background Image con tratamiento de imagen "Documental" */}
         <div className="absolute inset-0 z-0">
           <img 
-            src="/munsec.jpg" 
+            src="./munsec.jpg" 
             alt="Asamblea MUNSEC" 
             className="w-full h-full object-cover opacity-40 grayscale-[30%]"
           />

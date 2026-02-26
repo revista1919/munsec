@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import Image from 'next/image';
+import { useState } from 'react';
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
@@ -45,7 +46,10 @@ const TeamMember = ({ name, role, bio, index }) => {
     threshold: 0.1,
   });
 
-  const imageSrc = `/team/${name.toLowerCase().replace(/ /g, '-')}.jpg`;
+  const [imgError, setImgError] = useState(false);
+  const imageSrc = imgError 
+    ? "https://via.placeholder.com/600x800?text=MUNSEC" 
+    : `/team/${name.toLowerCase().replace(/ /g, '-')}.jpg`;
 
   return (
     <motion.div 
@@ -68,10 +72,7 @@ const TeamMember = ({ name, role, bio, index }) => {
             fill
             sizes="(max-width: 640px) 280px, (max-width: 1024px) 33vw, 280px"
             className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-            onError={(e) => {
-              // Fallback para cuando la imagen no existe
-              e.target.src = "https://via.placeholder.com/600x800?text=MUNSEC";
-            }}
+            onError={() => setImgError(true)}
           />
         </motion.div>
         <motion.div 
@@ -106,6 +107,7 @@ const TeamMember = ({ name, role, bio, index }) => {
 export default function Team() {
   const [heroRef, heroInView] = useInView({ triggerOnce: true, threshold: 0.1 });
   const [groupRef, groupInView] = useInView({ triggerOnce: true, threshold: 0.1 });
+  const [groupImgError, setGroupImgError] = useState(false);
 
   const adminCommittee = [
     { name: "Rafaela Pérez", role: "Comité Administrativo", bio: "bio de Rafaela Pérez." },
@@ -123,7 +125,7 @@ export default function Team() {
 
   return (
     <div className="bg-white min-h-screen overflow-x-hidden">
-      {/* Hero / Título - Ajustado para móvil */}
+      {/* Hero / Título */}
       <motion.header 
         ref={heroRef}
         className="pt-20 sm:pt-32 pb-12 sm:pb-16 border-b border-slate-100"
@@ -151,7 +153,7 @@ export default function Team() {
         </div>
       </motion.header>
 
-      {/* Foto Grupal - Mejorada para móvil */}
+      {/* Foto Grupal */}
       <section className="py-12 sm:py-20" ref={groupRef}>
         <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
           <motion.div 
@@ -166,14 +168,12 @@ export default function Team() {
               className="w-full h-full relative"
             >
               <Image 
-                src="/team-full.jpg" 
+                src={groupImgError ? "https://via.placeholder.com/1920x1080?text=Fotografía+Equipo+MUNSEC" : "/team-full.jpg"}
                 alt="Equipo MUNSEC" 
                 fill
                 sizes="(max-width: 1280px) 100vw, 1280px"
                 className="object-cover opacity-80"
-                onError={(e) => {
-                  e.target.src = "https://via.placeholder.com/1920x1080?text=Fotografía+Equipo+MUNSEC";
-                }}
+                onError={() => setGroupImgError(true)}
               />
             </motion.div>
             <motion.div 
@@ -189,7 +189,7 @@ export default function Team() {
         </div>
       </section>
 
-      {/* Comité Administrativo - Grid responsive */}
+      {/* Comité Administrativo */}
       <section className="py-16 sm:py-24 bg-slate-50">
         <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
           <motion.div 
@@ -221,7 +221,7 @@ export default function Team() {
         </div>
       </section>
 
-      {/* Comisiones Técnicas - Grid responsive */}
+      {/* Comisiones Técnicas */}
       <section className="py-20 sm:py-32">
         <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
           <motion.div 
@@ -253,7 +253,7 @@ export default function Team() {
         </div>
       </section>
 
-      {/* Cierre - Ajustado para móvil */}
+      {/* Cierre */}
       <motion.section 
         className="py-20 sm:py-32 border-t border-slate-100"
         initial={{ opacity: 0 }}

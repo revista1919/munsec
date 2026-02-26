@@ -2,6 +2,8 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { useState } from 'react';
+
 // --- CONFIGURACIÓN DE ALIANZAS (EDITAR AQUÍ PARA AGREGAR MÁS) ---
 const PARTNERS_DATA = [
   {
@@ -14,7 +16,7 @@ const PARTNERS_DATA = [
     hasTeamPhoto: true,
     teamPhoto: "/photos/team-cepal.jpg", // Foto del equipo con la institución
     photoCaption: "Delegación organizadora de MUNSEC en las dependencias de la CEPAL, Santiago."
-  },
+  }
   // {
   //   id: "nuevo-aliado",
   //   name: "Nombre",
@@ -33,6 +35,67 @@ const fadeIn = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
   transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
+};
+
+// Componente para el logo con manejo de errores
+const PartnerLogo = ({ src, name }) => {
+  const [logoError, setLogoError] = useState(false);
+  const [showFallback, setShowFallback] = useState(false);
+
+  if (logoError) {
+    return <span className="font-serif text-2xl font-bold text-slate-300 uppercase tracking-tighter">
+      {name}
+    </span>;
+  }
+
+  return (
+    <div className="relative h-16 w-32">
+      <Image
+        src={src}
+        alt={name}
+        fill
+        sizes="(max-width: 768px) 128px, 128px"
+        className="object-contain"
+        onError={() => setLogoError(true)}
+        onLoad={() => setShowFallback(true)}
+      />
+    </div>
+  );
+};
+
+// Componente para la foto del equipo
+const TeamPhoto = ({ src, caption }) => {
+  const [photoError, setPhotoError] = useState(false);
+
+  if (photoError) {
+    return (
+      <div className="h-full min-h-[400px] flex items-center justify-center bg-slate-100">
+        <p className="text-[10px] uppercase tracking-widest text-slate-400 font-bold">
+          Imagen no disponible
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="h-full flex flex-col">
+      <div className="flex-grow overflow-hidden relative group">
+        <Image
+          src={src}
+          alt={caption}
+          fill
+          sizes="(max-width: 768px) 100vw, 50vw"
+          className="object-cover grayscale group-hover:grayscale-0 transition-all duration-1000"
+          onError={() => setPhotoError(true)}
+        />
+      </div>
+      <div className="p-6 bg-white border-t border-slate-100">
+        <p className="text-[10px] text-slate-400 italic tracking-wide">
+          {caption}
+        </p>
+      </div>
+    </div>
+  );
 };
 
 export default function Partners() {
@@ -68,16 +131,7 @@ export default function Partners() {
                 <div className="md:col-span-5 p-12 border-b md:border-b-0 md:border-r border-slate-100 flex flex-col justify-between">
                   <div>
                     <div className="h-16 w-32 mb-10 flex items-center grayscale">
-                      {/* Logo con fallback visual si no existe la imagen */}
-                      <Image
-                        src={partner.logo} 
-                        alt={partner.name} 
-                        className="max-h-full max-w-full object-contain"
-                        onError={(e) => { e.target.style.display = 'none'; }}
-                      />
-                      <span className="font-serif text-2xl font-bold text-slate-300 uppercase tracking-tighter">
-                        {partner.name}
-                      </span>
+                      <PartnerLogo src={partner.logo} name={partner.name} />
                     </div>
                     <h2 className="font-serif text-2xl text-slate-900 mb-2">{partner.fullName}</h2>
                     <span className="text-[10px] uppercase tracking-[0.2em] text-[#4A90E2] font-bold">
@@ -92,20 +146,8 @@ export default function Partners() {
                 {/* Registro Visual (Si existe) */}
                 <div className="md:col-span-7 bg-slate-50 p-1">
                   {partner.hasTeamPhoto ? (
-                    <div className="h-full flex flex-col">
-                      <div className="flex-grow overflow-hidden relative group">
-                        <Image
-                          src={partner.teamPhoto} 
-                          alt={`Equipo MUNSEC en ${partner.name}`}
-                          className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000"
-                          onError={(e) => { e.target.src = "https://via.placeholder.com/1200x800?text=Registro+Institucional"; }}
-                        />
-                      </div>
-                      <div className="p-6 bg-white border-t border-slate-100">
-                        <p className="text-[10px] text-slate-400 italic tracking-wide">
-                          {partner.photoCaption}
-                        </p>
-                      </div>
+                    <div className="h-full">
+                      <TeamPhoto src={partner.teamPhoto} caption={partner.photoCaption} />
                     </div>
                   ) : (
                     <div className="h-full min-h-[400px] flex items-center justify-center border-2 border-dashed border-slate-200 m-8">

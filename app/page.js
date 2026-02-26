@@ -38,11 +38,12 @@ export default function Home() {
 
         {/* Logo centrado */}
 {/* Logo centrado y más grande */}
+{/* Logo centrado con flexbox */}
 <motion.div 
   initial={{ opacity: 0, y: -20 }}
   animate={{ opacity: 1, y: 0 }}
   transition={{ duration: 1, delay: 0.3 }}
-  className="absolute top-6 left-1/2 transform -translate-x-1/2 z-20"
+  className="absolute top-6 left-0 right-0 flex justify-center z-20"
 >
   <div className="relative w-16 h-16 md:w-20 md:h-20">
     <Image

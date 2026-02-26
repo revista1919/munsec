@@ -77,11 +77,8 @@ export default function Rules() {
       <header className="pt-32 pb-20 bg-white border-b border-slate-200">
         <div className="container mx-auto px-6 max-w-5xl">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
-            <span className="text-[#4A90E2] text-[10px] md:text-[11px] uppercase tracking-[0.5em] font-bold block mb-6">
-              Instrumento Jurídico v.2025
-            </span>
             <h1 className="font-serif text-5xl md:text-7xl text-slate-900 mb-8 leading-tight tracking-tighter">
-              Reglamento <br className="hidden md:block"/> Académico
+              Reglamento <br className="hidden md:block"/> MUNSEC
             </h1>
             <div className="h-[1px] w-24 bg-slate-900 mb-8"></div>
             <p className="text-slate-500 font-light max-w-2xl leading-relaxed text-base md:text-lg italic">

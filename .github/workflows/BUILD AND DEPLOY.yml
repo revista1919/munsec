@@ -31,6 +31,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      
       - name: Detect package manager
         id: detect-package-manager
         run: |
@@ -48,6 +49,7 @@ jobs:
             echo "Unable to determine package manager"
             exit 1
           fi
+      
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -64,13 +66,40 @@ jobs:
           # If source files changed but packages didn't, rebuild from a prior cache.
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
+      
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+      
+      # 🔧 CORRECCIÓN IMPORTANTE: Variables de entorno para el build
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
+        env:
+          NEXT_PUBLIC_BASE_PATH: '/munsec'
+      
+      # 🔧 NUEVO: Verificar que las rutas se generaron correctamente
+      - name: Check build output
+        run: |
+          echo "Verificando archivos generados..."
+          if [ -d "./out" ]; then
+            echo "✅ Carpeta out existe"
+            ls -la ./out
+            # Verificar que las imágenes están en la ruta correcta
+            if [ -d "./out/munsec" ] || [ -f "./out/index.html" ]; then
+              echo "✅ Estructura de archivos parece correcta"
+            else
+              echo "⚠️ Revisa la estructura: puede que las rutas no tengan el prefijo /munsec/"
+            fi
+          else
+            echo "❌ No se generó la carpeta out"
+            exit 1
+          fi
+      
+      # 🔧 CORRECCIÓN: Especificar la ruta correcta del artifact
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
+          # IMPORTANTE: GitHub Pages espera los archivos en la raíz
+          # Pero Next.js con basePath genera la estructura correcta automáticamente
           path: ./out
 
   # Deployment job

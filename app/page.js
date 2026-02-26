@@ -100,10 +100,7 @@ export default function Home() {
           </motion.div>
         </motion.div>
 
-        {/* Scroll Indicator Minimalista - CORREGIDO: eliminado el bug de línea saltarina */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-          <div className="w-[1px] h-12 bg-gradient-to-b from-[#4A90E2] to-transparent animate-pulse"></div>
-        </div>
+      
       </section>
 
       {/* About Section - Adaptado para móvil */}

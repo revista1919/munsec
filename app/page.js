@@ -11,7 +11,6 @@ const fadeIn = {
   transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] }
 };
 
-
 const staggerContainer = {
   animate: {
     transition: {
@@ -25,10 +24,10 @@ export default function Home() {
     <div className="overflow-hidden bg-[#F8FAFC]">
       {/* Hero Section - Estilo Documental */}
       <section className="relative min-h-screen flex items-center justify-center bg-[#0F172A]">
-        {/* Background Image con tratamiento de imagen "Documental" - CORREGIDO */}
+        {/* Background Image con tratamiento de imagen "Documental" - CORREGIDO con ruta relativa */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/munsec.jpg" 
+            src="./munsec.jpg" 
             alt="Asamblea MUNSEC" 
             fill
             className="object-cover opacity-40 grayscale-[30%]"
@@ -132,7 +131,7 @@ export default function Home() {
             >
               <div className="aspect-[4/3] border border-slate-100 p-4 relative">
                 <Image
-                  src="/munsec-debate.jpg" 
+                  src="./munsec-debate.jpg" 
                   alt="Debate en MUNSEC" 
                   fill
                   className="object-cover grayscale hover:grayscale-0 transition-all duration-700"
@@ -231,4 +230,4 @@ export default function Home() {
       </section>
     </div>
   );
-}
+            }

@@ -134,7 +134,7 @@ export default function RootLayout({ children }) {
               <div className="col-span-1 md:col-span-2 flex flex-col items-start">
                 <div className="mb-6">
                   <Image 
-                    src="/munsec.png" 
+                    src="/munsec/munsec.png" 
                     alt="MUNSEC Logo" 
                     className="h-20 w-auto object-contain brightness-110" 
                   />

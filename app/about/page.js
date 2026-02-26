@@ -29,7 +29,7 @@ export default function About() {
         {/* Background Image - CORREGIDO: añadido fill */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/munsec-about.jpg" 
+            src="/munsec/munsec-about.jpg" 
             alt="Asamblea MUNSEC" 
             fill
             className="object-cover opacity-90 sm:opacity-100"
@@ -126,7 +126,7 @@ export default function About() {
               </p>
             </div>
             <div className="bg-white/5 backdrop-blur-sm p-6 sm:p-8 md:p-10 border border-white/10">
-              <p className="text-xs sm:text-sm text-slate-400 uppercase tracking-wider mb-6 sm:mb-8">Hitos 2024</p>
+              <p className="text-xs sm:text-sm text-slate-400 uppercase tracking-wider mb-6 sm:mb-8">Hitos 2025</p>
               <ul className="space-y-4 sm:space-y-6">
                 {[
                   'Convocatoria abierta a establecimientos públicos y privados',

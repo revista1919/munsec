@@ -49,7 +49,7 @@ export default function Gallery() {
                 {/* Imagen de Fondo / Overlay */}
                 <div className="aspect-video relative overflow-hidden bg-slate-900">
                   <Image
-                    src={item.coverImage} 
+                    src={`/munsec${item.coverImage}`} 
                     alt={`MUNSEC ${item.year}`}
                     className="w-full h-full object-cover opacity-60 grayscale group-hover:scale-105 group-hover:grayscale-0 transition-all duration-1000"
                     onError={(e) => { e.target.src = "https://via.placeholder.com/800x450?text=MUNSEC+"+item.year; }}

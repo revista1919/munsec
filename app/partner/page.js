@@ -51,7 +51,7 @@ const PartnerLogo = ({ src, name }) => {
   return (
     <div className="relative h-16 w-32">
       <Image
-        src={src}
+        src={`/munsec${src}`}
         alt={name}
         fill
         sizes="(max-width: 768px) 128px, 128px"
@@ -81,7 +81,7 @@ const TeamPhoto = ({ src, caption }) => {
     <div className="h-full flex flex-col">
       <div className="flex-grow overflow-hidden relative group">
         <Image
-          src={src}
+          src={`/munsec${src}`}
           alt={caption}
           fill
           sizes="(max-width: 768px) 100vw, 50vw"

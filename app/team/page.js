@@ -67,7 +67,7 @@ const TeamMember = ({ name, role, bio, index }) => {
           className="w-full h-full relative"
         >
           <Image 
-            src={imageSrc}
+            src={`/munsec${imageSrc}`}
             alt={name}
             fill
             sizes="(max-width: 640px) 280px, (max-width: 1024px) 33vw, 280px"
@@ -168,7 +168,7 @@ export default function Team() {
               className="w-full h-full relative"
             >
               <Image 
-                src={groupImgError ? "https://via.placeholder.com/1920x1080?text=Fotografía+Equipo+MUNSEC" : "/team-full.jpg"}
+                src={`/munsec${groupImgError ? "https://via.placeholder.com/1920x1080?text=Fotografía+Equipo+MUNSEC" : "/munsec/team-full.jpg"}`}
                 alt="Equipo MUNSEC" 
                 fill
                 sizes="(max-width: 1280px) 100vw, 1280px"

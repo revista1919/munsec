@@ -11,6 +11,7 @@ const fadeIn = {
   transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] }
 };
 
+
 const staggerContainer = {
   animate: {
     transition: {

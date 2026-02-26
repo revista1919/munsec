@@ -36,23 +36,22 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-b from-slate-900/40 via-slate-900/80 to-[#0F172A]"></div>
         </div>
 
-        {/* Logo discreto en la esquina superior izquierda */}
-        <motion.div 
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.3 }}
-          className="absolute top-6 left-4 sm:left-6 md:left-8 z-20"
-        >
-          <div className="relative w-12 h-12 md:w-14 md:h-14">
-            <Image
-              src="./munsec.png"
-              alt="MUNSEC Logo"
-              fill
-              className="object-contain opacity-80 hover:opacity-100 transition-opacity duration-300"
-            />
-          </div>
-        </motion.div>
-
+        {/* Logo centrado */}
+<motion.div 
+  initial={{ opacity: 0, y: -20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 1, delay: 0.3 }}
+  className="absolute top-6 left-1/2 transform -translate-x-1/2 z-20"
+>
+  <div className="relative w-12 h-12 md:w-14 md:h-14">
+    <Image
+      src="./munsec.png"
+      alt="MUNSEC Logo"
+      fill
+      className="object-contain opacity-80 hover:opacity-100 transition-opacity duration-300"
+    />
+  </div>
+</motion.div>
         {/* Content - Adaptado para móvil */}
         <motion.div 
           initial="initial"

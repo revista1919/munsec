@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
@@ -25,25 +26,20 @@ export default function About() {
     <div className="bg-[#F8FAFC] min-h-screen">
       {/* Hero Section - Optimizado para móvil */}
       <section className="relative h-[90vh] sm:h-[80vh] md:h-[70vh] min-h-[600px] sm:min-h-[500px] flex items-center justify-center bg-[#0F172A] overflow-hidden">
-        {/* Background Image */}
+        {/* Background Image - CORREGIDO: añadido fill */}
         <div className="absolute inset-0 z-0">
           <Image
             src="/munsec-about.jpg" 
             alt="Asamblea MUNSEC" 
-            className="w-full h-full object-cover opacity-90 sm:opacity-100 scale-100 hover:scale-100 transition-transform duration-7000"
+            fill
+            className="object-cover opacity-90 sm:opacity-100"
+            priority
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-[#0F172A]/90 to-[#0F172A]/60"></div>
         </div>
 
         {/* Contenido del Hero - Padding ajustado para móvil */}
         <div className="relative z-10 container mx-auto px-4 sm:px-6 max-w-5xl text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-          </motion.div>
-
           <motion.h1 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -64,16 +60,6 @@ export default function About() {
               MUNSEC opera como una instancia de formación complementaria al currículo escolar, 
               donde los estudiantes secundarios de Chile pueden participar en debates sobre temas de política internacional.
             </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center px-4 sm:px-0"
-          >
-            
-        
           </motion.div>
         </div>
 

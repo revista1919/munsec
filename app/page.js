@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
+
 // Animaciones más lentas y fluidas para un tono más sobrio
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -23,12 +24,14 @@ export default function Home() {
     <div className="overflow-hidden bg-[#F8FAFC]">
       {/* Hero Section - Estilo Documental */}
       <section className="relative min-h-screen flex items-center justify-center bg-[#0F172A]">
-        {/* Background Image con tratamiento de imagen "Documental" */}
+        {/* Background Image con tratamiento de imagen "Documental" - CORREGIDO */}
         <div className="absolute inset-0 z-0">
           <Image
             src="/munsec.jpg" 
             alt="Asamblea MUNSEC" 
-            className="w-full h-full object-cover opacity-40 grayscale-[30%]"
+            fill
+            className="object-cover opacity-40 grayscale-[30%]"
+            priority
           />
           <div className="absolute inset-0 bg-gradient-to-b from-slate-900/40 via-slate-900/80 to-[#0F172A]"></div>
         </div>
@@ -126,11 +129,12 @@ export default function Home() {
               transition={{ duration: 1 }}
               className="relative order-1 lg:order-2"
             >
-              <div className="aspect-[4/3] border border-slate-100 p-4">
+              <div className="aspect-[4/3] border border-slate-100 p-4 relative">
                 <Image
                   src="/munsec-debate.jpg" 
                   alt="Debate en MUNSEC" 
-                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                  fill
+                  className="object-cover grayscale hover:grayscale-0 transition-all duration-700"
                 />
               </div>
               <div className="mt-6 flex items-center gap-4">

@@ -11,7 +11,7 @@ const PARTNERS_DATA = [
     name: "CEPAL",
     fullName: "Comisión Económica para América Latina y el Caribe",
     logo: "/logos/cepal.png", // Ruta al logo
-    description: "Principal organismo regional de las Naciones Unidas encargado de promover el desarrollo económico y social de la región. La colaboración con MUNSEC se centra en la validación técnica de los tópicos de debate y el acceso a marcos estadísticos oficiales para las delegaciones.",
+    description: "Principal organismo regional de las Naciones Unidas encargado de promover el desarrollo económico y social de la región. La colaboración con MUNSEC se basa en compartir instalaciones para una próxima edición especial.",
     collaborationType: "Colaboración en instalaciones y recursos técnicos",
     hasTeamPhoto: true,
     teamPhoto: "/photos/team-cepal.jpg", // Foto del equipo con la institución

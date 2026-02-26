@@ -37,13 +37,14 @@ export default function Home() {
         </div>
 
         {/* Logo centrado */}
+{/* Logo centrado y más grande */}
 <motion.div 
   initial={{ opacity: 0, y: -20 }}
   animate={{ opacity: 1, y: 0 }}
   transition={{ duration: 1, delay: 0.3 }}
   className="absolute top-6 left-1/2 transform -translate-x-1/2 z-20"
 >
-  <div className="relative w-12 h-12 md:w-14 md:h-14">
+  <div className="relative w-16 h-16 md:w-20 md:h-20">
     <Image
       src="./munsec.png"
       alt="MUNSEC Logo"

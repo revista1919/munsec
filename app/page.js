@@ -45,7 +45,7 @@ export default function Home() {
         >
           <div className="relative w-12 h-12 md:w-14 md:h-14">
             <Image
-              src="./logo.png"
+              src="./munsec.png"
               alt="MUNSEC Logo"
               fill
               className="object-contain opacity-80 hover:opacity-100 transition-opacity duration-300"

@@ -60,14 +60,15 @@ const TeamMember = ({ name, role, bio, index }) => {
       custom={index}
       className="group relative w-full max-w-[280px] mx-auto sm:max-w-none"
     >
-      <div className="aspect-[3/4] bg-slate-100 overflow-hidden mb-4 sm:mb-6 border border-slate-200 relative">
+      {/* Contenedor con tamaño fijo para todas las imágenes */}
+      <div className="w-full h-[320px] sm:h-[360px] bg-slate-100 overflow-hidden mb-4 sm:mb-6 border border-slate-200 relative">
         <motion.div
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.6 }}
           className="w-full h-full relative"
         >
           <Image 
-            src={`/munsec${imageSrc}`}
+            src={imageSrc.startsWith('/team') ? `/munsec${imageSrc}` : imageSrc}
             alt={name}
             fill
             sizes="(max-width: 640px) 280px, (max-width: 1024px) 33vw, 280px"

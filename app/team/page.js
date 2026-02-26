@@ -118,7 +118,7 @@ export default function Team() {
 
   const technicalCommissions = [
     { name: "Karen Briceño", role: "Comisión de Finanzas", bio: "bio de Karen Briceño." },
-    { name: "Javier Vergara", role: "Comisión de Finanzas", bio: "bio de Javier Vergara." },
+    { name: "Javier Vergara", role: "Comisión de Finanzas", bio: "Estudiante de Cuarto Medio del Colegio Curimón de San Felipe, interesado principalmente en economía y teoría política." },
     { name: "Matías Valdés", role: "Comisión de Redacción", bio: "bio de Matías Valdés." },
     { name: "Amaro Reyes", role: "Comisión Eventos", bio: "bio de Amaro Reyes." },
   ];

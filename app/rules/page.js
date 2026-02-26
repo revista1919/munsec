@@ -2,118 +2,127 @@
 
 import { motion } from 'framer-motion';
 
-// --- REGLAMENTO MUNSEC (EDITAR AQUÍ EL CONTENIDO) ---
-// El texto puede incluir HTML como si viniera de un editor Quill (negritas, listas, etc.)
+// --- REGLAMENTO MUNSEC (CONTENIDO EDITABLE) ---
 const RULES_DATA = [
   {
     id: "disposiciones-generales",
     title: "Disposiciones Generales",
+    chapter: "Capítulo I",
+    articles: "1–2",
     content: `
-      <p class="lead">El presente reglamento establece las normas que regirán las sesiones del <strong>Modelo de Naciones Unidas de Santiago, MUNSEC</strong>. Su cumplimiento es obligatorio para todas las delegaciones, miembros de la mesa y organización.</p>
-      <h3>Artículo 1: De la naturaleza del modelo</h3>
-      <p>MUNSEC es un ejercicio académico y de simulación diplomática, sin fines de lucro, organizado por estudiantes y para estudiantes. Busca fomentar el pensamiento crítico, la oratoria y el entendimiento de las relaciones internacionales.</p>
-      <h3>Artículo 2: De los participantes</h3>
-      <p>Los participantes se dividen en:</p>
+      <p class="lead">El presente cuerpo normativo constituye el marco jurídico supremo que regirá las sesiones del <strong>Modelo de Naciones Unidas de Santiago, MUNSEC</strong>.</p>
+      <h3>Artículo 1: Naturaleza Institucional</h3>
+      <p>MUNSEC se define como una plataforma de alta exigencia académica y simulación diplomática. Su objetivo es la formación de líderes a través del rigor intelectual y el respeto irrestricto a los protocolos internacionales.</p>
+      <h3>Artículo 2: Estructura de Participantes</h3>
+      <p>La jerarquía del modelo se organiza bajo los siguientes estamentos:</p>
       <ul>
-        <li><span class="li-strong">Delegaciones:</span> Representantes de los Estados miembros y observadores.</li>
-        <li><span class="li-strong">Mesa Directiva:</span> Presidente y Moderador, encargados de dirigir el comité y velar por el cumplimiento de este reglamento.</li>
-        <li><span class="li-strong">Secretaría General:</span> Autoridad máxima durante el evento, responsable de la interpretación del reglamento.</li>
+        <li><span class="li-strong">Delegaciones:</span> Sujetos de derecho internacional representados por estudiantes acreditados.</li>
+        <li><span class="li-strong">Mesa Directiva:</span> Órgano rector del debate, con potestad absoluta sobre el flujo de la sesión.</li>
+        <li><span class="li-strong">Secretaría General:</span> Máxima instancia de interpretación reglamentaria y resolución de conflictos.</li>
       </ul>
     `
   },
   {
     id: "procedimiento-de-debate",
     title: "Procedimiento de Debate",
+    chapter: "Capítulo II",
+    articles: "3–5",
     content: `
-      <p class="lead">El debate en los comités de MUNSEC sigue el flujo establecido, inspirado en el manual de procedimiento de las Naciones Unidas, pero adaptado para un modelo académico de excelencia.</p>
+      <p class="lead">El flujo del debate se rige por principios de equidad, celeridad y orden parlamentario estricto.</p>
       <h3>Artículo 3: Lista de Oradores</h3>
-      <p>Al inicio del comité, se establecerá la <strong>Lista de Oradores</strong> para debatir el tópico en cuestión. Los delegados podrán incluirse o retirarse de la lista mediante el envío de una nota a la mesa.</p>
-      <h3>Artículo 4: Caucus</h3>
-      <p>El caucus (debate moderado o informal) puede ser solicitado por cualquier delegado. La moción debe especificar:</p>
+      <p>Es el mecanismo primario de participación. La inclusión en la lista es un acto formal que faculta al delegado para el uso de la palabra según los tiempos establecidos por la Mesa.</p>
+      <h3>Artículo 4: Instancias de Caucus</h3>
+      <p>Los delegados podrán proponer mociones para alterar la modalidad de debate:</p>
       <ol>
-        <li><span class="li-num">Duración total</span> del caucus.</li>
-        <li><span class="li-num">Tiempo de intervención</span> por delegado (en caso de ser moderado).</li>
-        <li><span class="li-num">Propósito específico</span> del debate.</li>
+        <li><span class="li-num">Caucus Moderado:</span> Debate dirigido sobre ejes temáticos específicos.</li>
+        <li><span class="li-num">Caucus Informal:</span> Espacio de negociación directa para la redacción de documentos.</li>
       </ol>
-      <p>La moción será votada y requerirá mayoría simple para ser aprobada.</p>
-      <h3>Artículo 5: Documentos de Trabajo</h3>
-      <p>Los proyectos de resolución y documentos de trabajo deben ser redactados siguiendo el formato oficial de MUNSEC y contar con el número mínimo de firmantes (establecido por la mesa) para ser introducidos.</p>
+      <p>Toda moción requiere de una justificación técnica y la aprobación por mayoría simple del comité.</p>
+      <h3>Artículo 5: Documentación Oficial</h3>
+      <p>Solo se admitirán Proyectos de Resolución que cumplan con los estándares de formato, preámbulos y cláusulas operativas definidos en la Guía de Protocolo.</p>
     `
   },
   {
     id: "protocolo-de-conducta",
     title: "Protocolo de Conducta",
+    chapter: "Capítulo III",
+    articles: "6–8",
     content: `
-      <p class="lead">La excelencia académica va de la mano con el respeto y la diplomacia. Todos los participantes mantendrán una conducta intachable durante el evento.</p>
-      <h3>Artículo 6: Vestimenta</h3>
-      <p>Se requiere el uso de <strong>vestimenta formal</strong> (traje, corbata, vestido sastre) durante todas las sesiones de trabajo. No se permitirá el ingreso a las salas con vestimenta informal.</p>
-      <h3>Artículo 7: Uso de dispositivos electrónicos</h3>
-      <p>El uso de laptops y tablets está permitido exclusivamente para la redacción de documentos y la investigación. Queda estrictamente prohibido el uso de teléfonos móviles durante las sesiones, salvo en casos de emergencia previamente autorizados por la mesa.</p>
-      <h3>Artículo 8: Faltas y sanciones</h3>
-      <p>Las faltas al reglamento o el irrespeto hacia otro delegado o miembro de la organización serán sancionadas de la siguiente manera:</p>
+      <p class="lead">La integridad del modelo depende del comportamiento ético y la presencia profesional de sus miembros.</p>
+      <h3>Artículo 6: Código de Vestimenta (Dress Code)</h3>
+      <p>Se exige <strong>Vestimenta Formal de Negocios (Western Business Attire)</strong>. La sobriedad en la vestimenta es un reflejo del respeto hacia la institución representada.</p>
+      <h3>Artículo 7: Tecnologías de la Información</h3>
+      <p>Los dispositivos electrónicos son herramientas de investigación. El uso indebido para fines ajenos al debate resultará en la confiscación inmediata del equipo durante la sesión.</p>
+      <h3>Artículo 8: Régimen Disciplinario</h3>
+      <p>Cualquier transgresión a la investidura del modelo será procesada mediante:</p>
       <ul class="sanctions-list">
-        <li><span class="li-strong">Primera falta:</span> Llamado de atención verbal por parte de la mesa.</li>
-        <li><span class="li-strong">Segunda falta:</span> Nota diplomática de advertencia.</li>
-        <li><span class="li-strong">Tercera falta:</span> Expulsión del comité y citación con la Secretaría General.</li>
+        <li><span class="li-strong">Amonestación:</span> Advertencia formal registrada en el acta del comité.</li>
+        <li><span class="li-strong">Censura:</span> Suspensión del derecho a voto y uso de la palabra.</li>
+        <li><span class="li-strong">Expulsión:</span> Retiro inmediato de las credenciales y exclusión del evento.</li>
       </ul>
     `
   }
 ];
-// ---------------------------------------------------------------
 
 const fadeIn = {
-  initial: { opacity: 0, y: 20 },
+  initial: { opacity: 0, y: 30 },
   animate: { opacity: 1, y: 0 },
   transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
 };
 
 export default function Rules() {
   return (
-    <div className="bg-[#F5F7FA] min-h-screen pb-32">
-      {/* Header */}
-      <header className="pt-32 pb-20 bg-white border-b border-[#E8EFF5]">
+    <div className="bg-[#F8FAFC] min-h-screen">
+      {/* Header Estilo Editorial */}
+      <header className="pt-32 pb-20 bg-white border-b border-slate-200">
         <div className="container mx-auto px-6 max-w-5xl">
-          <span className="text-[#2B5F8A] text-[11px] uppercase tracking-[0.4em] font-medium block mb-5">
-            Normativa oficial
-          </span>
-          <h1 className="font-serif text-6xl text-[#1A2E40] mb-6 tracking-tight">Reglamento MUNSEC</h1>
-          <p className="text-[#4A5F73] font-light max-w-2xl leading-relaxed text-base">
-            El siguiente compendio de reglas ha sido elaborado para garantizar un debate de excelencia, organizado y fiel a los principios de la diplomacia. Su lectura y comprensión son responsabilidad de cada delegación.
-          </p>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
+            <span className="text-[#4A90E2] text-[10px] md:text-[11px] uppercase tracking-[0.5em] font-bold block mb-6">
+              Instrumento Jurídico v.2025
+            </span>
+            <h1 className="font-serif text-5xl md:text-7xl text-slate-900 mb-8 leading-tight tracking-tighter">
+              Reglamento <br className="hidden md:block"/> Académico
+            </h1>
+            <div className="h-[1px] w-24 bg-slate-900 mb-8"></div>
+            <p className="text-slate-500 font-light max-w-2xl leading-relaxed text-base md:text-lg italic">
+              "El orden es el requisito indispensable para la libertad del pensamiento y la excelencia del debate."
+            </p>
+          </motion.div>
         </div>
       </header>
 
-      {/* Lista de Artículos del Reglamento */}
-      <section className="py-24">
-        <div className="container mx-auto px-6 max-w-5xl space-y-16">
+      {/* Contenido del Reglamento */}
+      <section className="py-20 md:py-32">
+        <div className="container mx-auto px-6 max-w-5xl space-y-24 md:space-y-40">
           {RULES_DATA.map((rule, index) => (
             <motion.article
               key={rule.id}
               variants={fadeIn}
               initial="initial"
               whileInView="animate"
-              viewport={{ once: true }}
-              className="bg-white border border-[#E0E8F0] overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
+              viewport={{ once: true, margin: "-100px" }}
+              className="relative"
             >
-              <div className="grid md:grid-cols-12">
-                {/* Título del Artículo (Lateral) - JERARQUÍA VISUAL */}
-                <div className="md:col-span-4 p-12 border-b md:border-b-0 md:border-r border-[#E0E8F0] bg-[#F9FCFE] flex flex-col justify-start">
-                  <span className="text-[10px] uppercase tracking-[0.3em] text-[#6B89A3] font-medium mb-3">
-                    {index === 0 ? 'Capítulo I' : index === 1 ? 'Capítulo II' : 'Capítulo III'}
-                  </span>
-                  <h2 className="font-serif text-4xl text-[#1A2E40] leading-tight tracking-tight">
-                    {rule.title}
-                  </h2>
-                  <div className="mt-8 w-16 h-[2px] bg-[#2B5F8A] opacity-30"></div>
-                  <p className="mt-6 text-[13px] text-[#6B89A3] uppercase tracking-wider font-medium">
-                    Artículos {index === 0 ? '1–2' : index === 1 ? '3–5' : '6–8'}
-                  </p>
+              <div className="grid md:grid-cols-12 gap-8 md:gap-16">
+                {/* Lateral: Metadatos del Capítulo */}
+                <div className="md:col-span-4">
+                  <div className="sticky top-32">
+                    <span className="text-[10px] uppercase tracking-[0.4em] text-slate-400 font-bold block mb-4">
+                      {rule.chapter}
+                    </span>
+                    <h2 className="font-serif text-3xl md:text-4xl text-slate-900 mb-6 leading-none">
+                      {rule.title}
+                    </h2>
+                    <p className="text-[11px] uppercase tracking-widest text-[#4A90E2] font-semibold border-l-2 border-[#4A90E2] pl-4">
+                      Artículos {rule.articles}
+                    </p>
+                  </div>
                 </div>
 
-                {/* Contenido HTML - JERARQUÍA TIPOGRÁFICA OBSESIVA */}
-                <div className="md:col-span-8 p-12">
+                {/* Contenido Principal */}
+                <div className="md:col-span-8">
                   <div 
-                    className="rules-content"
+                    className="rules-typography"
                     dangerouslySetInnerHTML={{ __html: rule.content }} 
                   />
                 </div>
@@ -123,169 +132,135 @@ export default function Rules() {
         </div>
       </section>
 
-      {/* Sección de Aceptación y Fe de Erratas */}
-      <section className="container mx-auto px-6 max-w-5xl">
-        <div className="border border-[#D0DDEB] p-16 text-center bg-white">
-          <div className="w-20 h-[2px] bg-[#2B5F8A] mx-auto mb-8 opacity-40"></div>
-          <h3 className="font-serif text-3xl text-[#1A2E40] mb-6 font-light italic tracking-wide">
-            Fe de Erratas y Modificaciones
-          </h3>
-          <p className="text-[#4A5F73] text-sm font-light max-w-xl mx-auto mb-8 leading-relaxed tracking-wide">
-            La Secretaría General de MUNSEC se reserva el derecho de interpretar el presente reglamento y de emitir comunicados oficiales para su aclaración o modificación, los cuales serán oportunamente informados a las delegaciones.
-          </p>
-          <div className="inline-block border-b border-[#1A2E40] pb-1">
-            <span className="text-[10px] uppercase tracking-[0.4em] font-medium text-[#1A2E40]">
-              Versión 2025 — Vigente para la próxima sesión
-            </span>
+      {/* Footer de Firma y Autoridad */}
+      <section className="pb-32 px-6">
+        <div className="container mx-auto max-w-5xl border-t border-slate-200 pt-20">
+          <div className="bg-slate-900 text-white p-10 md:p-20 relative overflow-hidden">
+            <div className="relative z-10 text-center">
+              <span className="text-[10px] uppercase tracking-[0.5em] text-slate-400 block mb-8">Certificación Oficial</span>
+              <h3 className="font-serif text-3xl mb-8 italic">Vigencia y Aplicación</h3>
+              <p className="text-slate-400 text-sm font-light max-w-xl mx-auto leading-relaxed mb-12">
+                Este reglamento entra en vigor a partir de su publicación oficial y anula cualquier disposición anterior. La Secretaría General posee la facultad privativa de su interpretación.
+              </p>
+              <div className="text-[9px] uppercase tracking-[0.3em] font-bold text-white border-t border-white/10 pt-8 inline-block">
+                Secretaría General — MUNSEC 2025
+              </div>
+            </div>
+            {/* Marca de agua sutil */}
+            <div className="absolute -bottom-10 -right-10 font-serif text-[200px] text-white/[0.03] select-none pointer-events-none">
+              SEC
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ESTILOS OBSESIVOS - JERARQUÍA TIPOGRÁFICA PERFECTA */}
-      <style jsx>{`
-        .rules-content {
-          font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-          color: #2A4059;
+      <style jsx global>{`
+        .rules-typography {
+          color: #334155;
+          line-height: 1.8;
         }
         
-        /* Párrafo inicial con jerarquía */
-        .rules-content .lead {
-          font-size: 1.1875rem !important;
-          line-height: 1.65 !important;
-          color: #1A2E40 !important;
-          font-weight: 400 !important;
-          margin-bottom: 2rem !important;
-          letter-spacing: -0.01em !important;
-          border-left: 3px solid #2B5F8A !important;
-          padding-left: 1.25rem !important;
-          font-style: normal !important;
+        .rules-typography .lead {
+          font-family: 'Inter', sans-serif;
+          font-size: 1.25rem;
+          color: #0F172A;
+          font-weight: 300;
+          margin-bottom: 3rem;
+          line-height: 1.6;
         }
-        
-        /* TÍTULOS - AHORA GRANDES Y CON PRESENCIA */
-        .rules-content h3 {
-          font-size: 2rem !important;
-          font-weight: 500 !important;
-          color: #0A1A2A !important;
-          font-family: 'Times New Roman', Georgia, Garamond, serif !important;
-          margin-top: 2.5rem !important;
-          margin-bottom: 1.25rem !important;
-          line-height: 1.2 !important;
-          letter-spacing: -0.02em !important;
-          border-bottom: 1px solid #E0E8F0 !important;
-          padding-bottom: 0.5rem !important;
+
+        .rules-typography h3 {
+          font-family: 'Times New Roman', serif;
+          font-size: 1.75rem;
+          color: #0F172A;
+          margin-top: 4rem;
+          margin-bottom: 1.5rem;
+          font-style: italic;
+          border-bottom: 1px solid #E2E8F0;
+          padding-bottom: 0.75rem;
         }
-        
-        .rules-content h3:first-of-type {
-          margin-top: 0 !important;
+
+        .rules-typography h3:first-of-type {
+          margin-top: 0;
         }
-        
-        /* Párrafos regulares */
-        .rules-content p {
-          font-size: 1.0625rem !important;
-          line-height: 1.7 !important;
-          color: #2F4057 !important;
-          margin-bottom: 1.5rem !important;
-          font-weight: 350 !important;
+
+        .rules-typography p {
+          font-size: 1.05rem;
+          margin-bottom: 1.5rem;
+          font-weight: 300;
         }
-        
-        /* LISTAS - CON ESTILO */
-        .rules-content ul, 
-        .rules-content ol {
-          margin-top: 1rem !important;
-          margin-bottom: 2rem !important;
-          padding-left: 1.75rem !important;
+
+        .rules-typography strong {
+          font-weight: 600;
+          color: #0F172A;
         }
-        
-        .rules-content li {
-          font-size: 1.0625rem !important;
-          line-height: 1.7 !important;
-          color: #2F4057 !important;
-          margin-bottom: 0.75rem !important;
-          font-weight: 350 !important;
-          padding-left: 0.5rem !important;
+
+        .rules-typography ul, .rules-typography ol {
+          margin: 2rem 0;
+          padding-left: 1.5rem;
         }
-        
-        /* Elementos destacados en listas */
-        .rules-content .li-strong {
-          font-weight: 600 !important;
-          color: #1A2E40 !important;
-          display: inline-block !important;
-          min-width: 7.5rem !important;
+
+        .rules-typography li {
+          margin-bottom: 1rem;
+          font-size: 1rem;
+          position: relative;
+          list-style: none;
         }
-        
-        .rules-content .li-num {
-          font-weight: 600 !important;
-          color: #1A2E40 !important;
-          display: inline-block !important;
+
+        /* Viñetas personalizadas y elegantes */
+        .rules-typography ul li::before {
+          content: "—";
+          position: absolute;
+          left: -1.5rem;
+          color: #4A90E2;
+          font-weight: bold;
         }
-        
-        /* Lista de sanciones con espaciado especial */
-        .rules-content .sanctions-list li {
-          border-left: 2px solid #D0DDEB !important;
-          padding-left: 1rem !important;
-          margin-left: 0.5rem !important;
+
+        .rules-typography .li-strong {
+          font-weight: 600;
+          color: #0F172A;
+          text-transform: uppercase;
+          font-size: 0.85rem;
+          letter-spacing: 0.05em;
+          display: block;
+          margin-bottom: 0.25rem;
         }
-        
-        /* Negritas en general */
-        .rules-content strong {
-          color: #0A1A2A !important;
-          font-weight: 600 !important;
-          letter-spacing: -0.01em !important;
+
+        /* Sanciones con diseño de 'Warning' sobrio */
+        .rules-typography .sanctions-list li {
+          border-left: 2px solid #F1F5F9;
+          padding-left: 1.5rem;
+          margin-bottom: 2rem;
         }
-        
-        /* Listas ordenadas con números estilizados */
-        .rules-content ol {
-          list-style: none !important;
-          counter-reset: custom-counter !important;
+
+        .rules-typography .sanctions-list li:hover {
+          border-left-color: #4A90E2;
         }
-        
-        .rules-content ol li {
-          counter-increment: custom-counter !important;
-          position: relative !important;
+
+        /* Contadores para listas ordenadas */
+        .rules-typography ol {
+          counter-reset: rule-counter;
         }
-        
-        .rules-content ol li::before {
-          content: counter(custom-counter) "." !important;
-          color: #2B5F8A !important;
-          font-weight: 500 !important;
-          position: absolute !important;
-          left: -1.75rem !important;
-          font-size: 1rem !important;
+        .rules-typography ol li {
+          counter-increment: rule-counter;
         }
-        
-        /* Listas no ordenadas con viñeta elegante */
-        .rules-content ul li {
-          position: relative !important;
+        .rules-typography ol li::before {
+          content: counter(rule-counter) ".";
+          position: absolute;
+          left: -2rem;
+          font-family: serif;
+          font-style: italic;
+          color: #4A90E2;
+          font-weight: bold;
         }
-        
-        .rules-content ul li::before {
-          content: "—" !important;
-          color: #8AA5C0 !important;
-          font-weight: 300 !important;
-          position: absolute !important;
-          left: -1.25rem !important;
-          font-size: 1rem !important;
-        }
-        
-        /* Espaciado entre elementos */
-        .rules-content h3 + p,
-        .rules-content h3 + ul,
-        .rules-content h3 + ol {
-          margin-top: 0.5rem !important;
-        }
-        
-        /* Pequeños detalles tipográficos */
-        .rules-content p:last-of-type {
-          margin-bottom: 0 !important;
-        }
-        
-        /* Responsive */
+
         @media (max-width: 768px) {
-          .rules-content h3 {
-            font-size: 1.75rem !important;
+          .rules-typography .lead {
+            font-size: 1.1rem;
           }
-          .rules-content .lead {
-            font-size: 1.125rem !important;
+          .rules-typography h3 {
+            font-size: 1.5rem;
+            margin-top: 3rem;
           }
         }
       `}</style>

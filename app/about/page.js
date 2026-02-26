@@ -63,14 +63,10 @@ export default function About() {
           </motion.div>
         </div>
 
-        {/* Scroll Indicator - Oculto en móviles muy pequeños */}
-        <motion.div 
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden sm:block"
-        >
-          <div className="w-[1px] h-12 sm:h-16 bg-gradient-to-b from-[#4A90E2] to-transparent"></div>
-        </motion.div>
+        {/* Scroll Indicator - CORREGIDO: eliminado el bug de línea saltarina */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden sm:block">
+          <div className="w-[1px] h-12 sm:h-16 bg-gradient-to-b from-[#4A90E2] to-transparent animate-pulse"></div>
+        </div>
       </section>
 
       {/* Origen - Stack vertical en móvil */}
@@ -105,7 +101,7 @@ export default function About() {
         </div>
       </section>
 
-            {/* Primera Edición - Reemplaza al bloque de CEPAL */}
+      {/* Primera Edición - Reemplaza al bloque de CEPAL */}
       <section className="py-16 sm:py-20 md:py-24 bg-[#0F172A] text-white relative overflow-hidden">
         {/* Elementos decorativos */}
         <div className="absolute top-0 right-0 w-48 sm:w-64 md:w-96 h-48 sm:h-64 md:h-96 bg-[#4A90E2]/5 rounded-full blur-3xl"></div>

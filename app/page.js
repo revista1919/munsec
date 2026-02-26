@@ -36,6 +36,23 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-b from-slate-900/40 via-slate-900/80 to-[#0F172A]"></div>
         </div>
 
+        {/* Logo discreto en la esquina superior izquierda */}
+        <motion.div 
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, delay: 0.3 }}
+          className="absolute top-6 left-4 sm:left-6 md:left-8 z-20"
+        >
+          <div className="relative w-12 h-12 md:w-14 md:h-14">
+            <Image
+              src="./logo.png"
+              alt="MUNSEC Logo"
+              fill
+              className="object-contain opacity-80 hover:opacity-100 transition-opacity duration-300"
+            />
+          </div>
+        </motion.div>
+
         {/* Content - Adaptado para móvil */}
         <motion.div 
           initial="initial"
@@ -82,14 +99,10 @@ export default function Home() {
           </motion.div>
         </motion.div>
 
-        {/* Scroll Indicator Minimalista */}
-        <motion.div 
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        >
-          <div className="w-[1px] h-12 bg-gradient-to-b from-[#4A90E2] to-transparent"></div>
-        </motion.div>
+        {/* Scroll Indicator Minimalista - CORREGIDO: eliminado el bug de línea saltarina */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+          <div className="w-[1px] h-12 bg-gradient-to-b from-[#4A90E2] to-transparent animate-pulse"></div>
+        </div>
       </section>
 
       {/* About Section - Adaptado para móvil */}
@@ -230,4 +243,4 @@ export default function Home() {
       </section>
     </div>
   );
-            }
+}

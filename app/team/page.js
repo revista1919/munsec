@@ -114,10 +114,10 @@ export default function Team() {
     { name: "Camilo Jiménez", role: "Comité Administrativo", bio: "bio de Camilo Jiménez." },
     { name: "Trinidad Elgueta", role: "Comité Administrativo", bio: "bio de Trinidad Elgueta." },
     { name: "Emilia Barría", role: "Comité Administrativo", bio: "bio de Emilia Barría." },
-    { name: "Karen Briceño", role: "Comité Administrativo", bio: "bio de Karen Briceño." },
   ];
 
   const technicalCommissions = [
+    { name: "Karen Briceño", role: "Comisión de Finanzas", bio: "bio de Karen Briceño." },
     { name: "Javier Vergara", role: "Comisión de Finanzas", bio: "bio de Javier Vergara." },
     { name: "Matías Valdés", role: "Comisión de Redacción", bio: "bio de Matías Valdés." },
     { name: "Amaro Reyes", role: "Comisión Eventos", bio: "bio de Amaro Reyes." },
@@ -168,7 +168,7 @@ export default function Team() {
               className="w-full h-full relative"
             >
               <Image 
-                src={`/munsec${groupImgError ? "https://via.placeholder.com/1920x1080?text=Fotografía+Equipo+MUNSEC" : "/munsec/team-full.jpg"}`}
+                src={groupImgError ? "https://via.placeholder.com/1920x1080?text=Fotografía+Equipo+MUNSEC" : "/munsec/team-full.jpg"}
                 alt="Equipo MUNSEC" 
                 fill
                 sizes="(max-width: 1280px) 100vw, 1280px"

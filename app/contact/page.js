@@ -56,164 +56,17 @@ export default function Contacto() {
 
   // Función para obtener el cuerpo del mensaje (opcional)
   const getEmailBody = () => {
-  const baseStyles = {
-    container: 'max-width:600px; margin:0 auto; font-family:Arial, sans-serif;',
-    header: 'background-color:#f8f9fa; padding:30px; text-align:center; border-bottom:3px solid #4A90E2;',
-    title: 'font-family:Georgia, serif; font-size:24px; color:#1a1a1a; margin:0;',
-    subtitle: 'font-size:12px; color:#4A90E2; text-transform:uppercase; letter-spacing:2px;',
-    content: 'padding:30px; background-color:#ffffff;',
-    paragraph: 'font-size:14px; line-height:1.6; color:#333; margin-bottom:20px;',
-    signature: 'margin-top:30px; padding-top:20px; border-top:1px solid #e5e7eb;',
-    button: 'display:inline-block; background-color:#4A90E2; color:#ffffff; padding:12px 24px; text-decoration:none; border-radius:4px; font-size:13px; font-weight:bold;',
-    footer: 'background-color:#f8f9fa; padding:20px; text-align:center; font-size:11px; color:#666;'
-  };
-
-  const getPurposeContent = () => {
     switch(selectedPurpose) {
       case 'academico':
-        return `
-          <h3 style="font-size:18px; color:#1a1a1a; margin-bottom:15px;">Comunicación Académica</h3>
-          <p style="${baseStyles.paragraph}">
-            <strong>Institución de origen:</strong> [COMPLETAR]<br>
-            <strong>Área de interés:</strong> [COMPLETAR]<br>
-            <strong>Descripción del proyecto:</strong><br>
-            [DETALLAR PROPUESTA]
-          </p>
-        `;
+        return 'Escriba aquí su consulta académica...\n\nInstitución:\nÁrea de interés:\nDescripción del proyecto:';
       case 'cultural':
-        return `
-          <h3 style="font-size:18px; color:#1a1a1a; margin-bottom:15px;">Propuesta Cultural</h3>
-          <p style="${baseStyles.paragraph}">
-            <strong>Tipo de actividad:</strong> [COMPLETAR]<br>
-            <strong>Fechas tentativas:</strong> [COMPLETAR]<br>
-            <strong>Descripción de la iniciativa:</strong><br>
-            [DETALLAR PROPUESTA CULTURAL]
-          </p>
-        `;
+        return 'Escriba aquí su propuesta cultural...\n\nTipo de actividad:\nFechas tentativas:\nDescripción:';
       case 'solicitud':
-        return `
-          <h3 style="font-size:18px; color:#1a1a1a; margin-bottom:15px;">Solicitud General</h3>
-          <p style="${baseStyles.paragraph}">
-            <strong>Asunto específico:</strong> [COMPLETAR]<br>
-            <strong>Detalles de la solicitud:</strong><br>
-            [EXPLICAR REQUERIMIENTO]
-          </p>
-        `;
+        return 'Escriba aquí su solicitud...\n\nAsunto específico:\nDetalles de la solicitud:';
       default:
         return '';
     }
   };
-
-  const htmlBody = `
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      </head>
-      <body style="margin:0; padding:0; background-color:#f3f4f6; font-family:Arial, sans-serif;">
-        
-        <!-- CONTENEDOR PRINCIPAL -->
-        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f3f4f6;">
-          <tr>
-            <td align="center" style="padding:40px 20px;">
-              
-              <!-- EMAIL CARD -->
-              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:600px; background-color:#ffffff; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.05);">
-                
-                <!-- HEADER -->
-                <tr>
-                  <td style="background:linear-gradient(135deg, #4A90E2 0%, #357ABD 100%); padding:40px 30px; text-align:center; border-radius:8px 8px 0 0;">
-                    <h1 style="margin:0; font-family:Georgia, serif; font-size:32px; color:#ffffff; letter-spacing:-0.5px;">
-                      MUNSEC
-                    </h1>
-                    <p style="margin:10px 0 0 0; font-size:12px; text-transform:uppercase; letter-spacing:3px; color:#ffffff; opacity:0.9;">
-                      Modelo de Naciones Unidas • Secretaría
-                    </p>
-                  </td>
-                </tr>
-                
-                <!-- CONTENIDO PRINCIPAL -->
-                <tr>
-                  <td style="padding:40px 30px;">
-                    
-                    <!-- SALUDO -->
-                    <p style="font-size:16px; color:#1a1a1a; line-height:1.6; margin-bottom:25px;">
-                      Estimado/a <strong>Secretaría MUNSEC</strong>,
-                    </p>
-                    
-                    <!-- CUERPO DEL MENSAJE -->
-                    <p style="font-size:15px; color:#333; line-height:1.7; margin-bottom:20px;">
-                      Por medio de la presente, me dirijo a ustedes para hacer llegar la siguiente comunicación:
-                    </p>
-                    
-                    <!-- CONTENIDO DINÁMICO SEGÚN PROPÓSITO -->
-                    ${getPurposeContent()}
-                    
-                    <!-- INFORMACIÓN ADICIONAL -->
-                    <div style="margin:30px 0; padding:25px; background-color:#f8f9fa; border-left:4px solid #4A90E2;">
-                      <p style="margin:0; font-size:14px; color:#555; line-height:1.6;">
-                        <strong>Nota:</strong> Agradecemos confirmar recepción de este mensaje. 
-                        Para consultas, puede responder directamente a este correo.
-                      </p>
-                    </div>
-                    
-                    <!-- DATOS DE CONTACTO DEL REMITENTE -->
-                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:30px 0;">
-                      <tr>
-                        <td style="padding:20px; background-color:#ffffff; border:1px solid #e5e7eb; border-radius:6px;">
-                          <p style="margin:0 0 10px 0; font-size:14px; color:#1a1a1a;">
-                            <strong>Datos del remitente:</strong>
-                          </p>
-                          <p style="margin:0; font-size:13px; color:#666;">
-                            <strong>Nombre completo:</strong> [COMPLETAR]<br>
-                            <strong>Institución/Organización:</strong> [COMPLETAR]<br>
-                            <strong>Teléfono de contacto:</strong> [COMPLETAR]<br>
-                            <strong>Correo electrónico:</strong> [COMPLETAR]
-                          </p>
-                        </td>
-                      </tr>
-                    </table>
-                    
-                    <!-- FIRMA -->
-                    <div style="margin-top:40px;">
-                      <p style="font-size:15px; color:#333; line-height:1.7; margin-bottom:5px;">
-                        Atentamente,
-                      </p>
-                      <p style="font-size:16px; color:#1a1a1a; line-height:1.7;">
-                        <strong>[NOMBRE DEL REMITENTE]</strong><br>
-                        <span style="font-size:13px; color:#666;">[CARGO / POSICIÓN]</span>
-                      </p>
-                    </div>
-                    
-                  </td>
-                </tr>
-                
-                <!-- FOOTER -->
-                <tr>
-                  <td style="padding:30px; background-color:#f8f9fa; border-top:1px solid #e5e7eb; text-align:center; border-radius:0 0 8px 8px;">
-                    <p style="margin:0 0 10px 0; font-size:12px; color:#666;">
-                      © ${new Date().getFullYear()} MUNSEC - Modelo de Naciones Unidas · Secretaría
-                    </p>
-                    <p style="margin:0; font-size:11px; color:#999;">
-                      Este correo fue enviado a través del formulario de contacto oficial.
-                    </p>
-                  </td>
-                </tr>
-                
-              </table>
-              
-            </td>
-          </tr>
-        </table>
-        
-      </body>
-    </html>
-  `;
-
-  // Convertir el HTML a una línea y codificarlo para URL
-  return encodeURIComponent(htmlBody);
-};
 
   // Construir el mailto con asunto dinámico (para móvil)
   const getMailtoLink = () => {

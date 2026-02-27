@@ -27,6 +27,41 @@ const containerVariants = {
 export default function Contacto() {
   const [selectedPurpose, setSelectedPurpose] = useState('academico');
 
+  // Función para obtener el asunto según el propósito seleccionado
+  const getEmailSubject = () => {
+    switch(selectedPurpose) {
+      case 'academico':
+        return 'Consulta Académica - MUNSEC';
+      case 'cultural':
+        return 'Propuesta Cultural - MUNSEC';
+      case 'solicitud':
+        return 'Solicitud General - MUNSEC';
+      default:
+        return 'Contacto - MUNSEC';
+    }
+  };
+
+  // Función para obtener el cuerpo del mensaje (opcional)
+  const getEmailBody = () => {
+    switch(selectedPurpose) {
+      case 'academico':
+        return 'Escriba aquí su consulta académica...';
+      case 'cultural':
+        return 'Escriba aquí su propuesta cultural...';
+      case 'solicitud':
+        return 'Escriba aquí su solicitud...';
+      default:
+        return '';
+    }
+  };
+
+  // Construir el mailto con asunto dinámico
+  const getMailtoLink = () => {
+    const subject = encodeURIComponent(getEmailSubject());
+    const body = encodeURIComponent(getEmailBody());
+    return `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+  };
+
   return (
     <div className="bg-[#F8FAFC] min-h-screen pb-32">
       {/* Header */}
@@ -116,13 +151,13 @@ export default function Contacto() {
                   </div>
                 </div>
 
-                {/* Correo de contacto estático */}
+                {/* Correo de contacto con asunto dinámico */}
                 <div className="mt-12 pt-6 border-t border-slate-100">
                   <span className="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-bold block mb-2">
                     Enviar correspondencia a
                   </span>
                   <a 
-                    href={`mailto:${CONTACT_EMAIL}`} 
+                    href={getMailtoLink()} 
                     className="text-lg text-slate-900 font-light hover:text-[#4A90E2] transition-colors break-all"
                   >
                     {CONTACT_EMAIL}
@@ -186,9 +221,6 @@ export default function Contacto() {
           </motion.div>
         </div>
       </section>
-
-      {/* Sección de nota adicional */}
-      
     </div>
   );
 }

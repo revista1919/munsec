@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 // --- CONFIGURACIÓN DEL CORREO (EDITAR AQUÍ CUANDO CAMBIE) ---
 const CONTACT_EMAIL = "munsec.chile@gmail.com";
@@ -26,6 +26,19 @@ const containerVariants = {
 
 export default function Contacto() {
   const [selectedPurpose, setSelectedPurpose] = useState('academico');
+  const [isMobile, setIsMobile] = useState(false);
+  const [showCopyFeedback, setShowCopyFeedback] = useState(false);
+
+  // Detectar si es dispositivo móvil
+  useEffect(() => {
+    const checkMobile = () => {
+      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+      const mobileRegex = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i;
+      setIsMobile(mobileRegex.test(userAgent));
+    };
+    
+    checkMobile();
+  }, []);
 
   // Función para obtener el asunto según el propósito seleccionado
   const getEmailSubject = () => {
@@ -45,21 +58,53 @@ export default function Contacto() {
   const getEmailBody = () => {
     switch(selectedPurpose) {
       case 'academico':
-        return 'Escriba aquí su consulta académica...';
+        return 'Escriba aquí su consulta académica...\n\nInstitución:\nÁrea de interés:\nDescripción del proyecto:';
       case 'cultural':
-        return 'Escriba aquí su propuesta cultural...';
+        return 'Escriba aquí su propuesta cultural...\n\nTipo de actividad:\nFechas tentativas:\nDescripción:';
       case 'solicitud':
-        return 'Escriba aquí su solicitud...';
+        return 'Escriba aquí su solicitud...\n\nAsunto específico:\nDetalles de la solicitud:';
       default:
         return '';
     }
   };
 
-  // Construir el mailto con asunto dinámico
+  // Construir el mailto con asunto dinámico (para móvil)
   const getMailtoLink = () => {
     const subject = encodeURIComponent(getEmailSubject());
     const body = encodeURIComponent(getEmailBody());
     return `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+  };
+
+  // Construir enlace de Gmail (para escritorio)
+  const getGmailLink = () => {
+    const subject = encodeURIComponent(getEmailSubject());
+    const body = encodeURIComponent(getEmailBody());
+    return `https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT_EMAIL}&su=${subject}&body=${body}`;
+  };
+
+  // Construir enlace de Outlook (para escritorio)
+  const getOutlookLink = () => {
+    const subject = encodeURIComponent(getEmailSubject());
+    const body = encodeURIComponent(getEmailBody());
+    return `https://outlook.live.com/mail/0/deeplink/compose?to=${CONTACT_EMAIL}&subject=${subject}&body=${body}`;
+  };
+
+  // Función para copiar el correo
+  const copyEmailToClipboard = () => {
+    navigator.clipboard.writeText(CONTACT_EMAIL).then(() => {
+      setShowCopyFeedback(true);
+      setTimeout(() => setShowCopyFeedback(false), 3000);
+    }).catch(err => {
+      // Fallback para navegadores antiguos
+      const textArea = document.createElement('textarea');
+      textArea.value = CONTACT_EMAIL;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      setShowCopyFeedback(true);
+      setTimeout(() => setShowCopyFeedback(false), 3000);
+    });
   };
 
   return (
@@ -151,24 +196,83 @@ export default function Contacto() {
                   </div>
                 </div>
 
-                {/* Correo de contacto con asunto dinámico */}
+                {/* Correo de contacto - COMPORTAMIENTO DIFERENCIADO */}
                 <div className="mt-12 pt-6 border-t border-slate-100">
                   <span className="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-bold block mb-2">
                     Enviar correspondencia a
                   </span>
-                  <a 
-                    href={getMailtoLink()} 
-                    className="text-lg text-slate-900 font-light hover:text-[#4A90E2] transition-colors break-all"
-                  >
-                    {CONTACT_EMAIL}
-                  </a>
-                  <p className="text-[10px] text-slate-400 mt-2 tracking-wide">
-                    * Para asuntos específicos, selecciona el propósito que mejor describa tu consulta.
-                  </p>
+                  
+                  <div className="space-y-4">
+                    {/* Mostrar el correo como texto siempre */}
+                    <div className="text-lg text-slate-900 font-light break-all">
+                      {CONTACT_EMAIL}
+                    </div>
+
+                    {/* Feedback de copiado */}
+                    {showCopyFeedback && (
+                      <span className="inline-block text-xs text-green-600 bg-green-50 px-2 py-1 rounded">
+                        ✓ Correo copiado al portapapeles
+                      </span>
+                    )}
+
+                    {/* Opciones según dispositivo */}
+                    {isMobile ? (
+                      /* MÓVIL: Mailto link */
+                      <a
+                        href={getMailtoLink()}
+                        className="inline-block text-xs px-4 py-2 bg-[#4A90E2] text-white rounded hover:bg-[#4A90E2]/90 transition-colors"
+                      >
+                        Abrir aplicación de correo
+                      </a>
+                    ) : (
+                      /* ESCRITORIO: Botones para servicios web */
+                      <div className="flex flex-wrap gap-2">
+                        <a
+                          href={getGmailLink()}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs px-3 py-2 bg-red-50 text-red-600 rounded hover:bg-red-100 transition-colors flex items-center gap-1"
+                        >
+                          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                          </svg>
+                          Gmail
+                        </a>
+                        <a
+                          href={getOutlookLink()}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs px-3 py-2 bg-blue-50 text-blue-600 rounded hover:bg-blue-100 transition-colors flex items-center gap-1"
+                        >
+                          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M7.5 3.5L4 6v12l3.5 2.5 8-5v-4l-8 5v-4l8-5v-4l-8 5z"/>
+                          </svg>
+                          Outlook
+                        </a>
+                        <button
+                          onClick={copyEmailToClipboard}
+                          className="text-xs px-3 py-2 bg-slate-100 text-slate-600 rounded hover:bg-slate-200 transition-colors"
+                        >
+                          Copiar correo
+                        </button>
+                      </div>
+                    )}
+
+                    {/* Instrucciones adicionales según dispositivo */}
+                    {isMobile ? (
+                      <p className="text-[10px] text-slate-400 mt-2">
+                        * Se abrirá tu aplicación de correo predeterminada con el asunto según el propósito seleccionado.
+                      </p>
+                    ) : (
+                      <p className="text-[10px] text-slate-400 mt-2">
+                        * Selecciona un propósito y luego haz clic en Gmail o Outlook para enviar con el asunto pre-completado.
+                      </p>
+                    )}
+                  </div>
                 </div>
               </div>
 
-              {/* Formulario de contacto simulado / Información adicional */}
+              {/* Panel derecho - Información según propósito */}
               <div className="md:col-span-7 bg-slate-50 p-12">
                 <div className="h-full flex flex-col justify-center">
                   <h3 className="font-serif text-xl text-slate-900 mb-6">

@@ -81,7 +81,7 @@ const TeamPhoto = ({ src, caption }) => {
     <div className="h-full flex flex-col">
       <div className="flex-grow overflow-hidden relative group">
         <Image
-          src={`/munsec${src}`}
+          src={`${src}`}
           alt={caption}
           fill
           sizes="(max-width: 768px) 100vw, 50vw"

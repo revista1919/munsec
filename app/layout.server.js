@@ -2,17 +2,17 @@ export const metadata = {
   metadataBase: new URL("https://www.munsec.org"),
 
   title: {
-    default: "MUNSEC · Modelo de Naciones Unidas para Secundarios de Chile",
+    default: "MUNSEC · Modelo de Naciones Unidas para Estudiantes Secundarios de Chile",
     template: "%s | MUNSEC Chile"
   },
 
   description:
-    "MUNSEC es el Modelo de Naciones Unidas para estudiantes secundarios de Chile, con vocación de educación pública y participación ciudadana. Formamos delegados con pensamiento crítico y vocación diplomática.",
+    "MUNSEC es un Modelo de Naciones Unidas para estudiantes secundarios de Chile. Promovemos la diplomacia, el debate, la participación ciudadana, el pensamiento crítico y la formación de líderes jóvenes mediante simulaciones de las Naciones Unidas.",
 
   openGraph: {
     title: "MUNSEC · Modelo de Naciones Unidas",
     description:
-      "Simulación de UN para secundarios chilenos. Debate, diplomacia y formación ciudadana con enfoque en educación pública.",
+      "Modelo de Naciones Unidas para estudiantes secundarios de Chile. Debate, diplomacia y formación ciudadana.",
     url: "https://www.munsec.org",
     siteName: "MUNSEC Chile",
     images: [
@@ -20,13 +20,12 @@ export const metadata = {
         url: "/munsec.png",
         width: 1200,
         height: 630,
-        alt: "MUNSEC · Modelo de Naciones Unidas para Secundarios de Chile"
+        alt: "MUNSEC · Modelo de Naciones Unidas para Estudiantes Secundarios de Chile"
       }
     ],
     locale: "es_CL",
     type: "website"
   },
-
 
   icons: {
     icon: "/favicon.ico",
@@ -37,8 +36,10 @@ export const metadata = {
   applicationName: "MUNSEC Chile",
 
   keywords: [
+    // Español
     "MUNSEC",
     "Modelo de Naciones Unidas",
+    "Modelo Naciones Unidas Chile",
     "ONU secundarios Chile",
     "debate escolar",
     "educación pública Chile",
@@ -46,12 +47,25 @@ export const metadata = {
     "formación ciudadana",
     "pensamiento crítico",
     "estudiantes secundarios",
+    "liderazgo juvenil",
     "Chile",
-    "Santiago"
+    "Santiago",
+
+    // Inglés
+    "Model United Nations",
+    "Model UN Chile",
+    "MUN Conference Chile",
+    "High School MUN",
+    "Student Diplomacy",
+    "United Nations Simulation",
+    "MUN Latin America"
   ],
 
   authors: [
-    { name: "MUNSEC · Organización", url: "https://www.munsec.org/team" }
+    {
+      name: "MUNSEC · Organización",
+      url: "https://www.munsec.org/team"
+    }
   ],
 
   creator: "MUNSEC · Secretaría General",
@@ -71,21 +85,54 @@ export const metadata = {
   },
 
   verification: {
-    google: "verification_token_munsec", // Reemplazar con el token real cuando lo tengan
+    google: "verification_token_munsec"
   },
 
-  category: "educación",
+  category: "education",
 
   alternates: {
     canonical: "https://www.munsec.org",
     languages: {
-      "es-CL": "https://www.munsec.org",
-    },
+      "es-CL": "https://www.munsec.org"
+    }
   },
 
-  // Para que aparezca como resultado enriquecido en Google
   other: {
     "og:region": "Chile",
-    "og:country-name": "Chile",
+    "og:country-name": "Chile"
   }
 };
+
+export default function RootLayout({ children }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    name: "MUNSEC",
+    alternateName: "Modelo de Naciones Unidas para Estudiantes Secundarios de Chile",
+    url: "https://www.munsec.org",
+    logo: "https://www.munsec.org/munsec.png",
+    description:
+      "Modelo de Naciones Unidas para estudiantes secundarios de Chile enfocado en diplomacia, debate, participación ciudadana y pensamiento crítico.",
+    areaServed: {
+      "@type": "Country",
+      name: "Chile"
+    },
+    sameAs: [
+      "https://www.instagram.com/munsec.chile/"
+    ]
+  };
+
+  return (
+    <html lang="es">
+      <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLd)
+          }}
+        />
+        {children}
+      </body>
+    </html>
+  );
+}

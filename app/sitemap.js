@@ -1,10 +1,9 @@
-// app/sitemap.ts
+// app/sitemap.js
 
-import { MetadataRoute } from 'next'
 import fs from 'fs'
 import path from 'path'
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default function sitemap() {
   const appDir = path.join(process.cwd(), 'app')
 
   const routes = fs

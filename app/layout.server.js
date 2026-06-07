@@ -1,5 +1,5 @@
 export const metadata = {
-  metadataBase: new URL("https://www.revistacienciasestudiantes.com/munsec"),
+  metadataBase: new URL("https://www.munsec.org"),
 
   title: {
     default: "MUNSEC · Modelo de Naciones Unidas para Secundarios de Chile",
@@ -13,7 +13,7 @@ export const metadata = {
     title: "MUNSEC · Modelo de Naciones Unidas",
     description:
       "Simulación de UN para secundarios chilenos. Debate, diplomacia y formación ciudadana con enfoque en educación pública.",
-    url: "https://www.revistacienciasestudiantes.com/munsec",
+    url: "https://www.munsec.org",
     siteName: "MUNSEC Chile",
     images: [
       {
@@ -51,7 +51,7 @@ export const metadata = {
   ],
 
   authors: [
-    { name: "MUNSEC · Organización", url: "https://www.revistacienciasestudiantes.com/munsec/team" }
+    { name: "MUNSEC · Organización", url: "https://www.munsec.org/team" }
   ],
 
   creator: "MUNSEC · Secretaría General",
@@ -77,9 +77,9 @@ export const metadata = {
   category: "educación",
 
   alternates: {
-    canonical: "https://www.revistacienciasestudiantes.com/munsec",
+    canonical: "https://www.munsec.org",
     languages: {
-      "es-CL": "https://www.revistacienciasestudiantes.com/munsec",
+      "es-CL": "https://www.munsec.org",
     },
   },
 

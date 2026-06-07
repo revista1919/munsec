@@ -29,7 +29,7 @@ export default function About() {
         {/* Background Image - CORREGIDO: añadido fill */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/munsec/munsec-about.jpg" 
+            src="/munsec-about.jpg" 
             alt="Asamblea MUNSEC" 
             fill
             className="object-cover opacity-90 sm:opacity-100"

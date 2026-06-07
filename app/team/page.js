@@ -169,7 +169,7 @@ export default function Team() {
               className="w-full h-full relative"
             >
               <Image 
-                src={groupImgError ? "https://via.placeholder.com/1920x1080?text=Fotografía+Equipo+MUNSEC" : "/munsec/team-full.jpg"}
+                src={groupImgError ? "https://via.placeholder.com/1920x1080?text=Fotografía+Equipo+MUNSEC" : "/team-full.jpg"}
                 alt="Equipo MUNSEC" 
                 fill
                 sizes="(max-width: 1280px) 100vw, 1280px"

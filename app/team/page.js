@@ -5,7 +5,7 @@ import { useInView } from 'react-intersection-observer';
 import Image from 'next/image';
 import { useState } from 'react';
 
-// --- ANIMACIONES ---
+// --- ANIMACIONES (sin cambios) ---
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
   visible: { 
@@ -23,7 +23,7 @@ const staggerContainer = {
   }
 };
 
-// --- CONFIGURACIÓN DE JERARQUÍAS VISUALES ---
+// --- CONFIGURACIÓN DE JERARQUÍAS VISUALES (sin cambios) ---
 const rankStyles = {
   founder: {
     height: "h-[380px] sm:h-[460px]",
@@ -51,6 +51,7 @@ const rankStyles = {
   }
 };
 
+// --- COMPONENTE TeamMember (sin cambios lógicos) ---
 const TeamMember = ({ name, role, rank = "collaborator", index }) => {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
   const [imgError, setImgError] = useState(false);
@@ -69,6 +70,8 @@ const TeamMember = ({ name, role, rank = "collaborator", index }) => {
     <motion.div 
       ref={ref}
       variants={fadeInUp}
+      // Añadimos 'mx-auto' para centrar la tarjeta dentro de su celda del grid, 
+      // y usamos 'w-full' para que ocupe la celda, el maxWidth controla el tamaño máximo.
       className={`group relative w-full mx-auto ${style.maxWidth}`}
     >
       <div className={`w-full ${style.height} bg-slate-100 overflow-hidden mb-5 border border-slate-200 relative shadow-sm transition-shadow duration-500 group-hover:shadow-md`}>
@@ -86,7 +89,6 @@ const TeamMember = ({ name, role, rank = "collaborator", index }) => {
             onError={() => setImgError(true)}
           />
         </motion.div>
-        {/* Capa de tinte azul diplomático al pasar el hover */}
         <div className="absolute inset-0 bg-[#418FDE]/0 group-hover:bg-[#418FDE]/10 transition-colors duration-700 pointer-events-none" />
       </div>
 
@@ -106,7 +108,8 @@ const TeamMember = ({ name, role, rank = "collaborator", index }) => {
     </motion.div>
   );
 };
-// --- DATA ---
+
+// --- DATA (sin cambios) ---
 const founders = [
   { name: "Anastacia Díaz", role: "Órgano Fundador" },
   { name: "Rafaela Pérez", role: "Órgano Fundador" },
@@ -136,7 +139,7 @@ export default function Team() {
   return (
     <div className="bg-[#FCFDFD] min-h-screen overflow-x-hidden selection:bg-[#418FDE] selection:text-white">
       
-      {/* Título Oficial (Estilo Resolución ONU) */}
+      {/* Título Oficial (sin cambios) */}
       <motion.header 
         ref={heroRef}
         className="pt-24 sm:pt-36 pb-16 sm:pb-20 border-b border-slate-200 bg-white"
@@ -170,11 +173,10 @@ export default function Team() {
         </div>
       </motion.header>
 
-      {/* Rango 1: Fundadores (Gran Escala) */}
+      {/* Rango 1: Fundadores - GRID SIMÉTRICO */}
       <section className="py-24 sm:py-32 relative bg-white border-b border-slate-100">
         <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
           <div className="text-center mb-16 sm:mb-24">
-           
             <h3 className="font-serif text-3xl sm:text-4xl text-slate-900">Fundadores</h3>
           </div>
           
@@ -183,18 +185,18 @@ export default function Team() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="flex flex-wrap justify-center gap-8 sm:gap-12"
+            // CAMBIO CLAVE: grid en lugar de flex, con columnas responsivas
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 sm:gap-10"
           >
             {founders.map((member, i) => (
-              <div key={i} className="w-full sm:w-[calc(50%-2rem)] lg:w-[calc(33.333%-2.5rem)] xl:w-[calc(20%-2rem)]">
-                <TeamMember {...member} rank="founder" index={i} />
-              </div>
+              // Ya no necesitamos un div wrapper para el ancho, la grid se encarga
+              <TeamMember key={i} {...member} rank="founder" index={i} />
             ))}
           </motion.div>
         </div>
       </section>
 
-      {/* Rango 2: Comité Administrativo (Escala Media) */}
+      {/* Rango 2: Comité Administrativo - GRID SIMÉTRICO */}
       <section className="py-20 sm:py-28 bg-slate-50 border-b border-slate-200">
         <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
           <div className="text-center mb-14 sm:mb-20">
@@ -206,18 +208,17 @@ export default function Team() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="flex flex-wrap justify-center gap-8 sm:gap-12 lg:gap-16"
+            // CAMBIO CLAVE: 4 columnas en pantallas medianas, 2 en pequeñas
+            className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10 lg:gap-12"
           >
             {committee.map((member, i) => (
-              <div key={i} className="w-full sm:w-[calc(50%-2rem)] md:w-[calc(25%-2rem)]">
-                <TeamMember {...member} rank="committee" index={i} />
-              </div>
+              <TeamMember key={i} {...member} rank="committee" index={i} />
             ))}
           </motion.div>
         </div>
       </section>
 
-      {/* Rango 3: Colaboradores (Escala Compacta) */}
+      {/* Rango 3: Colaboradores - GRID SIMÉTRICO */}
       <section className="py-20 sm:py-24 bg-white">
         <div className="container mx-auto px-4 sm:px-6 max-w-5xl">
           <div className="text-center mb-12 sm:mb-16">
@@ -232,18 +233,17 @@ export default function Team() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
-            className="flex flex-wrap justify-center gap-6 sm:gap-10"
+            // CAMBIO CLAVE: 4 columnas. Con 4 elementos, queda perfecto.
+            className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8"
           >
             {collaborators.map((member, i) => (
-              <div key={i} className="w-[calc(50%-1rem)] sm:w-[calc(25%-1.5rem)]">
-                <TeamMember {...member} rank="collaborator" index={i} />
-              </div>
+              <TeamMember key={i} {...member} rank="collaborator" index={i} />
             ))}
           </motion.div>
         </div>
       </section>
 
-      {/* Cierre Diplomático */}
+      {/* Cierre Diplomático (sin cambios) */}
       <motion.footer 
         className="py-16 sm:py-20 bg-slate-900 text-center"
         initial={{ opacity: 0 }}
@@ -252,7 +252,7 @@ export default function Team() {
       >
         <div className="container mx-auto px-6 max-w-2xl">
           <Image 
-            src="/munsec-logo-white.svg" // Asegúrate de tener este logo o quita esta etiqueta
+            src="/munsec-logo-white.svg" 
             alt="Logo" 
             width={40} 
             height={40} 

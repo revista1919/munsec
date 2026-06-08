@@ -122,8 +122,8 @@ const committee = [
 
 const collaborators = [
   { name: "Javier Vergara", role: "Cuerpo de Colaboradores" },
-  { name: "Karen", role: "Cuerpo de Colaboradores" },
-  { name: "Matías", role: "Cuerpo de Colaboradores" },
+  { name: "Karen Briceño", role: "Cuerpo de Colaboradores" },
+  { name: "Matías Valdez", role: "Cuerpo de Colaboradores" },
   { name: "Laura", role: "Cuerpo de Colaboradores" }
 ];
 

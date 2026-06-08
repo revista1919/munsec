@@ -85,7 +85,7 @@ const TeamMember = ({ name, role, rank = "collaborator", index }) => {
             alt={name}
             fill
             sizes="(max-width: 640px) 100vw, 33vw"
-            className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+            className="object-cover"
             onError={() => setImgError(true)}
           />
         </motion.div>

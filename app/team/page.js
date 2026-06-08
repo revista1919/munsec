@@ -78,14 +78,17 @@ const TeamMember = ({ name, role, rank = "collaborator", index }) => {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="w-full h-full relative"
         >
-          <Image 
-            src={imageSrc}
-            alt={name}
-            fill
-            sizes="(max-width: 640px) 100vw, 33vw"
-            className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-            onError={() => setImgError(true)}
-          />
+          <Image
+  src={imageSrc}
+  alt={name}
+  fill
+  sizes="(max-width: 640px) 100vw, 33vw"
+  className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+  style={{
+    objectPosition: position
+  }}
+  onError={() => setImgError(true)}
+/>
         </motion.div>
         {/* Capa de tinte azul diplomático al pasar el hover */}
         <div className="absolute inset-0 bg-[#418FDE]/0 group-hover:bg-[#418FDE]/10 transition-colors duration-700 pointer-events-none" />
@@ -128,7 +131,7 @@ const collaborators = [
   { name: "Javier Vergara", role: "Cuerpo de Colaboradores" },
   { name: "Karen Briceño", role: "Cuerpo de Colaboradores" },
   { name: "Matías Valdez", role: "Cuerpo de Colaboradores" },
-  { name: "Laura", role: "Cuerpo de Colaboradores" }
+  { name: "Laura Fuentealba", role: "Cuerpo de Colaboradores" }
 ];
 
 // --- VISTA PRINCIPAL ---

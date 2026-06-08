@@ -129,7 +129,8 @@ const collaborators = [
   { name: "Javier Vergara", role: "Cuerpo de Colaboradores" },
   { name: "Karen Briceño", role: "Cuerpo de Colaboradores" },
   { name: "Matías Valdez", role: "Cuerpo de Colaboradores" },
-  { name: "Laura Fuentealba", role: "Cuerpo de Colaboradores" }
+  { name: "Laura Fuentealba", role: "Cuerpo de Colaboradores" },
+  { name: "Amaro Reyes", role: "Cuerpo de Colaboradores" }
 ];
 
 // --- VISTA PRINCIPAL ---

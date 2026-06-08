@@ -51,18 +51,17 @@ const rankStyles = {
   }
 };
 
-// --- COMPONENTE DE MIEMBRO ---
 const TeamMember = ({ name, role, rank = "collaborator", index }) => {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
   const [imgError, setImgError] = useState(false);
   
   const imageSrc = imgError
-  ? `https://via.placeholder.com/600x800`
-  : `/team/${name
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .toLowerCase()
-      .replace(/ /g, "-")}.jpg`;
+    ? `https://via.placeholder.com/600x800`
+    : `/team/${name
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .replace(/ /g, "-")}.jpg`;
 
   const style = rankStyles[rank];
 
@@ -79,16 +78,13 @@ const TeamMember = ({ name, role, rank = "collaborator", index }) => {
           className="w-full h-full relative"
         >
           <Image
-  src={imageSrc}
-  alt={name}
-  fill
-  sizes="(max-width: 640px) 100vw, 33vw"
-  className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-  style={{
-    objectPosition: position
-  }}
-  onError={() => setImgError(true)}
-/>
+            src={imageSrc}
+            alt={name}
+            fill
+            sizes="(max-width: 640px) 100vw, 33vw"
+            className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+            onError={() => setImgError(true)}
+          />
         </motion.div>
         {/* Capa de tinte azul diplomático al pasar el hover */}
         <div className="absolute inset-0 bg-[#418FDE]/0 group-hover:bg-[#418FDE]/10 transition-colors duration-700 pointer-events-none" />
@@ -104,13 +100,12 @@ const TeamMember = ({ name, role, rank = "collaborator", index }) => {
         <motion.div 
           className={`h-[1px] mx-auto transition-all duration-700 ${style.accentLine}`}
           initial={{ width: "20px" }}
-          whileHover={{ width: style.hoverLineWidth.replace('w-', '') + 'rem' }} // Truco visual para expandir la línea
+          whileHover={{ width: style.hoverLineWidth }}
         />
       </motion.div>
     </motion.div>
   );
 };
-
 // --- DATA ---
 const founders = [
   { name: "Anastacia Díaz", role: "Órgano Fundador" },

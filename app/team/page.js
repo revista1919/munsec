@@ -56,9 +56,13 @@ const TeamMember = ({ name, role, rank = "collaborator", index }) => {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
   const [imgError, setImgError] = useState(false);
   
-  const imageSrc = imgError 
-    ? `https://via.placeholder.com/600x800/f8fafc/475569?text=${name.split(' ')[0]}` 
-    : `/team/${name.toLowerCase().replace(/ /g, '-')}.jpg`;
+  const imageSrc = imgError
+  ? `https://via.placeholder.com/600x800`
+  : `/team/${name
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .replace(/ /g, "-")}.jpg`;
 
   const style = rankStyles[rank];
 
@@ -172,10 +176,8 @@ export default function Team() {
       <section className="py-24 sm:py-32 relative bg-white border-b border-slate-100">
         <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
           <div className="text-center mb-16 sm:mb-24">
-            <h2 className="text-[#418FDE] text-[10px] sm:text-xs uppercase tracking-[0.4em] font-bold mb-3">
-              Alto Mando Ejecutivo
-            </h2>
-            <h3 className="font-serif text-3xl sm:text-4xl text-slate-900">Consejo Fundador</h3>
+           
+            <h3 className="font-serif text-3xl sm:text-4xl text-slate-900">Fundadores</h3>
           </div>
           
           <motion.div 
@@ -198,9 +200,6 @@ export default function Team() {
       <section className="py-20 sm:py-28 bg-slate-50 border-b border-slate-200">
         <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
           <div className="text-center mb-14 sm:mb-20">
-            <h2 className="text-slate-500 text-[10px] sm:text-xs uppercase tracking-[0.3em] font-bold mb-3">
-              Órgano de Gestión
-            </h2>
             <h3 className="font-serif text-2xl sm:text-3xl text-slate-900">Comité Administrativo</h3>
           </div>
 

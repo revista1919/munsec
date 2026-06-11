@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 // --- CONFIGURACIÓN DEL CORREO (EDITAR AQUÍ CUANDO CAMBIE) ---
-const CONTACT_EMAIL = "munsec.chile@gmail.com";
+const CONTACT_EMAIL = "contacto@munsec.org";
 // -----------------------------------------------------------
 
 const fadeIn = {

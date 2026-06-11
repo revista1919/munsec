@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 // --- CONFIGURACIÓN DE LA CONVOCATORIA (EDITAR AQUÍ) ---
 const REGISTRATION_CONFIG = {
   isOpen: false, // Cambiar a false para cerrar inscripciones
-  contactEmail: "contact@munsec.com",
+  contactEmail: "contacto@munsec.org",
   // Array de comisiones/formularios disponibles
   commissions: [
     {

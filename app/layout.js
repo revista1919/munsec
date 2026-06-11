@@ -163,8 +163,8 @@ export default function RootLayout({ children }) {
                 <ul className="space-y-3 mb-6">
                   <li className="text-gray-300 text-sm">Santiago, Chile</li>
                   <li>
-                    <a href="mailto:contact@munsec.com" className="text-[#4A90E2] hover:text-white transition-colors text-sm break-all">
-                      contact@munsec.com
+                    <a href="mailto:contacto@munsec.org" className="text-[#4A90E2] hover:text-white transition-colors text-sm break-all">
+                      contacto@munsec.org
                     </a>
                   </li>
                 </ul>

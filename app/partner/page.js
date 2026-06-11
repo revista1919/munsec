@@ -171,7 +171,7 @@ export default function Partners() {
             Nuestra institución se encuentra en un proceso constante de expansión de su red de colaboración. Buscamos establecer vínculos con organismos que compartan nuestra visión de descentralización y fortalecimiento de la educación pública.
           </p>
           <div className="inline-block border-b border-slate-900 pb-1">
-            <a href="mailto:contact@munsec.com" className="text-[10px] uppercase tracking-[0.3em] font-bold text-slate-900">
+            <a href="mailto:contacto@munsec.org" className="text-[10px] uppercase tracking-[0.3em] font-bold text-slate-900">
               Solicitar información de vinculación
             </a>
           </div>

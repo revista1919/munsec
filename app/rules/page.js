@@ -10,7 +10,7 @@ const RULES_DATA = [
     chapter: "Capítulo I",
     articles: "1–2",
     content: `
-      <p class="lead">El presente cuerpo normativo constituye el marco jurídico supremo que regirá las sesiones del <strong>Modelo de Naciones Unidas de Santiago, MUNSEC</strong>.</p>
+      <p class="lead">El presente cuerpo normativo constituye el marco jurídico supremo que regirá las sesiones del <strong>Modelo de Naciones Unidas para Secundarios, MUNSEC</strong>.</p>
       <h3>Artículo 1: Naturaleza Institucional</h3>
       <p>MUNSEC se define como una plataforma de alta exigencia académica y simulación diplomática. Su objetivo es la formación de líderes a través del rigor intelectual y el respeto irrestricto a los protocolos internacionales.</p>
       <h3>Artículo 2: Estructura de Participantes</h3>

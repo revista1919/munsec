@@ -14,6 +14,7 @@ export default function RootLayout({ children }) {
 
   // Verificar si estamos en la página del formulario
   const isFormularioPage = pathname === '/register/formulario';
+  const isConfirmacionPage = pathname === '/confirmacion';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,7 +44,7 @@ export default function RootLayout({ children }) {
     <html lang="es">
       <body className="antialiased">
         {/* Header - Solo se muestra si NO es la página del formulario */}
-        {!isFormularioPage && (
+        {!isFormularioPage && !isConfirmacionPage && (
           <header 
             className={`fixed top-0 w-full z-50 transition-all duration-500 ${
               scrolled 
@@ -131,7 +132,7 @@ export default function RootLayout({ children }) {
         </main>
 
         {/* Footer - Solo se muestra si NO es la página del formulario */}
-        {!isFormularioPage && (
+        {!isFormularioPage && !isConfirmacionPage && (
           <footer className="bg-[#0F172A] text-white mt-24">
             <div className="container-custom py-16">
               <div className="grid grid-cols-1 md:grid-cols-4 gap-12">

@@ -2,12 +2,12 @@
 // Cambia solo los valores, no la estructura
 
 export const CONFIG_INSCRIPCION = {
-  año: 2025,
+  año: 2026,
   
   // 🟢 CONTROL DE INSCRIPCIONES
   inscripciones: {
-    abiertas: true,
-    fecha_apertura: "2025-03-01T00:00:00-03:00",
+    abiertas: false,
+    fecha_apertura: "2026-03-01T00:00:00-03:00",
     fecha_cierre: null,
     mensajes: {
       cerradas: "Las inscripciones para MUNSEC {año} se encuentran cerradas. Síguenos en Instagram @munsec.chile para conocer las fechas de la próxima edición.",
@@ -19,7 +19,7 @@ export const CONFIG_INSCRIPCION = {
   
   // Información del evento
   evento: {
-    nombre: "MUNSEC 2025",
+    nombre: "MUNSEC 2026",
     fecha: "15, 16 y 17 de agosto",
     lugar: "Santiago, Chile",
     direccion: "Centro de Extensión UC, Av. Libertador Bernardo O'Higgins 390"

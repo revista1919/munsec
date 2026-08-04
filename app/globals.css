@@ -6,11 +6,14 @@
 @tailwind utilities;
 
 :root {
-  --un-blue: #4A90E2;
-  --un-navy: #1E3A5F;
-  --un-light: #E6F0FA;
-  --off-white: #F9FAFB;
-  --slate-soft: #6B7280;
+  /* Paleta Oficial MUNSEC - Adaptada al estándar ONU moderno */
+  --un-blue: #009EDB;
+  --un-blue-hover: #0072CE;
+  --un-blue-light: rgba(0, 158, 219, 0.1);
+  --un-navy: #0F172A; /* Slate 900 para contrastes institucionales fuertes */
+  --un-light: #F8FAFC; /* Slate 50 para fondos amigables y limpios */
+  --off-white: #FFFFFF;
+  --slate-soft: #64748B;
 }
 
 @layer base {
@@ -20,50 +23,112 @@
     box-sizing: border-box;
   }
 
+  html {
+    scroll-behavior: smooth; /* Navegación fluida */
+  }
+
   body {
     font-family: 'Inter', sans-serif;
-    background-color: var(--off-white);
-    color: #1F2937;
+    background-color: var(--un-light);
+    color: var(--un-navy);
     line-height: 1.6;
+    /* Renderizado de tipografía premium */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Personalización de la selección de texto (Detalle premium) */
+  ::selection {
+    background-color: var(--un-blue-light);
+    color: var(--un-blue-hover);
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Cormorant Garamond', serif;
     font-weight: 600;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
+  }
+
+  /* Scrollbar Institucional y Limpio */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #CBD5E1;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #94A3B8;
   }
 }
 
 @layer components {
+  /* Enlaces de navegación con micro-interacción moderna */
   .nav-link {
-    @apply text-sm uppercase tracking-[0.15em] text-gray-700 hover:text-[#4A90E2] transition-all duration-300 font-medium;
+    @apply text-xs uppercase tracking-[0.15em] text-slate-600 font-bold hover:text-[#009EDB] transition-colors duration-300 relative;
+  }
+  
+  /* Línea animada inferior para los enlaces de navegación */
+  .nav-link::after {
+    content: '';
+    @apply absolute -bottom-1 left-0 w-0 h-[2px] bg-[#009EDB] transition-all duration-300;
+  }
+  .nav-link:hover::after {
+    @apply w-full;
   }
 
+  /* Botones primarios - Ahora más táctiles y con sombras elegantes */
   .btn-primary {
-    @apply bg-[#4A90E2] text-white px-6 py-3 text-sm uppercase tracking-[0.15em] font-medium 
-           hover:bg-[#1E3A5F] transition-all duration-500 relative overflow-hidden;
+    @apply bg-[#009EDB] text-white px-8 py-3.5 text-sm font-semibold rounded-xl
+           hover:bg-[#0072CE] transition-all duration-300 
+           shadow-[0_4px_14px_0_rgba(0,158,219,0.39)] 
+           hover:shadow-[0_6px_20px_rgba(0,158,219,0.23)]
+           active:scale-[0.98] flex items-center justify-center gap-2;
   }
 
+  /* Botones secundarios/outline */
   .btn-outline {
-    @apply border border-[#1E3A5F] text-[#1E3A5F] px-6 py-3 text-sm uppercase tracking-[0.15em] font-medium 
-           hover:bg-[#1E3A5F] hover:text-white transition-all duration-500;
+    @apply border-2 border-slate-200 text-slate-700 px-8 py-3.5 text-sm font-semibold rounded-xl
+           hover:border-slate-300 hover:bg-slate-50 transition-all duration-300
+           active:scale-[0.98] flex items-center justify-center gap-2;
   }
 
+  /* Botón formato Institucional Oscuro */
+  .btn-navy {
+    @apply bg-slate-900 text-white px-8 py-3.5 text-sm font-semibold rounded-xl
+           hover:bg-slate-800 transition-all duration-300 shadow-xl shadow-slate-900/10
+           active:scale-[0.98];
+  }
+
+  /* Contenedores */
   .container-custom {
-    @apply max-w-7xl mx-auto px-6 md:px-12;
-  }
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-  .section-title {
-    @apply font-serif text-4xl md:text-5xl text-[#1E3A5F] mb-6;
+    @apply max-w-6xl mx-auto px-6 md:px-12;
   }
 
+  /* Imágenes responsivas por defecto */
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Títulos de sección */
+  .section-title {
+    @apply font-serif text-3xl md:text-5xl text-slate-900 mb-4 leading-tight;
+  }
+
+  /* Subtítulos (Estilo "Nota Diplomática") */
   .section-subtitle {
-    @apply text-[#4A90E2] text-sm uppercase tracking-[0.3em] mb-4 block;
+    @apply text-[#009EDB] text-[10px] md:text-xs font-bold uppercase tracking-[0.25em] mb-3 block;
+  }
+  
+  /* Tarjetas/Paneles de contenido */
+  .card-oficial {
+    @apply bg-white rounded-2xl border border-slate-200 shadow-sm p-6 md:p-8 transition-shadow duration-300 hover:shadow-md;
   }
 }

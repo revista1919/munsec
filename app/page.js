@@ -20,11 +20,13 @@ const staggerContainer = {
 };
 
 export default function Home() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <div className="overflow-hidden bg-[#F8FAFC]">
       {/* Hero Section - Estilo Documental */}
       <section className="relative min-h-screen flex items-center justify-center bg-[#0F172A]">
-        {/* Background Image con tratamiento de imagen "Documental" - CORREGIDO con ruta relativa */}
+        {/* Background Image con tratamiento de imagen "Documental" */}
         <div className="absolute inset-0 z-0">
           <Image
             src="./munsec.jpg" 
@@ -37,23 +39,22 @@ export default function Home() {
         </div>
 
         {/* Logo centrado */}
-{/* Logo centrado y más grande */}
-{/* Logo centrado con flexbox */}
-<motion.div 
-  initial={{ opacity: 0, y: -20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 1, delay: 0.3 }}
-  className="absolute top-6 left-0 right-0 flex justify-center z-20"
->
-  <div className="relative w-16 h-16 md:w-20 md:h-20">
-    <Image
-      src="./munsec.png"
-      alt="MUNSEC Logo"
-      fill
-      className="object-contain opacity-80 hover:opacity-100 transition-opacity duration-300"
-    />
-  </div>
-</motion.div>
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.3 }}
+          className="absolute top-6 left-0 right-0 flex justify-center z-20"
+        >
+          <div className="relative w-16 h-16 md:w-20 md:h-20">
+            <Image
+              src="./munsec.png"
+              alt="MUNSEC Logo"
+              fill
+              className="object-contain opacity-80 hover:opacity-100 transition-opacity duration-300"
+            />
+          </div>
+        </motion.div>
+
         {/* Content - Adaptado para móvil */}
         <motion.div 
           initial="initial"
@@ -63,7 +64,7 @@ export default function Home() {
         >
           <motion.span 
             variants={fadeIn}
-            className="text-[#4A90E2] text-[10px] md:text-xs uppercase tracking-[0.5em] mb-6 md:mb-8 block font-semibold"
+            className="section-subtitle text-center mb-6 md:mb-8 block"
           >
             Modelo de Naciones Unidas para Secundarios
           </motion.span>
@@ -91,21 +92,19 @@ export default function Home() {
             variants={fadeIn}
             className="flex flex-col md:flex-row gap-4 md:gap-6 justify-center items-center px-4 md:px-0"
           >
-            <Link href="/about" className="text-white text-xs uppercase tracking-[0.2em] border-b border-[#4A90E2] pb-1 hover:text-[#4A90E2] transition-colors">
+            <Link href="/about" className="text-white text-xs uppercase tracking-[0.2em] border-b border-[#009EDB] pb-1 hover:text-[#009EDB] transition-colors">
               Conoce más
             </Link>
-            <Link href="/register" className="bg-[#4A90E2] text-white px-8 py-3 text-xs uppercase tracking-[0.2em] font-bold hover:bg-blue-600 transition-all w-full md:w-auto text-center">
-              Inscripciones 2025
+            <Link href="/register" className="btn-primary text-xs uppercase tracking-[0.2em] w-full md:w-auto text-center">
+              Inscripciones {currentYear}
             </Link>
           </motion.div>
         </motion.div>
-
-      
       </section>
 
-      {/* About Section - Adaptado para móvil */}
+      {/* About Section */}
       <section className="py-20 md:py-32 bg-white">
-        <div className="container-custom px-6 md:px-4 max-w-7xl mx-auto">
+        <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-12 md:gap-24 items-start">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -114,9 +113,9 @@ export default function Home() {
               transition={{ duration: 1 }}
               className="order-2 lg:order-1"
             >
-              <span className="text-[#4A90E2] text-[10px] uppercase tracking-[0.4em] font-bold">Quiénes somos</span>
-              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-slate-900 mt-4 mb-6 md:mb-8 leading-snug">
-                Un espacio para estudiantes <span className="text-[#4A90E2]">secundarios</span>
+              <span className="section-subtitle">Quiénes somos</span>
+              <h2 className="section-title">
+                Un espacio para estudiantes <span className="text-[#009EDB]">secundarios</span>
               </h2>
               <div className="space-y-4 md:space-y-6 text-slate-600 text-sm md:text-base leading-relaxed">
                 <p>
@@ -127,7 +126,7 @@ export default function Home() {
                 </p>
               </div>
               <div className="mt-8">
-                <Link href="/about" className="bg-slate-900 text-white px-8 py-3 text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-slate-800 transition-all inline-block w-full sm:w-auto text-center">
+                <Link href="/about" className="btn-navy text-[10px] uppercase tracking-[0.2em] inline-block w-full sm:w-auto text-center">
                   Leer nuestra historia
                 </Link>
               </div>
@@ -149,11 +148,11 @@ export default function Home() {
                 />
               </div>
               <div className="mt-6 flex items-center gap-4">
-                <div className="w-10 h-[1px] bg-[#4A90E2]"></div>
+                <div className="w-10 h-[1px] bg-[#009EDB]"></div>
                 <p className="text-[10px] uppercase tracking-widest text-slate-400"></p>
               </div>
               {/* Testimonio - Solo visible en desktop */}
-              <div className="absolute -bottom-6 -right-6 bg-[#4A90E2] p-8 max-w-xs hidden lg:block">
+              <div className="absolute -bottom-6 -right-6 bg-[#009EDB] p-8 max-w-xs hidden lg:block">
                 <p className="text-white font-serif text-xl italic">
                   "Lo mejor de MUNSEC es que te das cuenta que puedes hablar y que te escuchen, aunque seas de un liceo público."
                 </p>
@@ -163,17 +162,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Áreas de Trabajo - Adaptado para móvil */}
+      {/* Áreas de Trabajo */}
       <section className="py-20 md:py-32 bg-white">
-        <div className="container-custom px-6 md:px-4 max-w-7xl mx-auto">
+        <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="mb-12 md:mb-20"
           >
-            <span className="text-[#4A90E2] text-[10px] uppercase tracking-[0.4em] font-bold">Qué ofrecemos</span>
-            <h2 className="font-serif text-3xl md:text-4xl text-slate-900 mt-4 italic">Ejes de participación</h2>
+            <span className="section-subtitle">Qué ofrecemos</span>
+            <h2 className="section-title italic">Ejes de participación</h2>
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-4 md:gap-[1px] bg-transparent md:bg-slate-200 border-0 md:border md:border-slate-200">
@@ -198,7 +197,7 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: index * 0.1 }}
                 whileHover={{ backgroundColor: '#F8FAFC' }}
-                className="bg-white p-8 md:p-12 transition-colors border border-slate-200 md:border-0 mb-4 md:mb-0"
+                className="card-oficial mb-4 md:mb-0"
               >
                 <span className="text-slate-300 font-serif text-xl mb-4 md:mb-6 block">0{index + 1}</span>
                 <h3 className="font-serif text-lg md:text-xl text-slate-900 mb-3 md:mb-4">{item.title}</h3>
@@ -209,29 +208,29 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Final - Adaptado para móvil */}
+      {/* CTA Final */}
       <section className="py-20 md:py-32 bg-white">
-        <div className="container-custom px-6 md:px-4 max-w-4xl mx-auto">
+        <div className="container-custom max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <div className="border border-slate-900 p-8 md:p-20">
-              <span className="text-[#4A90E2] text-[10px] uppercase tracking-[0.4em] font-bold mb-4 md:mb-6 block">
+            <div className="card-oficial border-slate-900 p-8 md:p-20 text-center">
+              <span className="section-subtitle text-center mb-4 md:mb-6 block">
                 ¿Te interesa?
               </span>
-              <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-slate-900 mb-6 md:mb-8">
+              <h2 className="section-title mb-6 md:mb-8">
                 Súmate a la próxima edición
               </h2>
               <p className="text-slate-600 mb-8 md:mb-12 max-w-xl mx-auto text-sm leading-relaxed px-4 md:px-0">
                 Revisa si las inscripciones para MUNSEC están abiertas. Si tienes entre 14 y 18 años y quieres vivir la experiencia, este es tu momento.
               </p>
               <div className="flex flex-col md:flex-row gap-4 md:gap-8 justify-center items-stretch md:items-center px-4 md:px-0">
-                <Link href="/register" className="bg-slate-900 text-white px-8 md:px-12 py-4 text-[10px] uppercase tracking-[0.3em] font-bold hover:bg-slate-800 transition-all w-full md:w-auto text-center">
+                <Link href="/register" className="btn-navy text-[10px] uppercase tracking-[0.3em] w-full md:w-auto text-center">
                   Inscribirme ahora
                 </Link>
-                <Link href="/contact" className="text-slate-900 text-[10px] uppercase tracking-[0.3em] font-bold border-b border-slate-900 pb-1 hover:text-slate-500 hover:border-slate-500 transition-all text-center md:text-left">
+                <Link href="/contact" className="btn-outline text-[10px] uppercase tracking-[0.3em] text-center md:text-left">
                   Tener más info
                 </Link>
               </div>

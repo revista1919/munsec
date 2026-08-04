@@ -5,7 +5,7 @@ import { verificarEstadoInscripciones, CONFIG_INSCRIPCION } from '@/config/inscr
 
 export async function POST(request) {
   try {
-    // 🔒 VERIFICAR SI LAS INSCRIPCIONES ESTÁN ABIERTAS
+
     const estado = verificarEstadoInscripciones();
     if (!estado.abiertas) {
       return NextResponse.json(

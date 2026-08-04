@@ -22,14 +22,14 @@ export default function FormularioInscripcion() {
   const [error, setError] = useState('');
   const [guardando, setGuardando] = useState(false);
   
-  // 🔥 NUEVO: Estado para el modal de términos legales
+  // Estado para el modal de términos legales
   const [mostrarModalLegal, setMostrarModalLegal] = useState(false);
   
-  // 🔥 NUEVO: Estados para becas
+  // Estados para becas
   const [tieneBeca, setTieneBeca] = useState(false);
   const [codigoBeca, setCodigoBeca] = useState('');
-  const [becaTotal, setBecaTotal] = useState(false); // true = beca total, false = solo descuento
-  const [comprobanteBeca, setComprobanteBeca] = useState(null); // base64
+  const [becaTotal, setBecaTotal] = useState(false); 
+  const [comprobanteBeca, setComprobanteBeca] = useState(null); 
   const [comprobanteBecaNombre, setComprobanteBecaNombre] = useState(null);
 
   // Datos del formulario
@@ -54,27 +54,15 @@ export default function FormularioInscripcion() {
       {
         id: Date.now(),
         delegado_1: {
-          nombre: '',
-          rut: '',
-          edad: '',
-          curso: '',
-          pais_preferencia_1: '',
-          pais_preferencia_2: '',
-          pais_preferencia_3: '',
+          nombre: '', rut: '', edad: '', curso: '',
+          pais_preferencia_1: '', pais_preferencia_2: '', pais_preferencia_3: '',
         },
         delegado_2: {
-          nombre: '',
-          rut: '',
-          edad: '',
-          curso: '',
-          pais_preferencia_1: '',
-          pais_preferencia_2: '',
-          pais_preferencia_3: '',
+          nombre: '', rut: '', edad: '', curso: '',
+          pais_preferencia_1: '', pais_preferencia_2: '', pais_preferencia_3: '',
         },
         tiene_pareja: false,
-        pais_preferencia_1: '',
-        pais_preferencia_2: '',
-        pais_preferencia_3: '',
+        pais_preferencia_1: '', pais_preferencia_2: '', pais_preferencia_3: '',
       },
     ],
 
@@ -99,28 +87,10 @@ export default function FormularioInscripcion() {
           datos.delegaciones = [
             {
               id: Date.now(),
-              delegado_1: {
-                nombre: '',
-                rut: '',
-                edad: '',
-                curso: '',
-                pais_preferencia_1: '',
-                pais_preferencia_2: '',
-                pais_preferencia_3: '',
-              },
-              delegado_2: {
-                nombre: '',
-                rut: '',
-                edad: '',
-                curso: '',
-                pais_preferencia_1: '',
-                pais_preferencia_2: '',
-                pais_preferencia_3: '',
-              },
+              delegado_1: { nombre: '', rut: '', edad: '', curso: '', pais_preferencia_1: '', pais_preferencia_2: '', pais_preferencia_3: '' },
+              delegado_2: { nombre: '', rut: '', edad: '', curso: '', pais_preferencia_1: '', pais_preferencia_2: '', pais_preferencia_3: '' },
               tiene_pareja: false,
-              pais_preferencia_1: '',
-              pais_preferencia_2: '',
-              pais_preferencia_3: '',
+              pais_preferencia_1: '', pais_preferencia_2: '', pais_preferencia_3: '',
             },
           ];
           datos.cantidad_delegaciones = 1;
@@ -150,11 +120,7 @@ export default function FormularioInscripcion() {
     const timer = setTimeout(() => {
       localStorage.setItem('munsec_inscripcion', JSON.stringify(formData));
       localStorage.setItem('munsec_paso', paso.toString());
-      localStorage.setItem('munsec_beca', JSON.stringify({
-  tieneBeca,
-  codigoBeca,
-  becaTotal
-}));
+      localStorage.setItem('munsec_beca', JSON.stringify({ tieneBeca, codigoBeca, becaTotal }));
       setGuardando(true);
       setTimeout(() => setGuardando(false), 1000);
     }, 1000);
@@ -164,30 +130,21 @@ export default function FormularioInscripcion() {
   // Manejadores
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
   };
 
   const handleDelegadoChange = (delegacionIndex, delegadoKey, field, value) => {
     const nuevasDelegaciones = [...formData.delegaciones];
     nuevasDelegaciones[delegacionIndex] = {
       ...nuevasDelegaciones[delegacionIndex],
-      [delegadoKey]: {
-        ...nuevasDelegaciones[delegacionIndex][delegadoKey],
-        [field]: value,
-      },
+      [delegadoKey]: { ...nuevasDelegaciones[delegacionIndex][delegadoKey], [field]: value },
     };
     setFormData((prev) => ({ ...prev, delegaciones: nuevasDelegaciones }));
   };
 
   const handlePreferenciaPaisDelegacion = (delegacionIndex, campo, valor) => {
     const nuevasDelegaciones = [...formData.delegaciones];
-    nuevasDelegaciones[delegacionIndex] = {
-      ...nuevasDelegaciones[delegacionIndex],
-      [campo]: valor,
-    };
+    nuevasDelegaciones[delegacionIndex] = { ...nuevasDelegaciones[delegacionIndex], [campo]: valor };
     setFormData((prev) => ({ ...prev, delegaciones: nuevasDelegaciones }));
   };
 
@@ -197,16 +154,10 @@ export default function FormularioInscripcion() {
 
     if (!nuevasDelegaciones[delegacionIndex].tiene_pareja) {
       nuevasDelegaciones[delegacionIndex].delegado_2 = {
-        nombre: '',
-        rut: '',
-        edad: '',
-        curso: '',
-        pais_preferencia_1: '',
-        pais_preferencia_2: '',
-        pais_preferencia_3: '',
+        nombre: '', rut: '', edad: '', curso: '',
+        pais_preferencia_1: '', pais_preferencia_2: '', pais_preferencia_3: '',
       };
     }
-
     setFormData((prev) => ({ ...prev, delegaciones: nuevasDelegaciones }));
   };
 
@@ -218,72 +169,40 @@ export default function FormularioInscripcion() {
       while (delegacionesActuales.length < num) {
         delegacionesActuales.push({
           id: Date.now() + delegacionesActuales.length,
-          delegado_1: {
-            nombre: '',
-            rut: '',
-            edad: '',
-            curso: '',
-            pais_preferencia_1: '',
-            pais_preferencia_2: '',
-            pais_preferencia_3: '',
-          },
-          delegado_2: {
-            nombre: '',
-            rut: '',
-            edad: '',
-            curso: '',
-            pais_preferencia_1: '',
-            pais_preferencia_2: '',
-            pais_preferencia_3: '',
-          },
+          delegado_1: { nombre: '', rut: '', edad: '', curso: '', pais_preferencia_1: '', pais_preferencia_2: '', pais_preferencia_3: '' },
+          delegado_2: { nombre: '', rut: '', edad: '', curso: '', pais_preferencia_1: '', pais_preferencia_2: '', pais_preferencia_3: '' },
           tiene_pareja: false,
-          pais_preferencia_1: '',
-          pais_preferencia_2: '',
-          pais_preferencia_3: '',
+          pais_preferencia_1: '', pais_preferencia_2: '', pais_preferencia_3: '',
         });
       }
     } else {
       delegacionesActuales.splice(num);
     }
-
-    setFormData((prev) => ({
-      ...prev,
-      cantidad_delegaciones: num,
-      delegaciones: delegacionesActuales,
-    }));
+    setFormData((prev) => ({ ...prev, cantidad_delegaciones: num, delegaciones: delegacionesActuales }));
   };
 
   const handleComprobante = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-
     if (file.size > 2 * 1024 * 1024) {
       setError('El archivo seleccionado excede el límite máximo de 2 MB.');
       return;
     }
-
     const reader = new FileReader();
     reader.onload = (event) => {
-      setFormData((prev) => ({
-        ...prev,
-        comprobante_base64: event.target.result,
-        comprobante_nombre: file.name,
-      }));
+      setFormData((prev) => ({ ...prev, comprobante_base64: event.target.result, comprobante_nombre: file.name }));
       setError('');
     };
     reader.readAsDataURL(file);
   };
 
-  // 🔥 NUEVO: Manejar comprobante de beca
   const handleComprobanteBeca = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-
     if (file.size > 2 * 1024 * 1024) {
       setError('El archivo de beca excede el límite máximo de 2 MB.');
       return;
     }
-
     const reader = new FileReader();
     reader.onload = (event) => {
       setComprobanteBeca(event.target.result);
@@ -293,30 +212,13 @@ export default function FormularioInscripcion() {
     reader.readAsDataURL(file);
   };
 
-// 🔥 ULTRA FLEXIBLE: Validador mega permisivo, acepta casi todo
-const validarRutSimple = (documento) => {
-  // Si está vacío, lo aceptamos sin problema
-  if (!documento || documento.trim() === '') return true;
-  
-  // Limpiar: quitar puntos, guiones, espacios, barras, todo
-  const docLimpio = documento
-    .replace(/\./g, '')
-    .replace(/-/g, '')
-    .replace(/\s/g, '')
-    .replace(/\//g, '')
-    .trim();
-  
-  // Si después de limpiar no queda nada, ok
-  if (docLimpio === '') return true;
-  
-  // Aceptamos cualquier cosa con 5 o más caracteres
-  // Esto cubre RUT, DNI, pasaporte, etc.
-  if (docLimpio.length >= 5) return true;
-  
-  // Solo rechazamos si es demasiado corto (probable error)
-  return false;
-};
-
+  const validarRutSimple = (documento) => {
+    if (!documento || documento.trim() === '') return true;
+    const docLimpio = documento.replace(/[\.\-\s\/]/g, '').trim();
+    if (docLimpio === '') return true;
+    if (docLimpio.length >= 5) return true;
+    return false;
+  };
 
   const validarPaso = (num) => {
     switch (num) {
@@ -327,80 +229,49 @@ const validarRutSimple = (documento) => {
         break;
       case 2:
         if (!formData.profesor_nombre || !formData.profesor_rut || !formData.profesor_email || !formData.profesor_telefono) {
-          throw new Error('Debe ingresar la información requerida del docente responsable.');
+          throw new Error('Debe ingresar la información requerida del profesor responsable.');
         }
         if (!formData.profesor_email.includes('@')) {
-          throw new Error('El correo electrónico indicado para el docente no es válido.');
+          throw new Error('El correo electrónico indicado para el profesor no es válido.');
         }
-        // Validación de RUT más relajada
         if (!validarRutSimple(formData.profesor_rut)) {
-          throw new Error('El número de documento de identidad ingresado para el docente no parece ser válido. Por favor verifica.');
+          throw new Error('El número de documento de identidad ingresado para el profesor no parece válido. Por favor verifique.');
         }
         break;
       case 3:
-        // 🔥 Leer mínimos y máximos desde config
         const minDeleg = CONFIG_INSCRIPCION.requisitos.delegacion.minimo;
         const maxDeleg = CONFIG_INSCRIPCION.requisitos.delegacion.maximo;
-        
         if (formData.cantidad_delegaciones < minDeleg || formData.cantidad_delegaciones > maxDeleg) {
           throw new Error(`La cantidad de delegaciones debe estar entre ${minDeleg} y ${maxDeleg}.`);
         }
-        
         for (let i = 0; i < formData.delegaciones.length; i++) {
           const del = formData.delegaciones[i];
           const d1 = del.delegado_1;
-
           if (!d1.nombre || !d1.rut || !d1.edad || !d1.curso) {
             throw new Error(`Complete todos los campos del Delegado 1 en la Delegación ${i + 1}.`);
           }
-          if (!validarRutSimple(d1.rut)) {
-            throw new Error(`El documento de identidad del Delegado 1 en la Delegación ${i + 1} no parece válido.`);
-          }
-
+          if (!validarRutSimple(d1.rut)) throw new Error(`El documento del Delegado 1 en la Delegación ${i + 1} no parece válido.`);
           if (del.tiene_pareja) {
             const d2 = del.delegado_2;
-            if (!d2.nombre || !d2.rut || !d2.edad || !d2.curso) {
-              throw new Error(`Complete todos los campos del Delegado 2 en la Delegación ${i + 1}.`);
-            }
-            if (!validarRutSimple(d2.rut)) {
-              throw new Error(`El documento de identidad del Delegado 2 en la Delegación ${i + 1} no parece válido.`);
-            }
-            if (d1.rut === d2.rut) {
-              throw new Error(`Los representantes de la Delegación ${i + 1} no pueden tener el mismo documento de identificación.`);
-            }
+            if (!d2.nombre || !d2.rut || !d2.edad || !d2.curso) throw new Error(`Complete todos los campos del Delegado 2 en la Delegación ${i + 1}.`);
+            if (!validarRutSimple(d2.rut)) throw new Error(`El documento del Delegado 2 en la Delegación ${i + 1} no parece válido.`);
+            if (d1.rut === d2.rut) throw new Error(`Los representantes de la Delegación ${i + 1} no pueden tener el mismo documento.`);
           }
-          
           if (!del.pais_preferencia_1 || !del.pais_preferencia_2 || !del.pais_preferencia_3) {
             throw new Error(`Debe seleccionar las 3 preferencias de país para la Delegación ${i + 1}.`);
           }
         }
         break;
       case 4:
-        // Validación de pago según situación
         if (tieneBeca) {
-  if (!codigoBeca || codigoBeca.trim() === '') {
-    throw new Error('Si tienes beca, debes ingresar el código que te fue entregado.');
-  }
-  if (becaTotal) {
-            // Beca total: solo necesita comprobante de correo
-            if (!comprobanteBeca) {
-              throw new Error('Para beca total, debe subir una imagen del correo de confirmación de su beca.');
-            }
-          } else {
-            // Descuento: necesita comprobante de pago con descuento
-            if (!formData.comprobante_base64) {
-              throw new Error('Debe adjuntar el comprobante de pago con el descuento aplicado.');
-            }
-          }
+          if (!codigoBeca || codigoBeca.trim() === '') throw new Error('Si tiene beca, debe ingresar el código asignado.');
+          if (becaTotal && !comprobanteBeca) throw new Error('Para beca total, debe adjuntar el correo de confirmación oficial.');
+          if (!becaTotal && !formData.comprobante_base64) throw new Error('Debe adjuntar el comprobante de pago con el descuento aplicado.');
         } else {
-          // Sin beca: pago normal
-          if (!formData.comprobante_base64) {
-            throw new Error('Debe adjuntar el comprobante oficial de transferencia bancaria.');
-          }
+          if (!formData.comprobante_base64) throw new Error('Debe adjuntar el comprobante oficial de transferencia bancaria.');
         }
-        
         if (!formData.acepta_terminos || !formData.acepta_reglamento || !formData.acepta_datos) {
-          throw new Error('Para concluir la inscripción, debe aceptar todos los acuerdos y términos requeridos.');
+          throw new Error('Para finalizar la inscripción, debe aceptar todos los acuerdos y normativas requeridas.');
         }
         break;
     }
@@ -414,6 +285,7 @@ const validarRutSimple = (documento) => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (err) {
       setError(err.message);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -423,18 +295,12 @@ const validarRutSimple = (documento) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // 🔥 ACTUALIZADO: Calcular monto con diferenciación por país y becas
   const calcularMonto = () => {
     const tipo = formData.tipo_establecimiento;
     if (!tipo) return { total: 0, moneda: 'CLP', descripcion: '' };
     
-    // Determinar si es extranjero
     const esExtranjero = formData.pais_origen !== 'Chile';
-    
-    // Obtener valores según tipo y país
-    let precioPorPersona;
-    let moneda;
-    let descripcion;
+    let precioPorPersona, moneda, descripcion;
     
     if (esExtranjero) {
       const valoresExt = CONFIG_INSCRIPCION.pago.valores_extranjero;
@@ -448,52 +314,37 @@ const validarRutSimple = (documento) => {
       descripcion = tipo === 'publico' ? valoresNac.publico.descripcion : valoresNac.privado.descripcion;
     }
     
-    // Calcular total base
     let total = 0;
     formData.delegaciones.forEach((del) => {
       total += precioPorPersona;
       if (del.tiene_pareja) total += precioPorPersona;
     });
     
-    // Aplicar descuento de beca si corresponde
     if (tieneBeca && !becaTotal) {
       const descuento = CONFIG_INSCRIPCION.pago.becas.descuento_porcentaje;
       total = total - (total * descuento / 100);
-      descripcion += ` (con ${descuento}% de descuento por beca)`;
+      descripcion += ` (Descuento institucional del ${descuento}%)`;
     } else if (tieneBeca && becaTotal) {
       total = 0;
-      descripcion = 'Beca total - Sin costo';
+      descripcion = 'Cobertura Total - Beca Institucional';
     }
     
     return { total, moneda, descripcion };
   };
 
   const contarDelegados = () => {
-    let total = 0;
-    formData.delegaciones.forEach((del) => {
-      total += 1;
-      if (del.tiene_pareja) total += 1;
-    });
-    return total;
+    return formData.delegaciones.reduce((acc, del) => acc + (del.tiene_pareja ? 2 : 1), 0);
   };
 
   const enviarFormulario = async () => {
     try {
       validarPaso(4);
       setEnviando(true);
-      
-      // Preparar datos completos incluyendo beca
       const datosCompletos = {
-  ...formData,
-  beca: {
-    tieneBeca,
-    codigoBeca,
-    becaTotal,
-    comprobanteBeca,
-    comprobanteBecaNombre
-  },
-  monto: calcularMonto()
-};
+        ...formData,
+        beca: { tieneBeca, codigoBeca, becaTotal, comprobanteBeca, comprobanteBecaNombre },
+        monto: calcularMonto()
+      };
 
       const response = await fetch('/api/inscripciones', {
         method: 'POST',
@@ -503,7 +354,7 @@ const validarRutSimple = (documento) => {
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.error || 'Error al enviar la solicitud al servidor.');
+        throw new Error(data.error || 'Error de conexión con el servidor central.');
       }
 
       setEnviado(true);
@@ -517,62 +368,72 @@ const validarRutSimple = (documento) => {
     }
   };
 
-  // Obtener monto calculado
   const montoCalculado = calcularMonto();
 
-  // --------------------------------------------------------------------------
-  // MODAL DE TÉRMINOS LEGALES
-  // --------------------------------------------------------------------------
+  // Textos dinámicos para la guía lateral
+  const textosGuia = {
+    1: { titulo: "Identificación de la Institución", texto: "El primer paso para participar comienza por su establecimiento. Complete los datos de la institución que representará a sus estudiantes." },
+    2: { titulo: "Profesor Responsable", texto: "La comunicación directa es fundamental. Indique quién estará a cargo de guiar y supervisar a los participantes durante todo el proceso." },
+    3: { titulo: "Registro de Delegaciones", texto: "Configure su equipo. Asigne los representantes y las preferencias de países. Cada estudiante es importante en el desarrollo del evento." },
+    4: { titulo: "Confirmación y Pago", texto: "El último paso para completar su registro. Adjunte el comprobante de pago o la documentación de beca correspondiente." }
+  };
+
+  // Componente Input Reutilizable
+  const InputEditorial = ({ label, type = "text", ...props }) => (
+    <div className="relative group">
+      <label className="block text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-1">{label}</label>
+      <input
+        type={type}
+        className="w-full bg-slate-50/50 border-0 border-b-2 border-slate-200 px-3 py-2.5 text-sm font-medium text-slate-900 focus:bg-white focus:border-[#003366] focus:ring-0 transition-all outline-none"
+        {...props}
+      />
+    </div>
+  );
+
+  const SelectEditorial = ({ label, children, ...props }) => (
+    <div className="relative group">
+      <label className="block text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-1">{label}</label>
+      <select
+        className="w-full bg-slate-50/50 border-0 border-b-2 border-slate-200 px-3 py-2.5 text-sm font-medium text-slate-900 focus:bg-white focus:border-[#003366] focus:ring-0 transition-all outline-none appearance-none cursor-pointer"
+        {...props}
+      >
+        {children}
+      </select>
+    </div>
+  );
+
+
+  // MODAL LEGAL
   const ModalTerminosLegales = () => (
     <AnimatePresence>
       {mostrarModalLegal && (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm"
           onClick={() => setMostrarModalLegal(false)}
         >
           <motion.div
-            initial={{ scale: 0.95, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.95, opacity: 0 }}
-            className="bg-white max-w-2xl w-full max-h-[80vh] overflow-y-auto border border-slate-300 shadow-2xl"
+            initial={{ scale: 0.98, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.98, opacity: 0, y: 20 }}
+            className="bg-white max-w-2xl w-full max-h-[85vh] overflow-y-auto rounded-none shadow-2xl border-t-4 border-[#003366]"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between">
-              <h2 className="text-lg font-serif font-bold text-slate-900">
-                {CONFIG_INSCRIPCION.legal.tratamiento_datos.titulo}
-              </h2>
-              <button
-                onClick={() => setMostrarModalLegal(false)}
-                className="text-slate-400 hover:text-slate-600 transition-colors"
-              >
+            <div className="sticky top-0 bg-white/95 backdrop-blur border-b border-slate-100 px-8 py-6 flex items-center justify-between">
+              <h2 className="text-xl font-serif text-[#003366]">{CONFIG_INSCRIPCION.legal.tratamiento_datos.titulo}</h2>
+              <button onClick={() => setMostrarModalLegal(false)} className="text-slate-400 hover:text-slate-900 transition-colors">
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
-            
-            <div className="p-6 text-sm text-slate-700 leading-relaxed whitespace-pre-line font-serif">
+            <div className="p-8 text-sm text-slate-600 leading-relaxed whitespace-pre-line font-serif">
               {CONFIG_INSCRIPCION.legal.tratamiento_datos.texto_completo}
             </div>
-            
-            <div className="sticky bottom-0 bg-slate-50 border-t border-slate-200 px-6 py-4 flex gap-3">
-              <button
-                onClick={() => setMostrarModalLegal(false)}
-                className="flex-1 px-4 py-2 bg-white border border-slate-300 text-slate-700 text-sm font-medium hover:bg-slate-100 transition-colors"
-              >
-                Cerrar
+            <div className="sticky bottom-0 bg-slate-50 border-t border-slate-200 px-8 py-5 flex gap-4">
+              <button onClick={() => setMostrarModalLegal(false)} className="flex-1 px-4 py-3 bg-white border border-slate-300 text-slate-700 text-xs font-bold uppercase tracking-wider hover:bg-slate-100 transition-colors">
+                Cerrar Documento
               </button>
-              <button
-                onClick={() => {
-                  setFormData(prev => ({ ...prev, acepta_datos: true }));
-                  setMostrarModalLegal(false);
-                }}
-                className="flex-1 px-4 py-2 bg-[#009EDB] text-white text-sm font-medium hover:bg-[#0072CE] transition-colors"
-              >
-                Aceptar y Continuar
+              <button onClick={() => { setFormData(prev => ({ ...prev, acepta_datos: true })); setMostrarModalLegal(false); }} className="flex-1 px-4 py-3 bg-[#003366] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#002244] transition-colors">
+                Aceptar y Confirmar
               </button>
             </div>
           </motion.div>
@@ -581,1199 +442,534 @@ const validarRutSimple = (documento) => {
     </AnimatePresence>
   );
 
-  // --------------------------------------------------------------------------
-  // PANTALLA DE ÉXITO
-  // --------------------------------------------------------------------------
+  // PANTALLA DE CONFIRMACIÓN
   if (enviado) {
     return (
-      <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4 md:p-8 font-sans">
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="max-w-xl w-full bg-white border border-slate-300 shadow-sm p-8 md:p-12 text-center"
-        >
-          <div className="w-16 h-16 bg-[#009EDB]/10 text-[#009EDB] flex items-center justify-center rounded-full mx-auto mb-6">
-            <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-            </svg>
+      <div className="min-h-screen bg-[#F0F4F8] flex items-center justify-center p-4 font-sans">
+        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="max-w-2xl w-full bg-white shadow-xl border border-slate-200 p-10 relative overflow-hidden">
+          {/* Marca de agua decorativa */}
+          <div className="absolute -right-20 -top-20 opacity-[0.03] pointer-events-none">
+            <svg width="300" height="300" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          
+          <div className="border-b-2 border-[#003366] pb-6 mb-8 text-center relative z-10">
+            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#418FDE]">Confirmación de Secretaría</span>
+            <h2 className="font-serif text-3xl text-[#003366] mt-2">Inscripción Exitosa</h2>
           </div>
 
-          <span className="text-xs font-semibold tracking-widest uppercase text-[#009EDB]">Registro Oficial</span>
-          <h2 className="font-serif text-3xl text-slate-900 mt-2 mb-6">Inscripción Registrada con Éxito</h2>
+          <div className="space-y-6 relative z-10">
+            <p className="text-sm text-slate-600 leading-relaxed text-justify font-serif">
+              Por la presente se certifica que la solicitud de inscripción presentada por la institución <strong>{formData.nombre_establecimiento}</strong> ha sido ingresada correctamente en los registros oficiales del Modelo de Naciones Unidas para Secundarios.
+            </p>
 
-          <div className="bg-slate-50 border border-slate-200 p-6 rounded text-left mb-8 space-y-3">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 border-b border-slate-200 pb-2">
-              Resumen de la solicitud
-            </h3>
-            <div className="space-y-2 text-sm text-slate-700">
-              <div className="flex justify-between">
-                <span className="text-slate-500">Institución:</span>
-                <span className="font-medium text-slate-900">{formData.nombre_establecimiento}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-500">Docente a cargo:</span>
-                <span className="font-medium text-slate-900">
-                  {formData.profesor_nombre} {formData.profesor_apellido}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-500">País de origen:</span>
-                <span className="font-medium text-slate-900">{formData.pais_origen}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-500">Delegaciones:</span>
-                <span className="font-medium text-slate-900">{formData.cantidad_delegaciones}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-500">Total delegados:</span>
-                <span className="font-medium text-slate-900">{contarDelegados()}</span>
-              </div>
-              {tieneBeca && (
-                <div className="flex justify-between bg-amber-50 p-2 rounded">
-                  <span className="text-amber-700">Beca aplicada:</span>
-                  <span className="font-medium text-amber-700">
-                    {becaTotal ? 'Beca Total' : `${CONFIG_INSCRIPCION.pago.becas.descuento_porcentaje}% de descuento`}
-                  </span>
+            <div className="bg-slate-50 border border-slate-200 p-6">
+              <h3 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4 pb-2 border-b border-slate-200">Resumen de la Solicitud</h3>
+              <div className="grid grid-cols-2 gap-y-4 text-sm">
+                <div className="text-slate-500">Profesor a Cargo:</div>
+                <div className="font-medium text-slate-900 text-right">{formData.profesor_nombre} {formData.profesor_apellido}</div>
+                <div className="text-slate-500">País de Origen:</div>
+                <div className="font-medium text-slate-900 text-right">{formData.pais_origen}</div>
+                <div className="text-slate-500">Total de Participantes:</div>
+                <div className="font-medium text-slate-900 text-right">{formData.cantidad_delegaciones} Delegaciones ({contarDelegados()} estudiantes)</div>
+                <div className="text-slate-500 pt-4 border-t border-slate-200">Monto Total:</div>
+                <div className="font-bold text-[#003366] text-right pt-4 border-t border-slate-200">
+                  {montoCalculado.total === 0 ? 'Beca Institucional' : `${montoCalculado.moneda === 'USD' ? 'USD $' : '$'}${montoCalculado.total.toLocaleString('es-CL')} ${montoCalculado.moneda}`}
                 </div>
-              )}
-              <div className="flex justify-between border-t border-slate-200 pt-2 mt-2">
-                <span className="text-slate-500">Monto total:</span>
-                <span className="font-bold text-[#009EDB]">
-                  {montoCalculado.total === 0 
-                    ? 'Beca completa' 
-                    : `${montoCalculado.moneda === 'USD' ? 'USD $' : '$'}${montoCalculado.total.toLocaleString('es-CL')} ${montoCalculado.moneda}`}
-                </span>
               </div>
             </div>
+
+            <p className="text-xs text-slate-500 text-center italic">
+              Se ha enviado un comprobante preliminar y los próximos pasos al correo institucional registrado ({formData.profesor_email}).
+            </p>
           </div>
 
-          <p className="text-sm text-slate-600 leading-relaxed mb-4">
-            El comité organizador verificará la documentación y emitirá la confirmación oficial. 
-            {tieneBeca && ' El equipo verificará internamente los datos de tu beca.'}
-          </p>
-          <p className="text-xs text-slate-500 mb-2">
-            La fecha de entrega de credenciales y asignaciones será comunicada próximamente a través de los canales oficiales.
-          </p>
-          <p className="text-xs text-slate-500 mb-8">
-            Se ha remitido un comprobante preliminar a <span className="font-semibold text-slate-700">{formData.profesor_email}</span>.
-          </p>
-
-          <button
-            onClick={() => window.close()}
-            className="w-full sm:w-auto bg-[#009EDB] text-white text-sm font-medium px-8 py-3.5 hover:bg-[#0072CE] transition-colors shadow-sm"
-          >
-            Finalizar y cerrar ventana
-          </button>
+          <div className="mt-10 text-center">
+            <button onClick={() => window.close()} className="bg-[#003366] text-white text-xs font-bold uppercase tracking-widest px-8 py-4 hover:bg-[#002244] transition-colors">
+              Finalizar y Cerrar
+            </button>
+          </div>
         </motion.div>
       </div>
     );
   }
 
-  // --------------------------------------------------------------------------
-  // INTERFAZ PRINCIPAL DEL FORMULARIO
-  // --------------------------------------------------------------------------
   return (
-    <div className="min-h-screen bg-[#F4F6F9] text-slate-800 font-sans pb-20">
-      {/* Modal de términos legales */}
+    <div className="min-h-screen bg-[#F4F7F9] text-slate-800 font-sans selection:bg-[#418FDE] selection:text-white">
       <ModalTerminosLegales />
       
-      {/* Barra superior estilo Naciones Unidas */}
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-xs">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#009EDB]" />
-              <span className="text-xs font-semibold tracking-widest uppercase text-slate-500">
-                Modelo de Naciones Unidas
-              </span>
+      {/* ENCABEZADO INSTITUCIONAL */}
+      <header className="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="w-10 h-10 flex items-center justify-center">
+  <img 
+    src="https://www.munsec.org/munsec.png" 
+    alt="Logo MUNSEC" 
+    className="w-full h-full object-contain"
+  />
+</div>
+            <div>
+              <h1 className="text-sm font-bold text-[#003366] tracking-wide">MUNSEC {CONFIG_INSCRIPCION.año}</h1>
+              <span className="text-[10px] uppercase tracking-widest text-slate-400 font-semibold">Portal de Inscripción Oficial</span>
             </div>
-            <h1 className="text-lg sm:text-xl font-serif font-bold text-slate-900 mt-0.5">
-              Formulario Oficial de Registro — MUNSEC {CONFIG_INSCRIPCION.año}
-            </h1>
           </div>
-
-          {/* Indicador de proceso */}
-          <div className="flex items-center sm:block justify-between border-t sm:border-0 pt-2 sm:pt-0 border-slate-100">
-            <div className="text-xs font-medium text-slate-500 sm:text-right">
-              Etapa <span className="text-slate-900 font-bold">{paso}</span> de 4
-            </div>
-            <div className="w-36 h-1.5 bg-slate-200 rounded-full sm:mt-1.5 overflow-hidden">
-              <div
-                className="h-full bg-[#009EDB] transition-all duration-300 ease-out"
-                style={{ width: `${(paso / 4) * 100}%` }}
-              />
+          
+          {/* Barra de progreso (Móvil) */}
+          <div className="lg:hidden flex items-center gap-3">
+            <span className="text-xs font-bold text-[#003366]">Paso {paso}/4</span>
+            <div className="w-16 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+              <div className="h-full bg-[#418FDE] transition-all" style={{ width: `${(paso / 4) * 100}%` }} />
             </div>
           </div>
         </div>
       </header>
 
-      {/* Indicador flotante de autoguardado */}
+      {/* NOTIFICACIÓN DE GUARDADO AUTOMÁTICO */}
       <AnimatePresence>
         {guardando && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            className="fixed bottom-6 right-6 bg-slate-900 text-white px-4 py-2.5 rounded shadow-lg text-xs tracking-wide flex items-center gap-2 z-50 border border-slate-700"
-          >
-            <span className="w-2 h-2 rounded-full bg-[#009EDB] animate-pulse" />
-            Guardando progreso de inscripción...
+          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="fixed top-20 right-6 bg-white border border-slate-200 shadow-lg px-4 py-3 flex items-center gap-3 z-50">
+            <div className="w-2 h-2 rounded-full bg-[#418FDE] animate-ping" />
+            <span className="text-xs font-medium text-slate-600">Guardando información...</span>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 pt-8">
-        {/* Banner de error */}
-        <AnimatePresence>
-          {error && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="mb-6 bg-red-50 border-l-4 border-red-600 p-4 shadow-sm flex justify-between items-start"
-            >
-              <div className="flex items-start gap-3">
-                <svg className="w-5 h-5 text-red-600 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                </svg>
-                <div>
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-red-800">Aviso de Validación</h4>
-                  <p className="text-sm text-red-700 mt-0.5">{error}</p>
-                </div>
+      <main className="max-w-7xl mx-auto px-6 py-10 lg:py-16">
+        <div className="flex flex-col lg:flex-row gap-12 items-start">
+          
+          {/* COLUMNA LATERAL: GUÍA DE AYUDA */}
+          <div className="hidden lg:block w-1/3 sticky top-32 space-y-8">
+            <div>
+              <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#418FDE] mb-2">Progreso del Registro</p>
+              <div className="h-1 w-full bg-slate-200 overflow-hidden mb-6">
+                <div className="h-full bg-[#003366] transition-all duration-700 ease-out" style={{ width: `${(paso / 4) * 100}%` }} />
               </div>
-              <button onClick={() => setError('')} className="text-red-500 hover:text-red-800 text-sm font-semibold px-2">
-                Cerrar
-              </button>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* PASO 1: ESTABLECIMIENTO */}
-        {paso === 1 && (
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-            <div className="border-b border-slate-200 pb-4">
-              <span className="text-xs font-semibold tracking-widest uppercase text-[#009EDB]">Sección I</span>
-              <h2 className="text-2xl font-serif text-slate-900 mt-1">Identificación de la Institución Educativa</h2>
-              <p className="text-sm text-slate-500 mt-1">
-                Ingrese los antecedentes generales del establecimiento que patrocinará a la delegación.
-              </p>
-            </div>
-
-            <div className="bg-white border border-slate-200 p-6 sm:p-8 shadow-xs space-y-8">
-              {/* Tipo de establecimiento */}
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-3">
-                  Clasificación Institucional *
-                </label>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <label
-                    className={`border p-5 cursor-pointer transition-all flex flex-col justify-between ${
-                      formData.tipo_establecimiento === 'publico'
-                        ? 'border-[#009EDB] bg-[#009EDB]/5 ring-1 ring-[#009EDB]'
-                        : 'border-slate-200 hover:border-slate-300 bg-white'
-                    }`}
-                  >
-                    <div className="flex items-start justify-between">
-                      <span className="font-serif font-semibold text-slate-900 text-base">
-                        Público o Particular Subvencionado
-                      </span>
-                      <input
-                        type="radio"
-                        name="tipo_establecimiento"
-                        value="publico"
-                        checked={formData.tipo_establecimiento === 'publico'}
-                        onChange={handleChange}
-                        className="h-4 w-4 text-[#009EDB] border-slate-300 focus:ring-[#009EDB]"
-                      />
-                    </div>
-                    <p className="text-xs text-slate-500 mt-2">
-                      Establecimientos municipales, SLEP, de administración delegada o con subvención estatal.
-                    </p>
-                  </label>
-
-                  <label
-                    className={`border p-5 cursor-pointer transition-all flex flex-col justify-between ${
-                      formData.tipo_establecimiento === 'privado'
-                        ? 'border-[#009EDB] bg-[#009EDB]/5 ring-1 ring-[#009EDB]'
-                        : 'border-slate-200 hover:border-slate-300 bg-white'
-                    }`}
-                  >
-                    <div className="flex items-start justify-between">
-                      <span className="font-serif font-semibold text-slate-900 text-base">
-                        Particular Pagado
-                      </span>
-                      <input
-                        type="radio"
-                        name="tipo_establecimiento"
-                        value="privado"
-                        checked={formData.tipo_establecimiento === 'privado'}
-                        onChange={handleChange}
-                        className="h-4 w-4 text-[#009EDB] border-slate-300 focus:ring-[#009EDB]"
-                      />
-                    </div>
-                    <p className="text-xs text-slate-500 mt-2">
-                      Colegios privados de financiamiento autónomo e instituciones internacionales.
-                    </p>
-                  </label>
-                </div>
-              </div>
-
-              {/* País de origen */}
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
-                  País de Origen de la Delegación *
-                </label>
-                <select
-                  name="pais_origen"
-                  value={formData.pais_origen}
-                  onChange={handleChange}
-                  className="w-full p-3 bg-white border border-slate-300 text-sm text-slate-800 focus:border-[#009EDB] focus:ring-1 focus:ring-[#009EDB] outline-none"
+              
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={paso}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 10 }}
+                  transition={{ duration: 0.3 }}
                 >
-                  <option value="Chile">Chile</option>
-                  <option value="Argentina">Argentina</option>
-                  <option value="Perú">Perú</option>
-                  <option value="Bolivia">Bolivia</option>
-                  <option value="Colombia">Colombia</option>
-                  <option value="Brasil">Brasil</option>
-                  <option value="Ecuador">Ecuador</option>
-                  <option value="Uruguay">Uruguay</option>
-                  <option value="Paraguay">Paraguay</option>
-                  <option value="Otro">Otro</option>
-                </select>
-                {formData.pais_origen !== 'Chile' && (
-                  <p className="text-xs text-amber-600 mt-1">
-                    Como delegación extranjera, los valores se calcularán en dólares estadounidenses (USD).
+                  <h2 className="text-3xl font-serif text-[#003366] mb-4 leading-tight">
+                    {textosGuia[paso].titulo}
+                  </h2>
+                  <p className="text-sm text-slate-600 leading-relaxed font-serif">
+                    {textosGuia[paso].texto}
                   </p>
-                )}
-              </div>
-
-              {/* Nombre de la institución */}
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
-                  Nombre del Establecimiento *
-                </label>
-                <input
-                  type="text"
-                  name="nombre_establecimiento"
-                  value={formData.nombre_establecimiento}
-                  onChange={handleChange}
-                  placeholder="Ej. Instituto Nacional General José Miguel Carrera"
-                  className="w-full p-3 bg-white border border-slate-300 text-sm text-slate-800 focus:border-[#009EDB] focus:ring-1 focus:ring-[#009EDB] outline-none"
-                />
-              </div>
-
-              {/* Ubicación */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
-                    Ciudad de Origen *
-                  </label>
-                  <input
-                    type="text"
-                    name="ciudad"
-                    value={formData.ciudad}
-                    onChange={handleChange}
-                    placeholder="Ej. Santiago"
-                    className="w-full p-3 bg-white border border-slate-300 text-sm text-slate-800 focus:border-[#009EDB] focus:ring-1 focus:ring-[#009EDB] outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
-                    Dirección Institucional
-                  </label>
-                  <input
-                    type="text"
-                    name="direccion"
-                    value={formData.direccion}
-                    onChange={handleChange}
-                    placeholder="Calle y numeración oficial"
-                    className="w-full p-3 bg-white border border-slate-300 text-sm text-slate-800 focus:border-[#009EDB] focus:ring-1 focus:ring-[#009EDB] outline-none"
-                  />
-                </div>
-              </div>
-
-              {/* Teléfono */}
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
-                  Teléfono de la Institución
-                </label>
-                <input
-                  type="tel"
-                  name="telefono_establecimiento"
-                  value={formData.telefono_establecimiento}
-                  onChange={handleChange}
-                  placeholder="+56 2 2000 0000"
-                  className="w-full p-3 bg-white border border-slate-300 text-sm text-slate-800 focus:border-[#009EDB] focus:ring-1 focus:ring-[#009EDB] outline-none"
-                />
-              </div>
+                </motion.div>
+              </AnimatePresence>
             </div>
-          </motion.div>
-        )}
 
-        {/* PASO 2: PROFESOR RESPONSABLE */}
-        {paso === 2 && (
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-            <div className="border-b border-slate-200 pb-4">
-              <span className="text-xs font-semibold tracking-widest uppercase text-[#009EDB]">Sección II</span>
-              <h2 className="text-2xl font-serif text-slate-900 mt-1">Docente Asesor y Enlace Oficial</h2>
-              <p className="text-sm text-slate-500 mt-1">
-                Antecedentes de la persona encargada que actuará como vínculo entre el establecimiento y la Secretaría General.
+            {/* Nota de ayuda adicional */}
+            <div className="p-5 bg-white border-l-2 border-[#418FDE] shadow-sm">
+              <span className="text-[10px] uppercase font-bold text-slate-400 block mb-2">Información Importante</span>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                {paso === 1 && "Verifique que el nombre de la institución sea el oficial, ya que así figurará en los documentos y certificados."}
+                {paso === 2 && "El profesor a cargo será el único medio autorizado para recibir información y modificaciones sobre las asignaciones."}
+                {paso === 3 && "Las delegaciones individuales serán agrupadas estratégicamente por el Comité Organizador según disponibilidad."}
+                {paso === 4 && "Los documentos adjuntos deben ser legibles. Evite recortes que omitan códigos de transacción o datos importantes."}
               </p>
             </div>
+          </div>
 
-            <div className="bg-white border border-slate-200 p-6 sm:p-8 shadow-xs space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
-                    Nombres *
-                  </label>
-                  <input
-                    type="text"
-                    name="profesor_nombre"
-                    value={formData.profesor_nombre}
-                    onChange={handleChange}
-                    placeholder="Nombres completos"
-                    className="w-full p-3 bg-white border border-slate-300 text-sm text-slate-800 focus:border-[#009EDB] focus:ring-1 focus:ring-[#009EDB] outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
-                    Apellidos *
-                  </label>
-                  <input
-                    type="text"
-                    name="profesor_apellido"
-                    value={formData.profesor_apellido}
-                    onChange={handleChange}
-                    placeholder="Apellidos completos"
-                    className="w-full p-3 bg-white border border-slate-300 text-sm text-slate-800 focus:border-[#009EDB] focus:ring-1 focus:ring-[#009EDB] outline-none"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
-                    {formData.pais_origen === 'Chile' ? 'RUT' : 'Documento de Identidad'} *
-                  </label>
-                  <input
-                    type="text"
-                    name="profesor_rut"
-                    value={formData.profesor_rut}
-                    onChange={handleChange}
-                    placeholder={formData.pais_origen === 'Chile' ? '12.345.678-9' : 'N° de documento'}
-                    className="w-full p-3 bg-white border border-slate-300 text-sm text-slate-800 focus:border-[#009EDB] focus:ring-1 focus:ring-[#009EDB] outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
-                    Edad
-                  </label>
-                  <input
-                    type="number"
-                    name="profesor_edad"
-                    value={formData.profesor_edad}
-                    onChange={handleChange}
-                    min="22"
-                    max="80"
-                    placeholder="Años"
-                    className="w-full p-3 bg-white border border-slate-300 text-sm text-slate-800 focus:border-[#009EDB] focus:ring-1 focus:ring-[#009EDB] outline-none"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
-                    Correo Electrónico Institucional *
-                  </label>
-                  <input
-                    type="email"
-                    name="profesor_email"
-                    value={formData.profesor_email}
-                    onChange={handleChange}
-                    placeholder="profesor@colegio.cl"
-                    className="w-full p-3 bg-white border border-slate-300 text-sm text-slate-800 focus:border-[#009EDB] focus:ring-1 focus:ring-[#009EDB] outline-none"
-                  />
-                  <p className="text-xs text-slate-400 mt-1">A este correo se enviarán las credenciales y resoluciones.</p>
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
-                    Teléfono Móvil de Contacto *
-                  </label>
-                  <input
-                    type="tel"
-                    name="profesor_telefono"
-                    value={formData.profesor_telefono}
-                    onChange={handleChange}
-                    placeholder="+56 9 0000 0000"
-                    className="w-full p-3 bg-white border border-slate-300 text-sm text-slate-800 focus:border-[#009EDB] focus:ring-1 focus:ring-[#009EDB] outline-none"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">
-                  Departamento o Asignatura Académica
-                </label>
-                <input
-                  type="text"
-                  name="profesor_asignatura"
-                  value={formData.profesor_asignatura}
-                  onChange={handleChange}
-                  placeholder="Ej. Historia, Geografía y Ciencias Sociales"
-                  className="w-full p-3 bg-white border border-slate-300 text-sm text-slate-800 focus:border-[#009EDB] focus:ring-1 focus:ring-[#009EDB] outline-none"
-                />
-              </div>
-            </div>
-          </motion.div>
-        )}
-
-        {/* PASO 3: DELEGACIONES */}
-        {paso === 3 && (
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-            <div className="border-b border-slate-200 pb-4">
-              <span className="text-xs font-semibold tracking-widest uppercase text-[#009EDB]">Sección III</span>
-              <h2 className="text-2xl font-serif text-slate-900 mt-1">Conformación de Delegaciones y Asignaciones</h2>
-              <p className="text-sm text-slate-500 mt-1">
-                Configure el número de delegaciones de su establecimiento e indique los delegados y las preferencias de país.
-              </p>
-            </div>
-
-            {/* Panel de información técnica */}
-            <div className="bg-slate-900 text-slate-200 border-l-4 border-[#009EDB] p-4 text-xs sm:text-sm leading-relaxed">
-              <span className="font-bold text-white uppercase tracking-wider block mb-1">Normativa de Representación</span>
-              Cada delegación representa un Estado miembro de las Naciones Unidas. Puede componerse de manera{' '}
-              <strong className="text-white">individual (1 delegado)</strong> o <strong className="text-white">dual (2 delegados en pareja)</strong>. Las representaciones individuales serán emparejadas por el Comité Organizador según disponibilidad. Las preferencias de país se asignan <strong className="text-white">por delegación</strong>, no por persona.
-            </div>
-
-            {/* Selector superior de cantidad - 🔥 Usando mínimos/máximos del config */}
-            <div className="bg-white border border-slate-200 p-6 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div>
-                <label className="block text-sm font-serif font-bold text-slate-900">
-                  Total de delegaciones a registrar
-                </label>
-                <p className="text-xs text-slate-500 mt-0.5">
-                  Permitido entre {CONFIG_INSCRIPCION.requisitos.delegacion.minimo} y {CONFIG_INSCRIPCION.requisitos.delegacion.maximo} delegaciones por institución educativa en esta fase.
-                </p>
-              </div>
-
-              <div className="w-full sm:w-32">
-                <select
-                  value={formData.cantidad_delegaciones}
-                  onChange={(e) => actualizarCantidadDelegaciones(e.target.value)}
-                  className="w-full p-2.5 bg-slate-50 border border-slate-300 text-sm font-semibold text-slate-900 focus:border-[#009EDB] outline-none"
-                >
-                  {Array.from(
-                    { length: CONFIG_INSCRIPCION.requisitos.delegacion.maximo - CONFIG_INSCRIPCION.requisitos.delegacion.minimo + 1 },
-                    (_, i) => i + CONFIG_INSCRIPCION.requisitos.delegacion.minimo
-                  ).map((num) => (
-                    <option key={num} value={num}>
-                      {num} Delegación{num > 1 ? 'es' : ''}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            {/* Listado dinámico de delegaciones */}
-            <div className="space-y-6">
-              {formData.delegaciones.map((delegacion, delIndex) => (
-                <div key={delegacion.id} className="bg-white border border-slate-200 shadow-xs">
-                  {/* Encabezado de la delegación */}
-                  <div className="bg-slate-50 border-b border-slate-200 px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          {/* COLUMNA PRINCIPAL: FORMULARIO */}
+          <div className="w-full lg:w-2/3">
+            
+            {/* Aviso de Errores */}
+            <AnimatePresence>
+              {error && (
+                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="mb-8 overflow-hidden">
+                  <div className="bg-red-50 border-l-4 border-red-600 p-5 shadow-sm flex justify-between items-start">
                     <div>
-                      <span className="text-xs font-semibold uppercase tracking-wider text-[#009EDB]">
-                        Asignación Diplomática
-                      </span>
-                      <h3 className="text-lg font-serif font-bold text-slate-900">
-                        Delegación {delIndex + 1}
-                      </h3>
+                      <h4 className="text-[11px] font-bold uppercase tracking-wider text-red-800">Corrección Necesaria</h4>
+                      <p className="text-sm text-red-700 mt-1 font-serif">{error}</p>
                     </div>
+                    <button onClick={() => setError('')} className="text-red-400 hover:text-red-700 text-xl font-light">
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-                    {/* Switch formal individual / pareja */}
-                    <div className="flex items-center gap-3">
-                      <span className="text-xs font-medium text-slate-600">
-                        {delegacion.tiene_pareja ? 'Representación en Pareja (2)' : 'Representación Individual (1)'}
-                      </span>
-                      <button
-                        type="button"
-                        onClick={() => togglePareja(delIndex)}
-                        className={`relative w-11 h-6 rounded-full transition-colors ${
-                          delegacion.tiene_pareja ? 'bg-[#009EDB]' : 'bg-slate-300'
-                        }`}
-                      >
-                        <span
-                          className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform shadow-xs ${
-                            delegacion.tiene_pareja ? 'translate-x-5' : 'translate-x-0'
-                          }`}
-                        />
-                      </button>
+            <div className="bg-white shadow-xl shadow-slate-200/50 border border-slate-100 p-8 sm:p-12">
+              
+              {/* PASO 1: DATOS DEL ESTABLECIMIENTO */}
+              {paso === 1 && (
+                <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-10">
+                  <div className="lg:hidden mb-8 border-b border-slate-100 pb-4">
+                    <h2 className="text-2xl font-serif text-[#003366]">{textosGuia[paso].titulo}</h2>
+                    <p className="text-sm text-slate-500 mt-2">{textosGuia[paso].texto}</p>
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-4">Tipo de Establecimiento *</label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <label className={`relative p-5 cursor-pointer border-2 transition-all ${formData.tipo_establecimiento === 'publico' ? 'border-[#003366] bg-slate-50' : 'border-slate-100 hover:border-slate-300'}`}>
+                        <input type="radio" name="tipo_establecimiento" value="publico" checked={formData.tipo_establecimiento === 'publico'} onChange={handleChange} className="absolute opacity-0" />
+                        <span className="block font-serif font-semibold text-[#003366] text-base mb-1">Público / Subvencionado</span>
+                        <span className="block text-xs text-slate-500 leading-tight">Establecimientos municipales, SLEP o con aporte estatal.</span>
+                      </label>
+                      <label className={`relative p-5 cursor-pointer border-2 transition-all ${formData.tipo_establecimiento === 'privado' ? 'border-[#003366] bg-slate-50' : 'border-slate-100 hover:border-slate-300'}`}>
+                        <input type="radio" name="tipo_establecimiento" value="privado" checked={formData.tipo_establecimiento === 'privado'} onChange={handleChange} className="absolute opacity-0" />
+                        <span className="block font-serif font-semibold text-[#003366] text-base mb-1">Particular Pagado</span>
+                        <span className="block text-xs text-slate-500 leading-tight">Colegios privados e instituciones internacionales.</span>
+                      </label>
                     </div>
                   </div>
 
-                  <div className="p-6 sm:p-8 space-y-8">
-                    {/* DELEGADO 1 */}
+                  <SelectEditorial label="País de Origen *" name="pais_origen" value={formData.pais_origen} onChange={handleChange}>
+                    {['Chile', 'Argentina', 'Perú', 'Bolivia', 'Colombia', 'Brasil', 'Ecuador', 'Uruguay', 'Paraguay', 'Otro'].map(p => <option key={p} value={p}>{p}</option>)}
+                  </SelectEditorial>
+
+                  <InputEditorial label="Nombre de la Institución *" name="nombre_establecimiento" value={formData.nombre_establecimiento} onChange={handleChange} placeholder="Ej. Instituto Nacional" />
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <InputEditorial label="Ciudad *" name="ciudad" value={formData.ciudad} onChange={handleChange} placeholder="Ciudad de origen" />
+                    <InputEditorial label="Dirección" name="direccion" value={formData.direccion} onChange={handleChange} placeholder="Calle y número" />
+                  </div>
+
+                  <InputEditorial label="Teléfono de Contacto Institucional" name="telefono_establecimiento" type="tel" value={formData.telefono_establecimiento} onChange={handleChange} placeholder="+56 2 0000 0000" />
+                </motion.div>
+              )}
+
+              {/* PASO 2: DATOS DEL PROFESOR */}
+              {paso === 2 && (
+                <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
+                  <div className="lg:hidden mb-8 border-b border-slate-100 pb-4">
+                    <h2 className="text-2xl font-serif text-[#003366]">{textosGuia[paso].titulo}</h2>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <InputEditorial label="Nombres del Profesor *" name="profesor_nombre" value={formData.profesor_nombre} onChange={handleChange} />
+                    <InputEditorial label="Apellidos *" name="profesor_apellido" value={formData.profesor_apellido} onChange={handleChange} />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <InputEditorial label={formData.pais_origen === 'Chile' ? 'RUT *' : 'Pasaporte / ID *'} name="profesor_rut" value={formData.profesor_rut} onChange={handleChange} />
+                    <InputEditorial label="Edad (Años)" name="profesor_edad" type="number" value={formData.profesor_edad} onChange={handleChange} />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <InputEditorial label="Correo Electrónico de Contacto *" name="profesor_email" type="email" value={formData.profesor_email} onChange={handleChange} />
+                    <InputEditorial label="Teléfono Móvil Directo *" name="profesor_telefono" type="tel" value={formData.profesor_telefono} onChange={handleChange} />
+                  </div>
+                  
+                  <InputEditorial label="Departamento o Asignatura" name="profesor_asignatura" value={formData.profesor_asignatura} onChange={handleChange} placeholder="Ej. Historia y Ciencias Sociales" />
+                </motion.div>
+              )}
+
+              {/* PASO 3: DELEGACIONES */}
+              {paso === 3 && (
+                <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-10">
+                  <div className="lg:hidden mb-8 border-b border-slate-100 pb-4">
+                    <h2 className="text-2xl font-serif text-[#003366]">{textosGuia[paso].titulo}</h2>
+                  </div>
+
+                  <div className="bg-slate-50 p-6 border border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-4">
                     <div>
-                      <div className="flex items-center justify-between border-b border-slate-200 pb-2 mb-4">
-                        <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800">
-                          Delegado Titular 1
-                        </h4>
-                        {!delegacion.tiene_pareja && (
-                          <span className="text-xs text-slate-400 italic">Pareja asignada por MUNSEC</span>
-                        )}
-                      </div>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div className="sm:col-span-2">
-                          <label className="block text-xs font-medium text-slate-600 mb-1">Nombre Completo *</label>
-                          <input
-                            type="text"
-                            value={delegacion.delegado_1.nombre}
-                            onChange={(e) => handleDelegadoChange(delIndex, 'delegado_1', 'nombre', e.target.value)}
-                            className="w-full p-2.5 bg-white border border-slate-300 text-sm text-slate-800 focus:border-[#009EDB] outline-none"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-xs font-medium text-slate-600 mb-1">
-                            {formData.pais_origen === 'Chile' ? 'RUT *' : 'Doc. Identidad *'}
-                          </label>
-                          <input
-                            type="text"
-                            placeholder={formData.pais_origen === 'Chile' ? '12.345.678-9' : 'N° documento'}
-                            value={delegacion.delegado_1.rut}
-                            onChange={(e) => handleDelegadoChange(delIndex, 'delegado_1', 'rut', e.target.value)}
-                            className="w-full p-2.5 bg-white border border-slate-300 text-sm text-slate-800 focus:border-[#009EDB] outline-none"
-                          />
-                        </div>
-                        <div className="grid grid-cols-2 gap-2">
-                          <div>
-                            <label className="block text-xs font-medium text-slate-600 mb-1">Edad *</label>
-                            <input
-                              type="number"
-                              min={CONFIG_INSCRIPCION.requisitos.edad.minimo}
-                              max={CONFIG_INSCRIPCION.requisitos.edad.maximo}
-                              value={delegacion.delegado_1.edad}
-                              onChange={(e) => handleDelegadoChange(delIndex, 'delegado_1', 'edad', e.target.value)}
-                              className="w-full p-2.5 bg-white border border-slate-300 text-sm text-slate-800 focus:border-[#009EDB] outline-none"
-                            />
-                          </div>
-                          <div>
-                            <label className="block text-xs font-medium text-slate-600 mb-1">Curso *</label>
-                            <select
-                              value={delegacion.delegado_1.curso}
-                              onChange={(e) => handleDelegadoChange(delIndex, 'delegado_1', 'curso', e.target.value)}
-                              className="w-full p-2.5 bg-white border border-slate-300 text-xs sm:text-sm text-slate-800 focus:border-[#009EDB] outline-none"
-                            >
-                              <option value="">-</option>
-                              <option value="1° Medio">1° Medio</option>
-                              <option value="2° Medio">2° Medio</option>
-                              <option value="3° Medio">3° Medio</option>
-                              <option value="4° Medio">4° Medio</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
+                      <h3 className="font-serif text-[#003366] font-bold text-lg">Cantidad de Delegaciones</h3>
+                      <p className="text-xs text-slate-500">Mínimo {CONFIG_INSCRIPCION.requisitos.delegacion.minimo} — Máximo {CONFIG_INSCRIPCION.requisitos.delegacion.maximo}</p>
                     </div>
+                    <select
+                      value={formData.cantidad_delegaciones}
+                      onChange={(e) => actualizarCantidadDelegaciones(e.target.value)}
+                      className="bg-white border-2 border-[#003366] text-[#003366] font-bold text-center w-32 h-12 outline-none cursor-pointer"
+                    >
+                      {Array.from({ length: CONFIG_INSCRIPCION.requisitos.delegacion.maximo - CONFIG_INSCRIPCION.requisitos.delegacion.minimo + 1 }, (_, i) => i + CONFIG_INSCRIPCION.requisitos.delegacion.minimo).map(num => (
+                        <option key={num} value={num}>{num} {num === 1 ? 'Delegación' : 'Delegaciones'}</option>
+                      ))}
+                    </select>
+                  </div>
 
-                    {/* DELEGADO 2 (CONDICIONAL) */}
-                    {delegacion.tiene_pareja && (
-                      <div className="border-t-2 border-slate-100 pt-6">
-                        <div className="flex items-center justify-between border-b border-slate-200 pb-2 mb-4">
-                          <h4 className="text-xs font-bold uppercase tracking-wider text-[#009EDB]">
-                            Delegado Titular 2 (Pareja Diplomática)
-                          </h4>
+                  <div className="space-y-12">
+                    {formData.delegaciones.map((delegacion, delIndex) => (
+                      <div key={delegacion.id} className="relative pt-6">
+                        <div className="absolute top-0 left-0 w-16 h-1 bg-[#418FDE]"></div>
+                        
+                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                          <h3 className="text-xl font-serif text-[#003366] font-bold">Delegación {delIndex + 1}</h3>
+                          
+                          <label className="flex items-center gap-3 cursor-pointer bg-slate-50 px-4 py-2 border border-slate-200 hover:bg-slate-100 transition-colors">
+                            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-600">Representación en Pareja</span>
+                            <div className={`w-10 h-5 rounded-full relative transition-colors ${delegacion.tiene_pareja ? 'bg-[#003366]' : 'bg-slate-300'}`}>
+                              <input type="checkbox" className="sr-only" checked={delegacion.tiene_pareja} onChange={() => togglePareja(delIndex)} />
+                              <div className={`absolute left-1 top-1 bg-white w-3 h-3 rounded-full transition-transform ${delegacion.tiene_pareja ? 'translate-x-5' : ''}`} />
+                            </div>
+                          </label>
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                          <div className="sm:col-span-2">
-                            <label className="block text-xs font-medium text-slate-600 mb-1">Nombre Completo *</label>
-                            <input
-                              type="text"
-                              value={delegacion.delegado_2.nombre}
-                              onChange={(e) => handleDelegadoChange(delIndex, 'delegado_2', 'nombre', e.target.value)}
-                              className="w-full p-2.5 bg-white border border-slate-300 text-sm text-slate-800 focus:border-[#009EDB] outline-none"
-                            />
-                          </div>
-                          <div>
-                            <label className="block text-xs font-medium text-slate-600 mb-1">
-                              {formData.pais_origen === 'Chile' ? 'RUT *' : 'Doc. Identidad *'}
-                            </label>
-                            <input
-                              type="text"
-                              placeholder={formData.pais_origen === 'Chile' ? '12.345.678-9' : 'N° documento'}
-                              value={delegacion.delegado_2.rut}
-                              onChange={(e) => handleDelegadoChange(delIndex, 'delegado_2', 'rut', e.target.value)}
-                              className="w-full p-2.5 bg-white border border-slate-300 text-sm text-slate-800 focus:border-[#009EDB] outline-none"
-                            />
-                          </div>
-                          <div className="grid grid-cols-2 gap-2">
-                            <div>
-                              <label className="block text-xs font-medium text-slate-600 mb-1">Edad *</label>
-                              <input
-                                type="number"
-                                min={CONFIG_INSCRIPCION.requisitos.edad.minimo}
-                                max={CONFIG_INSCRIPCION.requisitos.edad.maximo}
-                                value={delegacion.delegado_2.edad}
-                                onChange={(e) => handleDelegadoChange(delIndex, 'delegado_2', 'edad', e.target.value)}
-                                className="w-full p-2.5 bg-white border border-slate-300 text-sm text-slate-800 focus:border-[#009EDB] outline-none"
-                              />
-                            </div>
-                            <div>
-                              <label className="block text-xs font-medium text-slate-600 mb-1">Curso *</label>
-                              <select
-                                value={delegacion.delegado_2.curso}
-                                onChange={(e) => handleDelegadoChange(delIndex, 'delegado_2', 'curso', e.target.value)}
-                                className="w-full p-2.5 bg-white border border-slate-300 text-xs sm:text-sm text-slate-800 focus:border-[#009EDB] outline-none"
-                              >
-                                <option value="">-</option>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                          <div className="p-6 border border-slate-100 bg-white shadow-sm space-y-5">
+                            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#418FDE]">Representante Titular</span>
+                            <InputEditorial label="Nombre Completo" value={delegacion.delegado_1.nombre} onChange={(e) => handleDelegadoChange(delIndex, 'delegado_1', 'nombre', e.target.value)} />
+                            <InputEditorial label={formData.pais_origen === 'Chile' ? 'RUT' : 'Doc. de Identidad'} value={delegacion.delegado_1.rut} onChange={(e) => handleDelegadoChange(delIndex, 'delegado_1', 'rut', e.target.value)} />
+                            <div className="grid grid-cols-2 gap-4">
+                              <InputEditorial label="Edad" type="number" min={CONFIG_INSCRIPCION.requisitos.edad.minimo} max={CONFIG_INSCRIPCION.requisitos.edad.maximo} value={delegacion.delegado_1.edad} onChange={(e) => handleDelegadoChange(delIndex, 'delegado_1', 'edad', e.target.value)} />
+                              <SelectEditorial label="Curso" value={delegacion.delegado_1.curso} onChange={(e) => handleDelegadoChange(delIndex, 'delegado_1', 'curso', e.target.value)}>
+                                <option value="">- Seleccione -</option>
                                 <option value="1° Medio">1° Medio</option>
                                 <option value="2° Medio">2° Medio</option>
                                 <option value="3° Medio">3° Medio</option>
                                 <option value="4° Medio">4° Medio</option>
-                              </select>
+                              </SelectEditorial>
                             </div>
+                          </div>
+
+                          {delegacion.tiene_pareja ? (
+                            <div className="p-6 border border-slate-100 bg-slate-50/50 shadow-sm space-y-5">
+                              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#003366]">Compañero de Delegación</span>
+                              <InputEditorial label="Nombre Completo" value={delegacion.delegado_2.nombre} onChange={(e) => handleDelegadoChange(delIndex, 'delegado_2', 'nombre', e.target.value)} />
+                              <InputEditorial label={formData.pais_origen === 'Chile' ? 'RUT' : 'Doc. de Identidad'} value={delegacion.delegado_2.rut} onChange={(e) => handleDelegadoChange(delIndex, 'delegado_2', 'rut', e.target.value)} />
+                              <div className="grid grid-cols-2 gap-4">
+                                <InputEditorial label="Edad" type="number" value={delegacion.delegado_2.edad} onChange={(e) => handleDelegadoChange(delIndex, 'delegado_2', 'edad', e.target.value)} />
+                                <SelectEditorial label="Curso" value={delegacion.delegado_2.curso} onChange={(e) => handleDelegadoChange(delIndex, 'delegado_2', 'curso', e.target.value)}>
+                                  <option value="">- Seleccione -</option>
+                                  <option value="1° Medio">1° Medio</option>
+                                  <option value="2° Medio">2° Medio</option>
+                                  <option value="3° Medio">3° Medio</option>
+                                  <option value="4° Medio">4° Medio</option>
+                                </SelectEditorial>
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="p-6 border border-dashed border-slate-200 flex flex-col items-center justify-center text-center opacity-70">
+                              <div className="w-12 h-12 mb-2 text-slate-300">
+                                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                                </svg>
+                              </div>
+                              <p className="text-xs font-serif text-slate-500">Delegación individual.<br/>El Comité Organizador asignará un compañero.</p>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Preferencias de Países */}
+                        <div className="bg-white border-l-4 border-[#003366] pl-6 py-2">
+                          <p className="text-[11px] font-bold uppercase tracking-widest text-slate-600 mb-4">Preferencias de Países Solicitados</p>
+                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                            {[1, 2, 3].map((pref) => (
+                              <SelectEditorial key={pref} label={`Prioridad ${pref}`} value={delegacion[`pais_preferencia_${pref}`] || ''} onChange={(e) => handlePreferenciaPaisDelegacion(delIndex, `pais_preferencia_${pref}`, e.target.value)}>
+                                <option value="">Seleccionar País...</option>
+                                {CONFIG_INSCRIPCION.comisiones[0].paises_disponibles.map(pais => <option key={pais} value={pais}>{pais}</option>)}
+                              </SelectEditorial>
+                            ))}
                           </div>
                         </div>
                       </div>
-                    )}
-
-                    {/* PREFERENCIAS DE PAÍS A NIVEL DELEGACIÓN */}
-                    <div className="mt-4 pt-4 border-t border-slate-200">
-                      <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
-                        Preferencias de País para esta Delegación *
-                      </label>
-                      <p className="text-xs text-slate-400 mb-3">
-                        Seleccione 3 países en orden de prioridad. Estas preferencias aplican para toda la delegación.
-                      </p>
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        {[1, 2, 3].map((pref) => (
-                          <div key={pref}>
-                            <span className="block text-xs text-slate-400 mb-1">Prioridad {pref}</span>
-                            <select
-                              value={delegacion[`pais_preferencia_${pref}`] || ''}
-                              onChange={(e) =>
-                                handlePreferenciaPaisDelegacion(
-                                  delIndex,
-                                  `pais_preferencia_${pref}`,
-                                  e.target.value
-                                )
-                              }
-                              className="w-full p-2.5 bg-white border border-slate-300 text-sm text-slate-800 focus:border-[#009EDB] outline-none"
-                            >
-                              <option value="">Seleccionar Estado...</option>
-                              {CONFIG_INSCRIPCION.comisiones[0].paises_disponibles.map((pais) => (
-                                <option key={pais} value={pais}>
-                                  {pais}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+                    ))}
                   </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Cuadro de resumen institucional */}
-            {formData.tipo_establecimiento && (
-              <div className="bg-white border border-slate-300 p-6 shadow-xs">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#009EDB] block mb-2">
-                  Cuadro Resumen de Inscripción
-                </span>
-                <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 text-sm divide-y sm:divide-y-0 sm:divide-x divide-slate-200">
-                  <div className="pt-2 sm:pt-0">
-                    <span className="text-xs text-slate-500 block">Tipo de arancel</span>
-                    <span className="font-semibold text-slate-800">
-                      {montoCalculado.descripcion || 'Pendiente'}
-                    </span>
-                  </div>
-                  <div className="pt-2 sm:pt-0 sm:pl-4">
-                    <span className="text-xs text-slate-500 block">N° Delegaciones</span>
-                    <span className="font-semibold text-slate-800">{formData.cantidad_delegaciones}</span>
-                  </div>
-                  <div className="pt-2 sm:pt-0 sm:pl-4">
-                    <span className="text-xs text-slate-500 block">Estudiantes totales</span>
-                    <span className="font-semibold text-slate-800">{contarDelegados()} delegados</span>
-                  </div>
-                  <div className="pt-2 sm:pt-0 sm:pl-4">
-                    <span className="text-xs text-slate-500 block">Aporte institucional total</span>
-                    <span className="font-serif font-bold text-lg text-[#009EDB]">
-                      {montoCalculado.total === 0 
-                        ? 'Beca completa' 
-                        : `${montoCalculado.moneda === 'USD' ? 'USD $' : '$'}${montoCalculado.total.toLocaleString('es-CL')} ${montoCalculado.moneda}`}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            )}
-          </motion.div>
-        )}
-
-        {/* PASO 4: PAGO, BECAS Y CONFIRMACIÓN */}
-        {paso === 4 && (
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-            <div className="border-b border-slate-200 pb-4">
-              <span className="text-xs font-semibold tracking-widest uppercase text-[#009EDB]">Sección IV</span>
-              <h2 className="text-2xl font-serif text-slate-900 mt-1">Acreditación Financiera y Términos</h2>
-              <p className="text-sm text-slate-500 mt-1">
-                Verifique los datos bancarios, configure su situación de pago o beca, y adjunte la documentación requerida.
-              </p>
-            </div>
-
-            {/* 🔥 SECCIÓN DE BECAS - VERIFICACIÓN MANUAL POR EL EQUIPO */}
-{CONFIG_INSCRIPCION.pago.becas.habilitadas && (
-  <div className="bg-white border border-slate-200 p-6 shadow-xs">
-    <div className="flex items-center justify-between mb-4">
-      <div>
-        <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700">
-          ¿Cuentas con una beca o descuento?
-        </h3>
-        <p className="text-xs text-slate-400 mt-1">
-          Si te fue otorgado un código de beca, ingrésalo aquí. El equipo lo verificará posteriormente.
-        </p>
-      </div>
-      <button
-        type="button"
-        onClick={() => {
-          setTieneBeca(!tieneBeca);
-          if (tieneBeca) {
-            setCodigoBeca('');
-            setBecaTotal(false);
-            setComprobanteBeca(null);
-            setComprobanteBecaNombre(null);
-          }
-        }}
-        className={`relative w-11 h-6 rounded-full transition-colors ${
-          tieneBeca ? 'bg-amber-500' : 'bg-slate-300'
-        }`}
-      >
-        <span
-          className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform shadow-xs ${
-            tieneBeca ? 'translate-x-5' : 'translate-x-0'
-          }`}
-        />
-      </button>
-    </div>
-
-    {tieneBeca && (
-      <div className="space-y-4 border-t border-slate-200 pt-4">
-        {/* Código de beca - solo se guarda, no se verifica */}
-        <div>
-          <label className="block text-xs font-semibold text-slate-600 mb-2">
-            Código de Beca
-          </label>
-          <input
-            type="text"
-            value={codigoBeca}
-            onChange={(e) => setCodigoBeca(e.target.value)}
-            placeholder="Ingresa el código que te fue entregado"
-            className="w-full p-2.5 bg-white border border-slate-300 text-sm focus:border-[#009EDB] outline-none"
-          />
-          <p className="text-xs text-slate-400 mt-1">
-            Este código será verificado manualmente por el equipo organizador.
-          </p>
-        </div>
-
-        {/* Tipo de beca */}
-        <div>
-          <label className="block text-xs font-semibold text-slate-600 mb-2">
-            Tipo de Beca *
-          </label>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <label
-              className={`border p-4 cursor-pointer transition-all ${
-                becaTotal
-                  ? 'border-amber-500 bg-amber-50 ring-1 ring-amber-500'
-                  : 'border-slate-200 hover:border-slate-300 bg-white'
-              }`}
-            >
-              <div className="flex items-start justify-between">
-                <span className="text-sm font-semibold text-slate-900">Beca Total (100%)</span>
-                <input
-                  type="radio"
-                  name="tipo_beca"
-                  checked={becaTotal}
-                  onChange={() => setBecaTotal(true)}
-                  className="h-4 w-4 text-amber-500 border-slate-300"
-                />
-              </div>
-              <p className="text-xs text-slate-500 mt-1">
-                Cubre el 100% del valor. Debes subir el correo de confirmación.
-              </p>
-            </label>
-            <label
-              className={`border p-4 cursor-pointer transition-all ${
-                !becaTotal
-                  ? 'border-amber-500 bg-amber-50 ring-1 ring-amber-500'
-                  : 'border-slate-200 hover:border-slate-300 bg-white'
-              }`}
-            >
-              <div className="flex items-start justify-between">
-                <span className="text-sm font-semibold text-slate-900">
-                  Descuento Parcial
-                </span>
-                <input
-                  type="radio"
-                  name="tipo_beca"
-                  checked={!becaTotal}
-                  onChange={() => setBecaTotal(false)}
-                  className="h-4 w-4 text-amber-500 border-slate-300"
-                />
-              </div>
-              <p className="text-xs text-slate-500 mt-1">
-                Descuento sobre el valor total. Debes pagar la diferencia y subir el comprobante.
-              </p>
-            </label>
-          </div>
-        </div>
-
-        {/* Subir comprobante de beca total */}
-        {becaTotal && (
-          <div className="border-t border-slate-200 pt-4">
-            <label className="block text-xs font-semibold text-slate-600 mb-2">
-              Comprobante de Beca Total *
-            </label>
-            <p className="text-xs text-slate-400 mb-3">
-              Sube una foto o captura del correo de confirmación de tu beca.
-            </p>
-            {!comprobanteBeca ? (
-              <div className="border-2 border-dashed border-slate-300 p-6 text-center bg-slate-50">
-                <input
-                  type="file"
-                  accept="image/jpeg,image/png,image/webp"
-                  onChange={handleComprobanteBeca}
-                  className="hidden"
-                  id="comprobante-beca-input"
-                />
-                <label htmlFor="comprobante-beca-input" className="cursor-pointer block">
-                  <span className="text-sm font-semibold text-slate-800">
-                    Adjuntar comprobante de beca
-                  </span>
-                  <span className="block text-xs text-slate-500 mt-1">
-                    JPG, PNG o WebP — Máx. 2 MB
-                  </span>
-                </label>
-              </div>
-            ) : (
-              <div className="border border-slate-200 p-4 bg-slate-50">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-slate-900 truncate">{comprobanteBecaNombre}</span>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setComprobanteBeca(null);
-                      setComprobanteBecaNombre(null);
-                    }}
-                    className="text-xs text-red-600 underline hover:text-red-800"
-                  >
-                    Reemplazar
-                  </button>
-                </div>
-                <div className="mt-2 max-h-48 overflow-hidden border border-slate-200 flex items-center justify-center bg-white">
-                  <img
-                    src={comprobanteBeca}
-                    alt="Comprobante de beca"
-                    className="max-h-48 w-auto object-contain"
-                  />
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-    )}
-  </div>
-)}
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Información bancaria - Solo si no es beca total */}
-              {(!tieneBeca || !tieneBeca || !becaTotal) && (
-                <div className="bg-white border border-slate-200 p-6 sm:p-8 shadow-xs flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-4">
-                      Coordenadas de Transferencia Bancaria
-                    </h3>
-
-                    <div className="bg-slate-900 text-white p-6 space-y-3 font-mono text-sm">
-                      <div className="flex justify-between border-b border-slate-800 pb-2">
-                        <span className="text-slate-400 font-sans text-xs">Banco receptor</span>
-                        <span className="font-semibold">{CONFIG_INSCRIPCION.pago.cuenta.banco}</span>
-                      </div>
-                      <div className="flex justify-between border-b border-slate-800 pb-2">
-                        <span className="text-slate-400 font-sans text-xs">Tipo de cuenta</span>
-                        <span className="font-semibold">{CONFIG_INSCRIPCION.pago.cuenta.tipo}</span>
-                      </div>
-                      <div className="flex justify-between border-b border-slate-800 pb-2">
-                        <span className="text-slate-400 font-sans text-xs">Número de cuenta</span>
-                        <span className="font-bold text-base text-[#009EDB]">{CONFIG_INSCRIPCION.pago.cuenta.numero}</span>
-                      </div>
-                      <div className="flex justify-between border-b border-slate-800 pb-2">
-                        <span className="text-slate-400 font-sans text-xs">Titular de cuenta</span>
-                        <span className="font-semibold text-xs text-right">{CONFIG_INSCRIPCION.pago.cuenta.titular}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-slate-400 font-sans text-xs">RUT o Identificador</span>
-                        <span className="font-semibold">{CONFIG_INSCRIPCION.pago.cuenta.rut}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mt-6 border-t border-slate-200 pt-4">
-                    <div className="flex justify-between items-baseline">
-                      <span className="text-sm font-semibold text-slate-700">Total a transferir:</span>
-                      <span className="font-serif font-bold text-xl text-[#009EDB]">
-                        {montoCalculado.total === 0 
-                          ? 'Beca completa' 
-                          : `${montoCalculado.moneda === 'USD' ? 'USD $' : '$'}${montoCalculado.total.toLocaleString('es-CL')} ${montoCalculado.moneda}`}
-                      </span>
-                    </div>
-                    {tieneBeca && !becaTotal && (
-                      <p className="text-xs text-amber-600 mt-1">
-                        Monto con {CONFIG_INSCRIPCION.pago.becas.descuento_porcentaje}% de descuento aplicado.
-                      </p>
-                    )}
-                    <p className="text-xs text-slate-500 mt-2">{CONFIG_INSCRIPCION.pago.mensaje}</p>
-                  </div>
-                </div>
+                </motion.div>
               )}
 
-              {/* Subida del comprobante - Solo si no es beca total */}
-              {(!tieneBeca || !tieneBeca || !becaTotal) && (
-                <div className="bg-white border border-slate-200 p-6 sm:p-8 shadow-xs flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-4">
-                      Respaldo Digital del Pago *
-                    </h3>
+              {/* PASO 4: PAGO Y CONFIRMACIÓN */}
+              {paso === 4 && (
+                <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-12">
+                  <div className="lg:hidden mb-8 border-b border-slate-100 pb-4">
+                    <h2 className="text-2xl font-serif text-[#003366]">{textosGuia[paso].titulo}</h2>
+                  </div>
 
-                    {!formData.comprobante_base64 ? (
-                      <div className="border-2 border-dashed border-slate-300 p-8 text-center bg-slate-50 hover:bg-slate-100/60 transition-colors">
-                        <input
-                          type="file"
-                          accept="image/jpeg,image/png,image/webp"
-                          onChange={handleComprobante}
-                          className="hidden"
-                          id="comprobante-input"
-                        />
-                        <label htmlFor="comprobante-input" className="cursor-pointer block">
-                          <div className="w-10 h-10 border border-slate-300 rounded-full flex items-center justify-center mx-auto mb-3 text-slate-400">
-                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
-                            </svg>
+                  {/* Sección Becas */}
+                  {CONFIG_INSCRIPCION.pago.becas.habilitadas && (
+                    <div className="bg-slate-50 border border-slate-200 p-6 sm:p-8">
+                      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-6">
+                        <div>
+                          <h3 className="font-serif font-bold text-lg text-[#003366]">Gestión de Becas</h3>
+                          <p className="text-xs text-slate-500">Sujeta a verificación por parte del equipo organizador.</p>
+                        </div>
+                        <label className="flex items-center gap-3 cursor-pointer">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600">Aplicar Código</span>
+                          <div className={`w-10 h-5 rounded-full relative transition-colors ${tieneBeca ? 'bg-[#003366]' : 'bg-slate-300'}`}>
+                            <input type="checkbox" className="sr-only" checked={tieneBeca} onChange={() => {
+                              setTieneBeca(!tieneBeca);
+                              if (tieneBeca) { setCodigoBeca(''); setBecaTotal(false); setComprobanteBeca(null); setComprobanteBecaNombre(null); }
+                            }} />
+                            <div className={`absolute left-1 top-1 bg-white w-3 h-3 rounded-full transition-transform ${tieneBeca ? 'translate-x-5' : ''}`} />
                           </div>
-                          <span className="block text-sm font-semibold text-slate-800">
-                            Adjuntar comprobante de transferencia
-                          </span>
-                          <span className="block text-xs text-slate-500 mt-1">
-                            Formatos admitidos: JPG, PNG o WebP — Peso máximo 2 MB
-                          </span>
                         </label>
                       </div>
-                    ) : (
-                      <div className="border border-slate-200 p-4 bg-slate-50 space-y-4">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <span className="w-2.5 h-2.5 rounded-full bg-emerald-600 shrink-0" />
+
+                      <AnimatePresence>
+                        {tieneBeca && (
+                          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="space-y-6 pt-4 border-t border-slate-200 overflow-hidden">
+                            <InputEditorial label="Código de Beca" value={codigoBeca} onChange={(e) => setCodigoBeca(e.target.value)} placeholder="Ej. B-MUNSEC-26" />
+                            
                             <div>
-                              <p className="text-xs font-bold text-slate-900 truncate max-w-[200px]">
-                                {formData.comprobante_nombre}
-                              </p>
-                              <p className="text-[11px] text-slate-500">Documento cargado correctamente</p>
+                              <label className="block text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-3">Cobertura Asignada</label>
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <label className={`p-4 border cursor-pointer transition-all ${becaTotal ? 'border-[#003366] bg-white ring-1 ring-[#003366]' : 'border-slate-200 bg-white/50'}`}>
+                                  <div className="flex items-center justify-between">
+                                    <span className="font-serif font-semibold text-sm">Cobertura Total (100%)</span>
+                                    <input type="radio" checked={becaTotal} onChange={() => setBecaTotal(true)} className="accent-[#003366]" />
+                                  </div>
+                                </label>
+                                <label className={`p-4 border cursor-pointer transition-all ${!becaTotal ? 'border-[#003366] bg-white ring-1 ring-[#003366]' : 'border-slate-200 bg-white/50'}`}>
+                                  <div className="flex items-center justify-between">
+                                    <span className="font-serif font-semibold text-sm">Descuento Parcial</span>
+                                    <input type="radio" checked={!becaTotal} onChange={() => setBecaTotal(false)} className="accent-[#003366]" />
+                                  </div>
+                                </label>
+                              </div>
                             </div>
+
+                            {becaTotal && (
+                              <div>
+                                <label className="block text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-2">Documento Adjunto (Correo de confirmación)</label>
+                                {!comprobanteBeca ? (
+                                  <label className="border-2 border-dashed border-slate-300 p-8 flex flex-col items-center justify-center cursor-pointer hover:bg-white transition-colors">
+                                    <input type="file" accept="image/*" onChange={handleComprobanteBeca} className="hidden" />
+                                    <svg className="w-8 h-8 text-slate-400 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                                    </svg>
+                                    <span className="text-sm font-semibold text-[#003366]">Subir documento</span>
+                                    <span className="text-xs text-slate-400 mt-1">JPG, PNG (Máx 2MB)</span>
+                                  </label>
+                                ) : (
+                                  <div className="border border-slate-200 p-4 bg-white flex items-center justify-between">
+                                    <span className="text-xs font-semibold text-[#003366] truncate">{comprobanteBecaNombre}</span>
+                                    <button type="button" onClick={() => { setComprobanteBeca(null); setComprobanteBecaNombre(null); }} className="text-[10px] uppercase font-bold text-red-500 hover:text-red-700">Eliminar</button>
+                                  </div>
+                                )}
+                              </div>
+                            )}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  )}
+
+                  {/* Resumen de Pago */}
+                  {(!tieneBeca || !becaTotal) && (
+                    <div className="border border-slate-200 p-6 sm:p-8">
+                      <h3 className="font-serif font-bold text-lg text-[#003366] mb-6">Detalle de Pago</h3>
+                      
+                      <div className="bg-[#0A1930] text-slate-300 p-6 font-mono text-sm space-y-2 mb-6">
+                        <div className="flex justify-between pb-2 border-b border-slate-700"><span>Banco</span> <span className="text-white">{CONFIG_INSCRIPCION.pago.cuenta.banco}</span></div>
+                        <div className="flex justify-between pb-2 border-b border-slate-700"><span>Tipo de Cuenta</span> <span className="text-white">{CONFIG_INSCRIPCION.pago.cuenta.tipo}</span></div>
+                        <div className="flex justify-between pb-2 border-b border-slate-700"><span>Número de Cuenta</span> <span className="text-white font-bold">{CONFIG_INSCRIPCION.pago.cuenta.numero}</span></div>
+                        <div className="flex justify-between pb-2 border-b border-slate-700"><span>Titular</span> <span className="text-white text-right">{CONFIG_INSCRIPCION.pago.cuenta.titular}</span></div>
+                        <div className="flex justify-between"><span>RUT</span> <span className="text-white">{CONFIG_INSCRIPCION.pago.cuenta.rut}</span></div>
+                      </div>
+
+                      <div className="flex items-end justify-between border-b-2 border-[#003366] pb-4 mb-6">
+                        <span className="text-xs font-bold uppercase tracking-widest text-slate-500">Monto Total a Pagar</span>
+                        <span className="font-serif text-3xl font-bold text-[#003366]">
+                          {montoCalculado.moneda === 'USD' ? 'USD $' : '$'}{montoCalculado.total.toLocaleString('es-CL')}
+                        </span>
+                      </div>
+
+                      <div>
+                        <label className="block text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-2">Comprobante de Transferencia *</label>
+                        {!formData.comprobante_base64 ? (
+                          <label className="border-2 border-dashed border-slate-300 p-8 flex flex-col items-center justify-center cursor-pointer bg-slate-50 hover:bg-white transition-colors">
+                            <input type="file" accept="image/*" onChange={handleComprobante} className="hidden" />
+                            <svg className="w-8 h-8 text-slate-400 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                            </svg>
+                            <span className="text-sm font-semibold text-[#003366]">Adjuntar Comprobante</span>
+                            <span className="text-xs text-slate-400 mt-1">Legible y completo (Máx 2MB)</span>
+                          </label>
+                        ) : (
+                          <div className="border border-slate-200 p-4 bg-white flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <svg className="w-4 h-4 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                              </svg>
+                              <span className="text-xs font-semibold text-emerald-600 truncate">{formData.comprobante_nombre}</span>
+                            </div>
+                            <button type="button" onClick={() => setFormData(prev => ({ ...prev, comprobante_base64: null, comprobante_nombre: null }))} className="text-[10px] uppercase font-bold text-red-500 hover:text-red-700">Reemplazar</button>
                           </div>
-                          <button
-                            type="button"
-                            onClick={() =>
-                              setFormData((prev) => ({
-                                ...prev,
-                                comprobante_base64: null,
-                                comprobante_nombre: null,
-                              }))
-                            }
-                            className="text-xs font-semibold text-red-600 hover:text-red-800 underline"
-                          >
-                            Reemplazar
-                          </button>
-                        </div>
-                        <div className="max-h-48 overflow-hidden border border-slate-200 flex items-center justify-center bg-white">
-                          <img
-                            src={formData.comprobante_base64}
-                            alt="Comprobante de pago"
-                            className="max-h-48 w-auto object-contain"
-                          />
-                        </div>
+                        )}
                       </div>
-                    )}
-                  </div>
+                    </div>
+                  )}
 
-                  {/* Declaraciones juradas y términos */}
-                  <div className="mt-6 border-t border-slate-200 pt-6 space-y-3">
-                    <label className="flex items-start gap-3 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        name="acepta_terminos"
-                        checked={formData.acepta_terminos}
-                        onChange={handleChange}
-                        className="mt-0.5 h-4 w-4 text-[#009EDB] border-slate-300 focus:ring-[#009EDB]"
-                      />
-                      <span className="text-xs text-slate-600 leading-tight">
-                        Acepto formalmente los términos y condiciones de participación de MUNSEC {CONFIG_INSCRIPCION.año}.
+                  {/* Si es beca total, mostrar panel informativo */}
+                  {tieneBeca && becaTotal && (
+                    <div className="bg-amber-50 border border-amber-200 p-6">
+                      <h3 className="font-serif font-bold text-lg text-amber-800 mb-2">Beca Total Aplicada</h3>
+                      <p className="text-sm text-amber-700">
+                        Has aplicado una beca del 100%. El equipo de MUNSEC verificará internamente tu documentación.
+                        No se requiere pago adicional.
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Aceptación de Términos */}
+                  <div className="space-y-4 pt-6 border-t-2 border-slate-100">
+                    <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-6">Declaración y Aceptación</h3>
+                    
+                    <label className="flex items-start gap-4 cursor-pointer group">
+                      <div className="pt-1">
+                        <input type="checkbox" name="acepta_terminos" checked={formData.acepta_terminos} onChange={handleChange} className="w-4 h-4 accent-[#003366]" />
+                      </div>
+                      <span className="text-sm text-slate-600 leading-snug group-hover:text-slate-900 transition-colors font-serif">
+                        Acepto los términos y condiciones de participación establecidos para la presente edición de MUNSEC.
                       </span>
                     </label>
 
-                    <label className="flex items-start gap-3 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        name="acepta_reglamento"
-                        checked={formData.acepta_reglamento}
-                        onChange={handleChange}
-                        className="mt-0.5 h-4 w-4 text-[#009EDB] border-slate-300 focus:ring-[#009EDB]"
-                      />
-                      <span className="text-xs text-slate-600 leading-tight">
-                        Certifico que he leído y acepto el Reglamento Interno para Delegados e Instituciones.
+                    <label className="flex items-start gap-4 cursor-pointer group">
+                      <div className="pt-1">
+                        <input type="checkbox" name="acepta_reglamento" checked={formData.acepta_reglamento} onChange={handleChange} className="w-4 h-4 accent-[#003366]" />
+                      </div>
+                      <span className="text-sm text-slate-600 leading-snug group-hover:text-slate-900 transition-colors font-serif">
+                        Declaro haber informado a los participantes sobre el Reglamento Interno y asumo la responsabilidad de su cumplimiento.
                       </span>
                     </label>
 
-                    {/* 🔥 NUEVO: Acuerdo de datos con modal */}
-                    <div className="flex items-start gap-3">
-                      <input
-                        type="checkbox"
-                        name="acepta_datos"
-                        checked={formData.acepta_datos}
-                        onChange={handleChange}
-                        className="mt-0.5 h-4 w-4 text-[#009EDB] border-slate-300 focus:ring-[#009EDB]"
-                      />
-                      <div className="flex-1">
-                        <span className="text-xs text-slate-600 leading-tight">
-                          {CONFIG_INSCRIPCION.legal.tratamiento_datos.checkbox_texto}
+                    <div className="flex items-start gap-4">
+                      <div className="pt-1">
+                        <input type="checkbox" name="acepta_datos" checked={formData.acepta_datos} onChange={handleChange} className="w-4 h-4 accent-[#003366]" />
+                      </div>
+                      <div>
+                        <span className="text-sm text-slate-600 leading-snug block font-serif">
+                          Autorizo el tratamiento de datos personales e institucionales para los fines exclusivos del desarrollo del evento.
                         </span>
-                        <button
-                          type="button"
-                          onClick={() => setMostrarModalLegal(true)}
-                          className="block text-xs text-[#009EDB] underline hover:text-[#0072CE] mt-1"
-                        >
-                          Leer acuerdo completo
+                        <button type="button" onClick={() => setMostrarModalLegal(true)} className="text-[11px] font-bold uppercase tracking-widest text-[#418FDE] mt-2 hover:text-[#003366] transition-colors">
+                          Revisar Documento Legal Completo
                         </button>
                       </div>
                     </div>
                   </div>
-                </div>
-              )}
-
-              {/* Si es beca total, mostrar solo los términos */}
-              {tieneBeca && becaTotal && (
-                <div className="bg-white border border-slate-200 p-6 sm:p-8 shadow-xs">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-4">
-                    Términos y Condiciones
-                  </h3>
-                  
-                  <div className="bg-amber-50 border border-amber-200 p-4 mb-6">
-                    <p className="text-sm text-amber-800 font-semibold">Beca Total Aplicada</p>
-                    <p className="text-xs text-amber-700 mt-1">
-                      Has aplicado una beca del 100%. El equipo de MUNSEC verificará internamente tu documentación.
-                      No se requiere pago adicional.
-                    </p>
-                  </div>
-
-                  <div className="space-y-3">
-                    <label className="flex items-start gap-3 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        name="acepta_terminos"
-                        checked={formData.acepta_terminos}
-                        onChange={handleChange}
-                        className="mt-0.5 h-4 w-4 text-[#009EDB] border-slate-300 focus:ring-[#009EDB]"
-                      />
-                      <span className="text-xs text-slate-600 leading-tight">
-                        Acepto formalmente los términos y condiciones de participación de MUNSEC {CONFIG_INSCRIPCION.año}.
-                      </span>
-                    </label>
-
-                    <label className="flex items-start gap-3 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        name="acepta_reglamento"
-                        checked={formData.acepta_reglamento}
-                        onChange={handleChange}
-                        className="mt-0.5 h-4 w-4 text-[#009EDB] border-slate-300 focus:ring-[#009EDB]"
-                      />
-                      <span className="text-xs text-slate-600 leading-tight">
-                        Certifico que he leído y acepto el Reglamento Interno para Delegados e Instituciones.
-                      </span>
-                    </label>
-
-                    <div className="flex items-start gap-3">
-                      <input
-                        type="checkbox"
-                        name="acepta_datos"
-                        checked={formData.acepta_datos}
-                        onChange={handleChange}
-                        className="mt-0.5 h-4 w-4 text-[#009EDB] border-slate-300 focus:ring-[#009EDB]"
-                      />
-                      <div className="flex-1">
-                        <span className="text-xs text-slate-600 leading-tight">
-                          {CONFIG_INSCRIPCION.legal.tratamiento_datos.checkbox_texto}
-                        </span>
-                        <button
-                          type="button"
-                          onClick={() => setMostrarModalLegal(true)}
-                          className="block text-xs text-[#009EDB] underline hover:text-[#0072CE] mt-1"
-                        >
-                          Leer acuerdo completo
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                </motion.div>
               )}
             </div>
 
-            {/* 🔥 Nota sobre fechas de entrega */}
-            <div className="bg-slate-100 border border-slate-200 p-4 text-center">
-              <p className="text-xs text-slate-600">
-                Las fechas de entrega de credenciales, asignaciones de países y comisiones serán comunicadas 
-                próximamente a través de los canales oficiales de MUNSEC. Mantente atento a tu correo electrónico 
-                y a nuestras redes sociales.
-              </p>
+            {/* BARRA DE NAVEGACIÓN INFERIOR */}
+            <div className="mt-10 flex items-center justify-between">
+              <div>
+                {paso > 1 && (
+                  <button type="button" onClick={pasoAnterior} className="text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-[#003366] transition-colors py-2">
+                    <svg className="w-4 h-4 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                    </svg>
+                    Volver a Sección Anterior
+                  </button>
+                )}
+              </div>
+              
+              <div>
+                {paso < 4 ? (
+                  <button type="button" onClick={siguientePaso} className="bg-[#003366] text-white text-xs font-bold uppercase tracking-widest px-8 py-4 hover:bg-[#002244] transition-colors shadow-lg shadow-[#003366]/20 flex items-center gap-2">
+                    Continuar
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                    </svg>
+                  </button>
+                ) : (
+                  <button type="button" onClick={enviarFormulario} disabled={enviando} className="bg-[#003366] text-white text-xs font-bold uppercase tracking-widest px-8 py-4 hover:bg-[#002244] transition-colors disabled:bg-slate-400 disabled:shadow-none shadow-lg shadow-[#003366]/30 flex items-center gap-3">
+                    {enviando && <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />}
+                    {enviando ? 'Enviando Información...' : 'Finalizar y Enviar Inscripción'}
+                  </button>
+                )}
+              </div>
             </div>
-          </motion.div>
-        )}
 
-        {/* Barra inferior de navegación */}
-        <div className="mt-8 pt-6 border-t border-slate-300 flex items-center justify-between">
-          <div>
-            {paso > 1 && (
-              <button
-                type="button"
-                onClick={pasoAnterior}
-                className="px-6 py-2.5 bg-white border border-slate-300 text-slate-700 text-sm font-semibold hover:bg-slate-50 transition-colors shadow-xs"
-              >
-                Anterior
-              </button>
-            )}
-          </div>
-
-          <div>
-            {paso < 4 ? (
-              <button
-                type="button"
-                onClick={siguientePaso}
-                className="bg-[#009EDB] text-white px-8 py-2.5 text-sm font-semibold hover:bg-[#0072CE] transition-colors shadow-xs"
-              >
-                Continuar
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={enviarFormulario}
-                disabled={enviando}
-                className="bg-slate-900 text-white px-8 py-3 text-sm font-semibold hover:bg-slate-800 transition-colors disabled:opacity-50 shadow-sm"
-              >
-                {enviando ? 'Transmitiendo solicitud...' : 'Confirmar e Inscribir Delegación'}
-              </button>
-            )}
           </div>
         </div>
       </main>

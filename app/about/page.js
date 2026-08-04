@@ -4,15 +4,17 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { Users, School, ScrollText, HeartPulse } from 'lucide-react';
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 1, ease: [0.22, 1, 0.36, 1] }
+  transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
 };
 
 export default function About() {
   const [scrolled, setScrolled] = useState(false);
+  const currentYear = new Date().getFullYear();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,25 +24,46 @@ export default function About() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const impactMetrics = [
+    {
+      icon: Users,
+      value: '+100',
+      description: `Participantes en la edición ${currentYear}`
+    },
+    {
+      icon: School,
+      value: '+20',
+      description: 'Participación de colegios, 9 de ellos públicos.'
+    },
+    {
+      icon: ScrollText,
+      value: '+50',
+      description: 'Delegaciones en AG'
+    },
+    {
+      icon: HeartPulse,
+      value: '+60',
+      description: 'Voluntarios en la organización'
+    }
+  ];
+
   return (
     <div className="bg-[#F8FAFC] min-h-screen">
-      {/* Hero Section - Optimizado para móvil */}
-      <section className="relative h-[90vh] sm:h-[80vh] md:h-[70vh] min-h-[600px] sm:min-h-[500px] flex items-center justify-center bg-[#0F172A] overflow-hidden">
-        {/* Background Image - CORREGIDO: añadido fill */}
+      {/* Hero Section */}
+      <section className="relative h-[80vh] sm:h-[70vh] md:h-[60vh] min-h-[500px] flex items-center justify-center bg-[#0F172A] overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
             src="/munsec-about.jpg" 
             alt="Asamblea MUNSEC" 
             fill
-            className="object-cover opacity-90 sm:opacity-100"
+            className="object-cover opacity-80 sm:opacity-90"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-[#0F172A]/90 to-[#0F172A]/60"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-[#0F172A]/80 to-[#0F172A]/40"></div>
         </div>
 
-        {/* Contenido del Hero - Padding ajustado para móvil */}
-        <div className="relative z-10 container mx-auto px-4 sm:px-6 max-w-5xl text-center">
-          <motion.h1 
+        <div className="relative z-10 container-custom text-center">
+         <motion.h1 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -51,87 +74,89 @@ export default function About() {
           </motion.h1>
 
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="max-w-3xl mx-auto px-2 sm:px-0"
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="max-w-3xl mx-auto px-4 sm:px-0"
           >
-            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-slate-300 font-light leading-relaxed mb-8 sm:mb-10 md:mb-12">
+            <p className="text-base sm:text-lg md:text-xl text-slate-200 font-light leading-relaxed mb-12">
               MUNSEC opera como una instancia de formación complementaria al currículo escolar, 
               donde los estudiantes secundarios de Chile pueden participar en debates sobre temas de política internacional.
             </p>
           </motion.div>
         </div>
 
-        {/* Scroll Indicator - CORREGIDO: eliminado el bug de línea saltarina */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden sm:block">
-          <div className="w-[1px] h-12 sm:h-16 bg-gradient-to-b from-[#4A90E2] to-transparent animate-pulse"></div>
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden sm:block">
+          <div className="w-[1px] h-14 bg-gradient-to-b from-[#009EDB] to-transparent animate-pulse"></div>
         </div>
       </section>
 
-      {/* Origen - Stack vertical en móvil */}
-      <section id="origen" className="py-16 sm:py-20 md:py-24 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 max-w-5xl">
-          <div className="flex flex-col md:grid md:grid-cols-12 gap-8 md:gap-16">
-            <div className="md:col-span-5">
-              <div className="md:sticky md:top-32">
-                <span className="text-[#4A90E2] text-[8px] sm:text-[10px] uppercase tracking-[0.3em] sm:tracking-[0.4em] font-bold block mb-4 sm:mb-6">
-                  Origen
-                </span>
-                <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-slate-900 mb-6 sm:mb-8 leading-tight">
-                  Iniciativa fundada por estudiantes de la educación pública
-                </h2>
-                <div className="w-16 sm:w-20 h-[2px] bg-[#4A90E2]"></div>
-              </div>
-            </div>
-            <div className="md:col-span-7 space-y-6 sm:space-y-8 text-slate-600 leading-relaxed">
-              <motion.div 
-                variants={fadeIn} 
-                initial="initial" 
-                whileInView="animate" 
-                viewport={{ once: true, margin: "-50px" }}
-                className="text-base sm:text-lg"
-              >
-                <p className="mb-4 sm:mb-6">
-                  El proyecto nace de la necesidad de contar con espacios de formación en diplomacia y debate accesibles para estudiantes de educación pública. Tras participar en instancias universitarias, un grupo de estudiantes secundarios del <span className="text-slate-900 font-medium">Liceo 1 Javiera Carrera</span> y el <span className="text-slate-900 font-medium">Instituto Nacional</span> identificó la oportunidad de diseñar un modelo propio.
+      {/* 1. ¿Quiénes Somos? */}
+      <section id="quienes-somos" className="py-20 sm:py-24 md:py-32 bg-white">
+        <div className="container-custom">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-20 items-start">
+            
+            <div className="md:col-span-6 space-y-8">
+              <span className="section-subtitle block">
+                1. ¿Quiénes Somos?
+              </span>
+              
+              <div className="text-slate-700 leading-relaxed space-y-6 text-base sm:text-lg">
+                <p>
+                  <span className="text-slate-900 font-semibold">MUNSEC</span> es un modelo de Naciones Unidas organizado por estudiantes del <span className="text-slate-900 font-medium">Liceo N.1 Javiera Carrera</span> y del <span className="text-slate-900 font-medium">Instituto Nacional</span>.
                 </p>
-              </motion.div>
+                <p>
+                  Buscamos formar liderazgos juveniles, promover el pensamiento crítico y fortalecer la participación ciudadana a través del diálogo, la negociación y la cooperación internacional.
+                </p>
+              </div>
+              
+            </div>
+
+            <div className="md:col-span-6">
+              <div className="aspect-[4/3] relative bg-slate-100 shadow-xl overflow-hidden">
+                <Image
+                  src="/students-voting-placeholder.jpg"
+                  alt="Estudiantes participando en la votación de la asamblea MUNSEC"
+                  fill
+                  className="object-cover"
+                />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Primera Edición - Reemplaza al bloque de CEPAL */}
-      <section className="py-16 sm:py-20 md:py-24 bg-[#0F172A] text-white relative overflow-hidden">
-        {/* Elementos decorativos */}
-        <div className="absolute top-0 right-0 w-48 sm:w-64 md:w-96 h-48 sm:h-64 md:h-96 bg-[#4A90E2]/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-48 sm:w-64 md:w-96 h-48 sm:h-64 md:h-96 bg-[#4A90E2]/5 rounded-full blur-3xl"></div>
+      {/* Primera Edición / Inicios */}
+      <section className="py-20 sm:py-24 bg-[#0F172A] text-white relative overflow-hidden">
+        <div className="absolute top-10 right-10 w-96 h-96 bg-[#009EDB]/5 rounded-full blur-3xl opacity-60"></div>
+        <div className="absolute bottom-10 left-10 w-96 h-96 bg-[#009EDB]/5 rounded-full blur-3xl opacity-60"></div>
 
-        <div className="container mx-auto px-4 sm:px-6 max-w-5xl relative z-10">
-          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
-            <div>
-              <span className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 border border-[#4A90E2] text-[#4A90E2] text-[8px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] font-bold mb-6 sm:mb-8">
+        <div className="container-custom relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+            <div className="space-y-6">
+              <span className="section-subtitle block">
                 Inicios
               </span>
-              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl mb-6 sm:mb-8 leading-tight">
+              <h2 className="section-title text-white">
                 Primera edición<br />
-                <span className="text-[#4A90E2]">MUNSEC 2025</span>
+                <span className="text-[#009EDB]">MUNSEC 2025</span>
               </h2>
-              <p className="text-slate-300 text-base sm:text-lg leading-relaxed mb-6 lg:mb-0">
+              <p className="text-slate-300 text-base sm:text-lg leading-relaxed">
                 Inicialmente concebido con la Universidad de Chile, la primera edición de MUNSEC superó ampliamente las expectativas de convocatoria. Decenas de delegaciones de establecimientos secundarios se inscribieron para participar, consolidando el interés por este espacio de formación diplomática. El modelo se realizó exitosamente en el campus Juan Gómez Milla de la Universidad de Chile, marcando el inicio de un proyecto que continúa expandiéndose.
               </p>
             </div>
-            <div className="bg-white/5 backdrop-blur-sm p-6 sm:p-8 md:p-10 border border-white/10">
-              <p className="text-xs sm:text-sm text-slate-400 uppercase tracking-wider mb-6 sm:mb-8">Hitos 2025</p>
-              <ul className="space-y-4 sm:space-y-6">
+            
+            <div className="card-oficial bg-white/5 backdrop-blur-sm border-white/10 p-8 sm:p-10 shadow-2xl">
+              <p className="text-sm text-slate-400 uppercase tracking-widest mb-10">Hitos 2025</p>
+              <ul className="space-y-6">
                 {[
                   'Convocatoria abierta a establecimientos públicos y privados',
                   'Participación de decenas de delegaciones',
                   'Modelo realizado en campus Juan Gómez Milla',
                   'Respuesta sorprendente de la comunidad escolar'
                 ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 sm:gap-4 text-sm sm:text-base text-slate-300">
-                    <span className="text-[#4A90E2] text-lg sm:text-xl font-bold">—</span>
+                  <li key={i} className="flex items-center gap-4 text-sm sm:text-base text-slate-200">
+                    <span className="w-6 h-[1.5px] bg-[#009EDB]"></span>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -141,23 +166,68 @@ export default function About() {
         </div>
       </section>
 
-      {/* Enfoque actual - Cards responsivas */}
-      <section className="py-16 sm:py-20 md:py-24 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 max-w-5xl">
-          <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-            <span className="text-[#4A90E2] text-[8px] sm:text-[10px] uppercase tracking-[0.3em] sm:tracking-[0.4em] font-bold block mb-3 sm:mb-4">
+      {/* 2. Nuestro Impacto */}
+      <section id="impacto" className="py-24 sm:py-32 bg-white">
+        <div className="container-custom">
+          <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
+            <span className="section-subtitle block text-center mb-4">
+              2. Nuestro Impacto
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-20 sm:mb-24">
+            {impactMetrics.map((metric, index) => (
+              <motion.div
+                key={index}
+                variants={fadeIn}
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="card-oficial text-center hover:border-[#009EDB] group"
+              >
+                <div className="flex justify-center mb-8">
+                  <metric.icon className="w-12 h-12 text-[#009EDB] group-hover:scale-110 transition-transform duration-300" strokeWidth={1} />
+                </div>
+                <div className="text-5xl sm:text-6xl font-extrabold text-slate-900 mb-4 tracking-tighter">
+                  {metric.value}
+                </div>
+                <p className="text-slate-600 text-sm leading-relaxed px-2">
+                  {metric.description}
+                </p>
+                <div className="w-16 h-[2px] bg-[#009EDB]/30 mx-auto mt-8 group-hover:bg-[#009EDB]/60 transition-colors"></div>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="max-w-4xl mx-auto px-4 sm:px-0">
+            <div className="bg-[#FAF8F4] p-10 sm:p-12 border-l-4 border-[#009EDB] shadow-xl relative">
+              <span className="text-9xl font-serif text-[#009EDB]/10 absolute -top-8 -left-2">&ldquo;</span>
+              <p className="text-slate-800 text-lg sm:text-xl font-light leading-relaxed relative z-10 italic">
+                &laquo;MUNSEC es una oportunidad para decirle a Chile que la educación pública no está muerta. Sigue viva en cada estudiante que, con esfuerzo y sueños grandes, demuestra que la calidad educativa no debería depender de la capacidad de pago de una familia. Sino del derecho a aprender y desarrollarse plenamente&raquo;.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Proyección / Expansión */}
+      <section className="py-20 sm:py-24 md:py-32 bg-white">
+        <div className="container-custom">
+          <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20 space-y-4">
+            <span className="section-subtitle block text-center">
               Proyección
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-slate-900 mb-4 sm:mb-6">
+            <h2 className="section-title">
               Expansión del proyecto
             </h2>
-            <p className="text-slate-600 text-sm sm:text-base md:text-lg px-4 sm:px-0">
+            <p className="text-slate-600 text-base sm:text-lg md:text-xl px-4 sm:px-0 font-light">
               MUNSEC mantiene su compromiso con la calidad académica y la participación estudiantil, 
               consolidando alianzas que permitan ampliar el alcance de sus actividades.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 px-2 sm:px-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 px-2 sm:px-0">
             {[
               {
                 number: '01',
@@ -177,41 +247,45 @@ export default function About() {
             ].map((item, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
+                variants={fadeIn}
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="group relative p-6 sm:p-8 bg-gradient-to-br from-white to-slate-50 border border-slate-200 hover:border-[#4A90E2] hover:shadow-lg transition-all duration-500"
+                className="card-oficial relative group hover:border-[#009EDB]"
               >
-                <span className="text-4xl sm:text-5xl md:text-6xl font-serif text-slate-200 group-hover:text-[#4A90E2]/20 transition-colors absolute top-3 sm:top-4 right-3 sm:right-4">
+                <span className="text-6xl sm:text-7xl font-extrabold text-slate-100 group-hover:text-[#009EDB]/10 transition-colors absolute top-6 right-6 tracking-tighter">
                   {item.number}
                 </span>
-                <div className="relative z-10">
-                  <h3 className="font-serif text-lg sm:text-xl text-slate-900 mb-2 sm:mb-3">{item.title}</h3>
-                  <p className="text-slate-500 text-xs sm:text-sm leading-relaxed">{item.desc}</p>
+                <div className="relative z-10 pt-6">
+                  <h3 className="font-semibold text-xl sm:text-2xl text-slate-900 mb-3 tracking-tight">{item.title}</h3>
+                  <p className="text-slate-600 text-sm sm:text-base leading-relaxed">{item.desc}</p>
                 </div>
-                <div className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#4A90E2] group-hover:w-full transition-all duration-500"></div>
+                <div className="absolute bottom-0 left-0 w-0 h-[3px] bg-[#009EDB] group-hover:w-full transition-all duration-500"></div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Cierre institucional - Responsive */}
-      <section className="pb-16 sm:pb-20 md:pb-32 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 max-w-5xl">
-          <div className="border-t border-slate-200 pt-12 sm:pt-16">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 sm:gap-8">
-              <div className="w-full sm:w-auto">
-                <p className="text-[8px] sm:text-xs uppercase tracking-widest text-slate-400 mb-2">Consultas institucionales</p>
+      {/* Cierre institucional */}
+      <section className="pb-24 sm:pb-32 bg-white">
+        <div className="container-custom">
+          <div className="border-t border-slate-100 pt-16 sm:pt-20">
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-8 sm:gap-12">
+              <div className="text-center sm:text-left">
+                <p className="text-[10px] uppercase tracking-widest text-slate-400 mb-3 font-semibold">Consultas institucionales</p>
                 <Link 
                   href="/contact" 
-                  className="text-lg sm:text-xl text-slate-900 border-b-2 border-slate-300 hover:border-[#4A90E2] transition-colors font-serif block sm:inline-block"
+                  className="text-lg sm:text-xl md:text-2xl text-slate-900 font-semibold border-b-2 border-slate-200 hover:border-[#009EDB] transition-colors tracking-tight"
                 >
-                  contacto@munsec.com
+                  contacto@munsec.org
                 </Link>
               </div>
               
+              <Link href="/contact" className="btn-navy">
+                Contáctanos ahora
+              </Link>
             </div>
           </div>
         </div>

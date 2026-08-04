@@ -5,6 +5,8 @@ import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
+import { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, BorderStyle } from 'docx';
+import { saveAs } from 'file-saver';
 
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzx9Bhrckyor-_z6mfwp6vG9j0dS_pi7S4I5gMD3_qWTuXOxUUKQNVt0j-4xT7BMQBnPA/exec';
 const WHATSAPP_LINK = 'https://chat.whatsapp.com/Ji3QcgJ4V2K0he8klcoQJb';
@@ -120,6 +122,21 @@ MUNSEC Chile`;
       });
       
       pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+      
+      // Agregar enlace de WhatsApp como anotacion interactiva
+      const pageHeight = pdf.internal.pageSize.getHeight();
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      
+      // Agregar texto del enlace visible en el PDF
+      pdf.setTextColor(37, 211, 102);
+      pdf.setFontSize(11);
+      pdf.textWithLink('Enlace directo al grupo de WhatsApp: ' + WHATSAPP_LINK, 20, pageHeight - 40, { url: WHATSAPP_LINK });
+      
+      // Agregar texto informativo adicional
+      pdf.setTextColor(100, 100, 100);
+      pdf.setFontSize(9);
+      pdf.text('Para unirse, presione el enlace de WhatsApp.', 20, pageHeight - 25);
+      
       pdf.save('MUNSEC_Bienvenida.pdf');
     } catch (error) {
       console.error('Error generando PDF:', error);
@@ -145,6 +162,341 @@ MUNSEC Chile`;
       link.click();
     } catch (error) {
       console.error('Error generando imagen:', error);
+    }
+    
+    setDescargando(false);
+  };
+
+  const descargarDOCX = async () => {
+    setDescargando(true);
+    
+    try {
+      const doc = new Document({
+        sections: [{
+          properties: {
+            page: {
+              margin: {
+                top: 1000,
+                right: 1000,
+                bottom: 1000,
+                left: 1000,
+              },
+            },
+          },
+          children: [
+            // Header
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: "MUNSEC CHILE",
+                  bold: true,
+                  size: 28,
+                  font: "Georgia",
+                }),
+              ],
+              alignment: AlignmentType.LEFT,
+              spacing: { after: 100 },
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: fechaActual,
+                  bold: true,
+                  size: 20,
+                  color: "333333",
+                }),
+              ],
+              alignment: AlignmentType.RIGHT,
+              spacing: { after: 50 },
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: "COMUNICADO OFICIAL",
+                  bold: true,
+                  size: 22,
+                  color: "418FDE",
+                }),
+              ],
+              alignment: AlignmentType.RIGHT,
+              spacing: { after: 200 },
+            }),
+            
+            // Linea divisoria
+            new Paragraph({
+              border: {
+                bottom: {
+                  color: "111111",
+                  size: 6,
+                  space: 1,
+                },
+              },
+              spacing: { after: 300 },
+            }),
+            
+            // Titulo
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: "Inicio de Actividades",
+                  bold: true,
+                  size: 20,
+                  color: "666666",
+                  font: "Arial",
+                }),
+              ],
+              alignment: AlignmentType.CENTER,
+              spacing: { after: 100 },
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: "Bienvenidos al Equipo",
+                  bold: true,
+                  size: 32,
+                  font: "Georgia",
+                  color: "111111",
+                }),
+              ],
+              alignment: AlignmentType.CENTER,
+              heading: HeadingLevel.HEADING_1,
+              spacing: { after: 300 },
+            }),
+            
+            // Mensaje de bienvenida
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: `Estimado/a ${nombre}:`,
+                  bold: true,
+                  size: 24,
+                  color: "FFFFFF",
+                }),
+                new TextRun({
+                  text: " Te damos la mas cordial bienvenida al equipo oficial de MUNSEC. Queremos agradecer sinceramente tu interes, disposicion y compromiso con este proyecto.",
+                  size: 24,
+                  color: "FFFFFF",
+                }),
+              ],
+              shading: {
+                fill: "1a1a1a",
+              },
+              spacing: { after: 300 },
+              indent: { left: 200, right: 200 },
+            }),
+            
+            // Cuerpo del mensaje
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: "Estamos muy contentos de contar contigo y confiamos en que tu participacion sera un gran aporte para el crecimiento de MUNSEC y el desarrollo de nuestras futuras actividades.",
+                  size: 24,
+                  font: "Georgia",
+                }),
+              ],
+              spacing: { after: 200 },
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: "Para dar inicio a este proceso, tenemos planificadas dos instancias de bienvenida: una reunion ",
+                  size: 24,
+                  font: "Georgia",
+                }),
+                new TextRun({
+                  text: "presencial",
+                  bold: true,
+                  size: 24,
+                  font: "Georgia",
+                }),
+                new TextRun({
+                  text: " en el ",
+                  size: 24,
+                  font: "Georgia",
+                }),
+                new TextRun({
+                  text: "Palacio Pereira (Huerfanos 1515, Santiago)",
+                  italics: true,
+                  size: 24,
+                  font: "Georgia",
+                }),
+                new TextRun({
+                  text: " y una reunion ",
+                  size: 24,
+                  font: "Georgia",
+                }),
+                new TextRun({
+                  text: "online",
+                  bold: true,
+                  size: 24,
+                  font: "Georgia",
+                }),
+                new TextRun({
+                  text: ", destinada a quienes residan en otra region o, por motivos justificados, no puedan asistir presencialmente.",
+                  size: 24,
+                  font: "Georgia",
+                }),
+              ],
+              spacing: { after: 200 },
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: "En ambas instancias realizaremos la presentacion del equipo, daremos a conocer el trabajo de cada comision, llevaremos a cabo una capacitacion sobre ellas y presentaremos las principales actividades planificadas para este ano.",
+                  size: 24,
+                  font: "Georgia",
+                }),
+              ],
+              spacing: { after: 200 },
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: "Durante los proximos dias nos pondremos en contacto contigo con los horarios y mas detalles.",
+                  italics: true,
+                  size: 24,
+                  font: "Georgia",
+                }),
+              ],
+              spacing: { after: 400 },
+            }),
+            
+            // Seccion WhatsApp
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: "GRUPO OFICIAL DE WHATSAPP",
+                  bold: true,
+                  size: 24,
+                  color: "25D366",
+                }),
+              ],
+              alignment: AlignmentType.CENTER,
+              spacing: { after: 200 },
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: "Unete a nuestra comunidad oficial de WhatsApp. Este sera el canal de comunicacion central para los eventos y la coordinacion general.",
+                  size: 22,
+                  color: "444444",
+                }),
+              ],
+              alignment: AlignmentType.CENTER,
+              spacing: { after: 200 },
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: "ENLACE DEL GRUPO:",
+                  bold: true,
+                  size: 22,
+                  color: "333333",
+                }),
+              ],
+              alignment: AlignmentType.CENTER,
+              spacing: { after: 100 },
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: WHATSAPP_LINK,
+                  size: 22,
+                  color: "25D366",
+                  underline: true,
+                }),
+              ],
+              alignment: AlignmentType.CENTER,
+              spacing: { after: 100 },
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: "Presione el enlace o copielo en su navegador para unirse al grupo",
+                  size: 20,
+                  color: "888888",
+                  italics: true,
+                }),
+              ],
+              alignment: AlignmentType.CENTER,
+              spacing: { after: 400 },
+            }),
+            
+            // Cita
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: '"Bienvenido/a a MUNSEC. Esperamos trabajar contigo y construir una gran experiencia."',
+                  italics: true,
+                  size: 26,
+                  font: "Georgia",
+                  color: "111111",
+                }),
+              ],
+              alignment: AlignmentType.CENTER,
+              spacing: { after: 400 },
+            }),
+            
+            // Footer
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: "Equipo Organizador",
+                  bold: true,
+                  size: 24,
+                  color: "111111",
+                }),
+              ],
+              spacing: { after: 50 },
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: "MUNSEC Chile",
+                  italics: true,
+                  size: 22,
+                  color: "666666",
+                }),
+              ],
+              spacing: { after: 300 },
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: `Instagram: @munsec.chile`,
+                  size: 20,
+                  color: "666666",
+                }),
+              ],
+              spacing: { after: 100 },
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: `Este mensaje ha sido emitido de manera oficial para ${email}.`,
+                  size: 20,
+                  color: "888888",
+                }),
+              ],
+              spacing: { after: 50 },
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: `${new Date().getFullYear()} MUNSEC. Todos los derechos reservados.`,
+                  size: 20,
+                  color: "888888",
+                }),
+              ],
+            }),
+          ],
+        }],
+      });
+      
+      const blob = await Packer.toBlob(doc);
+      saveAs(blob, 'MUNSEC_Bienvenida.docx');
+    } catch (error) {
+      console.error('Error generando DOCX:', error);
     }
     
     setDescargando(false);
@@ -192,6 +544,28 @@ MUNSEC Chile`;
         padding: '1rem',
         fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
       }}>
+        {/* Advertencia inicial */}
+        <div style={{
+          maxWidth: '600px',
+          margin: '0 auto 20px auto',
+          backgroundColor: '#fef9e7',
+          border: '1px solid #f0c040',
+          borderLeft: '4px solid #f0c040',
+          padding: '15px 20px',
+          borderRadius: '4px',
+        }}>
+          <p style={{
+            margin: '0',
+            fontSize: '14px',
+            color: '#7d6608',
+            lineHeight: '1.5',
+            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+            fontWeight: '500',
+          }}>
+            IMPORTANTE: Lea el mensaje completo. Al final de esta pagina encontrara las opciones de descarga en formato PDF, DOCX e imagen PNG, ademas del enlace directo al grupo de WhatsApp.
+          </p>
+        </div>
+        
         {/* Tarjeta de bienvenida (para descargar) */}
         <div 
           ref={bienvenidaRef}
@@ -374,6 +748,36 @@ MUNSEC Chile`;
             </div>
           </div>
 
+          {/* Enlace WhatsApp visible */}
+          <div style={{ padding: '0 20px 15px 20px' }}>
+            <div style={{
+              backgroundColor: '#f0fdf4',
+              border: '1px solid #bbf7d0',
+              borderRadius: '6px',
+              padding: '12px 15px',
+              textAlign: 'center',
+            }}>
+              <p style={{
+                fontSize: '12px',
+                color: '#166534',
+                margin: '0 0 5px 0',
+                fontWeight: 'bold',
+              }}>
+                Enlace directo al grupo:
+              </p>
+              <p style={{
+                fontSize: '13px',
+                color: '#15803d',
+                margin: '0',
+                wordBreak: 'break-all',
+                textDecoration: 'underline',
+                cursor: 'pointer',
+              }}>
+                {WHATSAPP_LINK}
+              </p>
+            </div>
+          </div>
+
           {/* Cita */}
           <div style={{ padding: '0 20px 20px 20px' }}>
             <p style={{
@@ -514,7 +918,29 @@ MUNSEC Chile`;
               opacity: descargando ? 0.5 : 1,
             }}
           >
-            {descargando ? 'DESCARGANDO...' : 'Descargar PDF'}
+            {descargando ? 'DESCARGANDO...' : 'Descargar PDF (con enlace interactivo)'}
+          </button>
+
+          <button
+            onClick={descargarDOCX}
+            disabled={descargando}
+            style={{
+              width: '100%',
+              padding: '14px 20px',
+              fontSize: '13px',
+              fontWeight: 'bold',
+              textTransform: 'uppercase',
+              letterSpacing: '1px',
+              cursor: descargando ? 'not-allowed' : 'pointer',
+              border: '1px solid #cccccc',
+              backgroundColor: '#ffffff',
+              color: '#333333',
+              fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+              borderRadius: '4px',
+              opacity: descargando ? 0.5 : 1,
+            }}
+          >
+            {descargando ? 'DESCARGANDO...' : 'Descargar DOCX'}
           </button>
 
           <button

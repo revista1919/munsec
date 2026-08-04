@@ -20,7 +20,7 @@ export const CONFIG_INSCRIPCION = {
   // Información del evento
   evento: {
     nombre: "MUNSEC 2026",
-    fecha: "15, 16 y 17 de agosto",
+    fecha: "2 y 3 de Noviembre",
     lugar: "Santiago, Chile",
     direccion: "Centro de Extensión UC, Av. Libertador Bernardo O'Higgins 390"
   },

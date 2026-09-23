@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import {
   CONFIG_INSCRIPCION,
   verificarEstadoInscripciones,
-  esModoPrueba, // 👈 NUEVO
+  esModoPrueba,
 } from '@/config/inscripcion';
 
 // ============================================================
@@ -195,12 +195,8 @@ const ModalTerminosLegales = ({ abierto, onCerrar, onAceptar }) => (
 export default function FormularioInscripcion() {
   const router = useRouter();
 
-  // 🧪 Estado de modo prueba
   const [modoPrueba, setModoPrueba] = useState(false);
 
-  // ============================================================
-  // 🔴 CAMBIO 1: useEffect inicial con modo prueba
-  // ============================================================
   useEffect(() => {
     const prueba = esModoPrueba();
     setModoPrueba(prueba);
@@ -271,7 +267,6 @@ export default function FormularioInscripcion() {
     acepta_datos: false,
   });
 
-  // Cargar localStorage una vez
   const datosCargados = useRef(false);
   useEffect(() => {
     if (datosCargados.current) return;
@@ -309,7 +304,6 @@ export default function FormularioInscripcion() {
     if (pasoGuardado) setPaso(parseInt(pasoGuardado, 10));
   }, []);
 
-  // Guardado silencioso
   useEffect(() => {
     const timer = setTimeout(() => {
       try {
@@ -374,9 +368,16 @@ export default function FormularioInscripcion() {
     setFormData((prev) => ({ ...prev, delegaciones: nuevasDelegaciones }));
   };
 
+  // ============================================================
+  // 🔴 CAMBIO: sin límite real, usa el máximo del config (999)
+  // ============================================================
   const actualizarCantidadDelegaciones = (cantidad) => {
-    const num = Math.max(1, Math.min(5, parseInt(cantidad, 10) || 1));
+    const minDeleg = CONFIG_INSCRIPCION.requisitos.delegacion.minimo || 1;
+    const maxDeleg = CONFIG_INSCRIPCION.requisitos.delegacion.maximo || 999;
+    const num = Math.max(minDeleg, Math.min(maxDeleg, parseInt(cantidad, 10) || minDeleg));
+
     const delegacionesActuales = [...formData.delegaciones];
+
     if (num > delegacionesActuales.length) {
       while (delegacionesActuales.length < num) {
         delegacionesActuales.push({
@@ -442,9 +443,8 @@ export default function FormularioInscripcion() {
 
       case 3: {
         const minDeleg = CONFIG_INSCRIPCION.requisitos.delegacion.minimo;
-        const maxDeleg = CONFIG_INSCRIPCION.requisitos.delegacion.maximo;
-        if (formData.cantidad_delegaciones < minDeleg || formData.cantidad_delegaciones > maxDeleg) {
-          add('cantidad_delegaciones', `Debe estar entre ${minDeleg} y ${maxDeleg}.`);
+        if (formData.cantidad_delegaciones < minDeleg) {
+          add('cantidad_delegaciones', `Debe postular al menos ${minDeleg} delegación.`);
         }
         if (!formData.motivacion || formData.motivacion.trim().length < 20) {
           add('motivacion', 'Cuéntanos por qué quieren participar (mínimo 20 caracteres).');
@@ -552,13 +552,10 @@ export default function FormularioInscripcion() {
       setErroresCampos({});
       setError('');
 
-      // ============================================================
-      // 🔴 CAMBIO 2: incluir __es_prueba en el body
-      // ============================================================
       const datosParaEnviar = {
         ...formData,
         pais_origen: obtenerPaisOrigenReal(),
-        __es_prueba: modoPrueba, // 🔖 flag para la API
+        __es_prueba: modoPrueba,
       };
       delete datosParaEnviar.pais_origen_otro;
 
@@ -582,16 +579,34 @@ export default function FormularioInscripcion() {
     }
   };
 
+  // ============================================================
+  // 🔴 CAMBIO: textos guía coherentes en plural
+  // ============================================================
   const textosGuia = {
-    1: { titulo: 'I. Datos del Colegio', texto: 'Cuéntanos sobre tu institución y de dónde nos visitan.' },
-    2: { titulo: 'II. Profesor Responsable', texto: 'La persona adulta que estará a cargo y será nuestro contacto directo.' },
-    3: { titulo: 'III. Delegaciones y Motivación', texto: 'Quiénes participan, qué países les gustaría representar y por qué quieren estar en MUNSEC.' },
-    4: { titulo: 'IV. Apoyos y Alimentación', texto: 'Para que todos estén cómodos durante el evento. Esta información NO afecta tu selección.' },
-    5: { titulo: 'V. Confirmar Postulación', texto: 'Revisa todo y envía tu postulación. Recuerda: aquí NO se paga nada.' },
+    1: {
+      titulo: 'I. Datos del Colegio',
+      texto: 'Cuéntennos sobre su institución y desde dónde nos acompañan.',
+    },
+    2: {
+      titulo: 'II. Profesor Responsable',
+      texto: 'La persona adulta que estará a cargo y será nuestro contacto directo.',
+    },
+    3: {
+      titulo: 'III. Delegaciones y Motivación',
+      texto: 'Quiénes participan, qué países les gustaría representar y por qué quieren ser parte de MUNSEC.',
+    },
+    4: {
+      titulo: 'IV. Apoyos y Alimentación',
+      texto: 'Para que todos estén cómodos durante el evento. Esta información no afecta la selección.',
+    },
+    5: {
+      titulo: 'V. Confirmar Postulación',
+      texto: 'Revisen todo y envíen su postulación. Recuerden: aquí no se paga nada.',
+    },
   };
 
   // ============================================================
-  // PANTALLA DE "ENVIADO" (con mensaje especial si es prueba)
+  // PANTALLA DE "ENVIADO"
   // ============================================================
   if (enviado) {
     return (
@@ -613,7 +628,7 @@ export default function FormularioInscripcion() {
               />
             </div>
             <span className={`text-[10px] font-bold tracking-[0.2em] uppercase ${modoPrueba ? 'text-amber-600' : 'text-[#418FDE]'}`}>
-              {modoPrueba ? '🧪 Envío de prueba' : 'Postulación recibida'}
+              {modoPrueba ? 'Envío de prueba' : 'Postulación recibida'}
             </span>
             <h2 className="font-serif text-3xl text-[#003366] mt-2 mb-4">
               {modoPrueba ? '¡Formulario de prueba enviado!' : '¡Gracias por postular!'}
@@ -724,16 +739,17 @@ export default function FormularioInscripcion() {
         </div>
       </header>
 
-     {modoPrueba && (
-  <div className="sticky top-20 z-30 bg-[#003366] text-white">
-    <div className="max-w-6xl mx-auto px-6 py-2.5 flex items-center justify-center gap-3">
-      <span className="w-1.5 h-1.5 rounded-full bg-[#418FDE] animate-pulse" />
-      <p className="text-[11px] font-serif italic tracking-wide text-white/90">
-        Vista previa del formulario · Los envíos no se registran como postulaciones reales
-      </p>
-    </div>
-  </div>
-)}
+      {modoPrueba && (
+        <div className="sticky top-20 z-30 bg-[#003366] text-white">
+          <div className="max-w-6xl mx-auto px-6 py-2.5 flex items-center justify-center gap-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#418FDE] animate-pulse" />
+            <p className="text-[11px] font-serif italic tracking-wide text-white/90">
+              Vista previa del formulario · Los envíos no se registran como postulaciones reales
+            </p>
+          </div>
+        </div>
+      )}
+
       <main className="max-w-6xl mx-auto px-6 pt-12">
         <div className="flex flex-col lg:flex-row gap-10 items-start">
 
@@ -1078,7 +1094,7 @@ export default function FormularioInscripcion() {
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-10">
                   <div className="space-y-6 pb-8 border-b border-slate-200">
                     <div>
-                      <h3 className="font-serif text-lg font-semibold text-[#003366] mb-1">Cuéntanos de ustedes</h3>
+                      <h3 className="font-serif text-lg font-semibold text-[#003366] mb-1">Cuéntennos de ustedes</h3>
                       <p className="text-xs text-slate-500">
                         Nos ayuda a conocerlos mejor. No hay respuestas incorrectas.
                       </p>
@@ -1091,7 +1107,7 @@ export default function FormularioInscripcion() {
                       name="motivacion"
                       value={formData.motivacion}
                       onChange={handleChange}
-                      placeholder="Cuéntanos qué les motiva, qué esperan aprender o vivir en el evento..."
+                      placeholder="Cuéntennos qué les motiva, qué esperan aprender o vivir en el evento..."
                       maxLength={600}
                     />
                     <p className="text-[10px] text-slate-400 -mt-3 text-right">
@@ -1163,6 +1179,7 @@ export default function FormularioInscripcion() {
                     </AnimatePresence>
                   </div>
 
+                  {/* 🔴 CAMBIO: input numérico con botones + / − */}
                   <BloqueConError
                     error={erroresCampos.cantidad_delegaciones}
                     id="cantidad_delegaciones"
@@ -1171,23 +1188,52 @@ export default function FormularioInscripcion() {
                     <div>
                       <h3 className="text-sm font-bold text-slate-800">¿Cuántas delegaciones quieren postular?</h3>
                       <p className="text-xs text-slate-500 mt-1">
-                        Mínimo {CONFIG_INSCRIPCION.requisitos.delegacion.minimo} — Máximo {CONFIG_INSCRIPCION.requisitos.delegacion.maximo}
+                        Pueden postular una o más delegaciones por establecimiento.
                       </p>
                     </div>
-                    <select
-                      value={formData.cantidad_delegaciones}
-                      onChange={(e) => actualizarCantidadDelegaciones(e.target.value)}
-                      className="bg-white border border-slate-300 text-slate-900 font-semibold text-sm px-4 py-2.5 rounded-sm outline-none focus:border-[#003366] focus:ring-1 focus:ring-[#003366] cursor-pointer"
-                    >
-                      {Array.from(
-                        { length: CONFIG_INSCRIPCION.requisitos.delegacion.maximo - CONFIG_INSCRIPCION.requisitos.delegacion.minimo + 1 },
-                        (_, i) => i + CONFIG_INSCRIPCION.requisitos.delegacion.minimo
-                      ).map((num) => (
-                        <option key={num} value={num}>
-                          {num} {num === 1 ? 'Delegación' : 'Delegaciones'}
-                        </option>
-                      ))}
-                    </select>
+
+                    <div className="flex items-center gap-3">
+                      <button
+                        type="button"
+                        onClick={() => actualizarCantidadDelegaciones(formData.cantidad_delegaciones - 1)}
+                        disabled={formData.cantidad_delegaciones <= (CONFIG_INSCRIPCION.requisitos.delegacion.minimo || 1)}
+                        className="w-9 h-9 flex items-center justify-center border border-slate-300 bg-white text-slate-700 hover:border-[#003366] hover:text-[#003366] transition-colors rounded-sm disabled:opacity-40 disabled:cursor-not-allowed"
+                        aria-label="Quitar una delegación"
+                      >
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15" />
+                        </svg>
+                      </button>
+
+                      <div className="w-20 text-center">
+                        <input
+                          type="number"
+                          min={CONFIG_INSCRIPCION.requisitos.delegacion.minimo || 1}
+                          value={formData.cantidad_delegaciones}
+                          onChange={(e) => actualizarCantidadDelegaciones(e.target.value)}
+                          onBlur={(e) => {
+                            if (!e.target.value || parseInt(e.target.value, 10) < (CONFIG_INSCRIPCION.requisitos.delegacion.minimo || 1)) {
+                              actualizarCantidadDelegaciones(CONFIG_INSCRIPCION.requisitos.delegacion.minimo || 1);
+                            }
+                          }}
+                          className="w-full bg-white border border-slate-300 text-slate-900 font-semibold text-lg py-1.5 rounded-sm outline-none focus:border-[#003366] focus:ring-1 focus:ring-[#003366] text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                        />
+                        <span className="block text-[10px] text-slate-400 uppercase tracking-widest mt-1">
+                          {formData.cantidad_delegaciones === 1 ? 'delegación' : 'delegaciones'}
+                        </span>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => actualizarCantidadDelegaciones(formData.cantidad_delegaciones + 1)}
+                        className="w-9 h-9 flex items-center justify-center border border-slate-300 bg-white text-slate-700 hover:border-[#003366] hover:text-[#003366] transition-colors rounded-sm"
+                        aria-label="Agregar una delegación"
+                      >
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
+                      </button>
+                    </div>
                   </BloqueConError>
 
                   <div className="space-y-8">
@@ -1344,7 +1390,7 @@ export default function FormularioInscripcion() {
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-10">
                   <div className="bg-[#418FDE]/5 border border-[#418FDE]/20 rounded-sm p-5">
                     <p className="text-xs text-slate-700 leading-relaxed">
-                      <strong>Esto NO afecta tu selección.</strong> Solo nos ayuda a prepararnos para que todos estén cómodos y bien atendidos durante el evento. La información se maneja de forma reservada y solo la ve el equipo que necesita saberla.
+                      <strong>Esto no afecta la selección.</strong> Solo nos ayuda a prepararnos para que todos estén cómodos y bien atendidos durante el evento. La información se maneja de forma reservada y solo la ve el equipo que necesita saberla.
                     </p>
                   </div>
 
@@ -1417,7 +1463,7 @@ export default function FormularioInscripcion() {
                             name="apoyo_descripcion"
                             value={formData.apoyo_descripcion}
                             onChange={handleChange}
-                            placeholder="Cuéntanos brevemente qué necesita para participar cómodamente."
+                            placeholder="Cuéntennos brevemente qué necesita para participar cómodamente."
                             maxLength={400}
                           />
                           <div>

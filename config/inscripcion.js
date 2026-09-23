@@ -82,8 +82,8 @@ export const CONFIG_INSCRIPCION = {
       maximo: 18
     },
     delegacion: {
-      minimo: 1,  // Permite 1 delegado
-      maximo: 2   // Permite hasta 2 delegados
+      minimo: 1,    // Al menos 1 delegación por establecimiento
+      maximo: 999   // Sin límite real (prácticamente infinito)
     }
   },
 

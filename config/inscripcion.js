@@ -6,9 +6,9 @@ export const CONFIG_INSCRIPCION = {
 
   // 🟢 CONTROL DE INSCRIPCIONES
   inscripciones: {
-    abiertas: false, // 🔒 CERRADAS para el público hasta el 1 de octubre
-    fecha_apertura: "2026-10-01T00:00:00-03:00", // 📅 1 de octubre
-    fecha_cierre: "2026-10-18T23:59:59-03:00",   // 18 de octubre (2 semanas antes del 1 de Nov)
+    abiertas: false, // 🔒 CERRADAS para el público hasta el 28 de septiembre
+    fecha_apertura: "2026-09-28T00:00:00-03:00", // 📅 28 de septiembre
+    fecha_cierre: "2026-10-11T23:59:59-03:00",   // 11 de octubre
 
     // 🧪 MODO PRUEBA — Solo con ?prueba=1 en la URL
     // Cambia esta palabra si quieres invalidar el link del equipo

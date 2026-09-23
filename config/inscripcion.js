@@ -3,12 +3,17 @@
 
 export const CONFIG_INSCRIPCION = {
   año: 2026,
-  
+
   // 🟢 CONTROL DE INSCRIPCIONES
   inscripciones: {
-    abiertas: false,
-    fecha_apertura: "2026-03-01T00:00:00-03:00",
-    fecha_cierre: null,
+    abiertas: false, // 🔒 CERRADAS para el público hasta el 1 de octubre
+    fecha_apertura: "2026-10-01T00:00:00-03:00", // 📅 1 de octubre
+    fecha_cierre: "2026-10-18T23:59:59-03:00",   // 18 de octubre (2 semanas antes del 1 de Nov)
+
+    // 🧪 MODO PRUEBA — Solo con ?prueba=1 en la URL
+    // Cambia esta palabra si quieres invalidar el link del equipo
+    palabraPrueba: "munsec2026",
+
     mensajes: {
       cerradas: "Las inscripciones para MUNSEC {año} se encuentran cerradas. Síguenos en Instagram @munsec.chile para conocer las fechas de la próxima edición.",
       programadas: "Las inscripciones abrirán el {fecha}. ¡Te esperamos!",
@@ -16,15 +21,15 @@ export const CONFIG_INSCRIPCION = {
       abiertas: "¡Inscripciones abiertas! Completa el formulario para participar en MUNSEC {año}."
     }
   },
-  
+
   // Información del evento
   evento: {
     nombre: "MUNSEC 2026",
     fecha: "2 y 3 de Noviembre",
-    lugar: "Santiago, Chile",
-    direccion: "Centro de Extensión UC, Av. Libertador Bernardo O'Higgins 390"
+    lugar: "CEPAL - Comisión Económica para América Latina y el Caribe",
+    direccion: "Av. Dag Hammarskjöld 3477, Vitacura, Santiago"
   },
-  
+
   // Datos bancarios para el pago
   pago: {
     habilitado: true,
@@ -34,58 +39,34 @@ export const CONFIG_INSCRIPCION = {
       numero: "12345678",
       titular: "MUNSEC - Organización",
       rut: "12.345.678-9",
-      email_confirmacion: "pagos@munsec.org"
+      email_confirmacion: "munsec.chile@gmail.com"
     },
-    // Valores base (para Chile)
     valores: {
-      publico: {
-        delegado: 8000,
-        delegacion: 7000,
-        descripcion: "Establecimientos públicos y subvencionados"
+      nacional: {
+        delegado: 10000, // CLP
+        descripcion: "Establecimientos nacionales (Chile)"
       },
-      privado: {
-        delegado: 15000,
-        delegacion: 12000,
-        descripcion: "Establecimientos privados"
+      extranjero: {
+        delegado: 20, // USD
+        descripcion: "Establecimientos extranjeros"
       }
     },
-    // 🔥 NUEVO: Precios diferenciados por país (extranjeros)
-    valores_extranjero: {
-      publico: {
-        delegado: 25, // USD
-        delegacion: 20,
-        descripcion: "Establecimientos públicos extranjeros (USD)"
-      },
-      privado: {
-        delegado: 40,
-        delegacion: 35,
-        descripcion: "Establecimientos privados extranjeros (USD)"
-      }
-    },
-    // 🔥 NUEVO: Configuración de becas
     becas: {
-      habilitadas: true,
-      codigo_secreto: "MUNSEC-BECA-2025", // Código que se verifica internamente
-      descuento_porcentaje: 50, // 50% de descuento si aplica
-      mensaje_beca_total: "Beca completa. Solo debes subir el correo de confirmación.",
-      mensaje_descuento: "Descuento aplicado. Sube el comprobante con el monto ya descontado."
+      habilitadas: false,
+      codigo_secreto: "",
+      descuento_porcentaje: 0,
+      mensaje_beca_total: "",
+      mensaje_descuento: ""
     },
-    mensaje: "Realiza la transferencia y sube el comprobante. Tu inscripción se confirmará en 24-48 horas hábiles."
+    mensaje: "El pago se realizará únicamente si eres seleccionado. Por ahora, solo se muestran los precios de referencia."
   },
-  
+
   // Comisiones disponibles
   comisiones: [
     {
       id: "asamblea_general",
       nombre: "Asamblea General",
       activa: true,
-      paises_disponibles: [
-        "Estados Unidos", "China", "Rusia", "Francia", "Reino Unido",
-        "Alemania", "Japón", "Brasil", "India", "Canadá",
-        "México", "Argentina", "Chile", "Colombia", "Perú",
-        "España", "Italia", "Corea del Sur", "Australia", "Egipto",
-        "Nigeria", "Sudáfrica", "Turquía", "Ucrania", "Israel"
-      ],
       topicos: [
         "Cambio climático y desarrollo sostenible",
         "Derechos humanos en zonas de conflicto",
@@ -93,52 +74,110 @@ export const CONFIG_INSCRIPCION = {
       ]
     }
   ],
-  
-  // 🔥 ACTUALIZADO: Requisitos con mínimos/máximos desde config
+
+  // Requisitos
   requisitos: {
     edad: {
       minimo: 14,
       maximo: 18
     },
     delegacion: {
-      minimo: 2,  // Ahora se lee desde aquí
-      maximo: 10  // Ahora se lee desde aquí
+      minimo: 1,  // Permite 1 delegado
+      maximo: 2   // Permite hasta 2 delegados
     }
   },
-  
+
   contact: {
-    email: "contacto@munsec.org",
+    email: "munsec.chile@gmail.com",
     instagram: "@munsec.chile",
     whatsapp: "+56912345678"
   },
-  
-  // 🔥 NUEVO: Texto legal para tratamiento de datos
+
+  // ============================================================
+  // TEXTO LEGAL — HTML formateado para Quill / dangerouslySetInnerHTML
+  // Solo el equipo edita este contenido. El usuario solo lo ve.
+  // ============================================================
   legal: {
     tratamiento_datos: {
       titulo: "Acuerdo de Tratamiento de Datos Personales",
-      texto_completo: `Por medio del presente instrumento, y en conformidad con lo dispuesto en la Ley N° 19.628 sobre Protección de la Vida Privada y demás normativa aplicable, el titular de los datos personales declara haber sido informado y acepta expresamente lo siguiente:
 
-1. FINALIDAD DEL TRATAMIENTO: Los datos personales proporcionados serán utilizados exclusivamente para fines internos de MUNSEC, incluyendo pero no limitándose a: gestión de inscripciones, envío de correos electrónicos informativos, notificaciones sobre actualizaciones del evento, y comunicaciones relacionadas con la formación académica.
+      texto_completo: `
+        <p>
+          Por medio del presente instrumento, y en conformidad con lo dispuesto en la
+          <strong>Ley N° 19.628 sobre Protección de la Vida Privada</strong> y demás normativa aplicable,
+          el titular de los datos personales declara haber sido informado y acepta expresamente lo siguiente:
+        </p>
 
-2. USO INTERNO: MUNSEC se compromete a tratar los datos con estricta confidencialidad y a no utilizarlos para fines comerciales, lucrativos o ajenos a los propósitos académicos y formativos declarados.
+        <h3>1. Finalidad del tratamiento</h3>
+        <p>
+          Los datos personales proporcionados serán utilizados <strong>exclusivamente para fines internos de MUNSEC</strong>,
+          incluyendo, pero no limitándose a:
+        </p>
+        <ul>
+          <li>Gestión de inscripciones y postulaciones.</li>
+          <li>Envío de correos electrónicos informativos.</li>
+          <li>Notificaciones sobre actualizaciones del evento.</li>
+          <li>Comunicaciones relacionadas con la formación académica.</li>
+        </ul>
 
-3. POSIBILIDAD DE COMPARTIR DATOS: Eventualmente, y siempre bajo estrictos protocolos de seguridad y anonimización, los datos podrían ser compartidos con otras organizaciones verificadas y seguras, exclusivamente para propósitos académicos, de formación y sin ánimo de lucro. En ningún caso se compartirán datos con entidades que no cumplan con estándares de seguridad verificados.
+        <h3>2. Uso interno</h3>
+        <p>
+          MUNSEC se compromete a tratar los datos con <strong>estricta confidencialidad</strong> y a
+          <strong>no utilizarlos para fines comerciales, lucrativos o ajenos</strong> a los propósitos
+          académicos y formativos declarados.
+        </p>
 
-4. DERECHOS DEL TITULAR: El titular podrá ejercer en cualquier momento sus derechos de acceso, rectificación, cancelación y oposición contactándose a través de los canales oficiales de MUNSEC.
+        <h3>3. Posibilidad de compartir datos</h3>
+        <p>
+          Eventualmente, y siempre bajo <strong>estrictos protocolos de seguridad y anonimización</strong>,
+          los datos podrían ser compartidos con otras organizaciones verificadas y seguras,
+          exclusivamente para propósitos académicos y de formación, y sin ánimo de lucro.
+          En ningún caso se compartirán datos con entidades que no cumplan con estándares
+          de seguridad verificados.
+        </p>
 
-5. VIGENCIA: Este consentimiento permanecerá vigente mientras dure la relación entre el titular y MUNSEC, y por un período adicional de 2 años tras la finalización del evento, únicamente para fines estadísticos y de archivo académico.
+        <h3>4. Derechos del titular</h3>
+        <p>
+          El titular podrá ejercer en cualquier momento sus derechos de
+          <strong>acceso, rectificación, cancelación y oposición</strong> contactándose a través de
+          los canales oficiales de MUNSEC.
+        </p>
 
-Al hacer clic en "Aceptar", usted manifiesta su consentimiento libre, informado e inequívoco para el tratamiento de sus datos personales conforme a los términos aquí expuestos.`,
+        <h3>5. Vigencia</h3>
+        <p>
+          Este consentimiento permanecerá vigente para la utilización por parte de MUNSEC
+          de manera indefinida, siguiendo estrictos protocolos de privacidad y con fines
+          estrictamente académicos.
+        </p>
+
+        <blockquote>
+          Al hacer clic en <strong>"Aceptar"</strong>, usted manifiesta su consentimiento
+          libre, informado e inequívoco para el tratamiento de sus datos personales
+          conforme a los términos aquí expuestos.
+        </blockquote>
+      `,
+
       checkbox_texto: "He leído y acepto el Acuerdo de Tratamiento de Datos Personales para fines internos de MUNSEC, envío de correos, actualizaciones, y la posible compartición con organizaciones verificadas con propósitos académicos y de formación, sin ánimo de lucro."
     }
   }
 };
 
-// 🛠️ FUNCIÓN PARA VERIFICAR ESTADO DE INSCRIPCIONES
-export function verificarEstadoInscripciones() {
+// 🛠️ VERIFICAR ESTADO DE INSCRIPCIONES
+// Recibe un booleano "esPrueba" (viene de ?prueba=1 en la URL)
+export function verificarEstadoInscripciones(esPrueba = false) {
   const config = CONFIG_INSCRIPCION.inscripciones;
   const ahora = new Date();
-  
+
+  // 🧪 MODO PRUEBA: salta todas las validaciones
+  if (esPrueba) {
+    return {
+      abiertas: true,
+      razon: 'modo_prueba',
+      mensaje: '🧪 Modo prueba activado. El formulario funciona con normalidad, pero no es una inscripción real.'
+    };
+  }
+
+  // 🔒 Validaciones normales
   if (!config.abiertas) {
     return {
       abiertas: false,
@@ -148,7 +187,7 @@ export function verificarEstadoInscripciones() {
         .replace('{email}', CONFIG_INSCRIPCION.contact.email)
     };
   }
-  
+
   if (config.fecha_apertura) {
     const fechaApertura = new Date(config.fecha_apertura);
     if (ahora < fechaApertura) {
@@ -164,7 +203,7 @@ export function verificarEstadoInscripciones() {
       };
     }
   }
-  
+
   if (config.fecha_cierre) {
     const fechaCierre = new Date(config.fecha_cierre);
     if (ahora > fechaCierre) {
@@ -183,7 +222,7 @@ export function verificarEstadoInscripciones() {
       };
     }
   }
-  
+
   return {
     abiertas: true,
     razon: 'abiertas',
@@ -192,20 +231,31 @@ export function verificarEstadoInscripciones() {
   };
 }
 
-// 🕐 FUNCIÓN PARA OBTENER TIEMPO RESTANTE
+// 🕐 TIEMPO RESTANTE
 export function obtenerTiempoRestante() {
   const config = CONFIG_INSCRIPCION.inscripciones;
   const ahora = new Date();
-  
+
   if (!config.fecha_cierre) return null;
-  
+
   const fechaCierre = new Date(config.fecha_cierre);
   const diferencia = fechaCierre - ahora;
-  
+
   if (diferencia <= 0) return null;
-  
+
   const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
   const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  
+
   return { dias, horas };
+}
+
+// 🧪 HELPER: detecta si estamos en modo prueba según la URL
+// Funciona con ?prueba=1 o ?prueba=munsec2026
+export function esModoPrueba() {
+  if (typeof window === 'undefined') return false;
+  const params = new URLSearchParams(window.location.search);
+  const valor = params.get('prueba');
+  if (!valor) return false;
+  // Acepta ?prueba=1 o ?prueba=<palabraPrueba>
+  return valor === '1' || valor === CONFIG_INSCRIPCION.inscripciones.palabraPrueba;
 }

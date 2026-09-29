@@ -68,9 +68,7 @@ export const CONFIG_INSCRIPCION = {
       nombre: "Asamblea General",
       activa: true,
       topicos: [
-        "Cambio climático y desarrollo sostenible",
-        "Derechos humanos en zonas de conflicto",
-        "Cooperación internacional post-pandemia"
+        "Por definir"
       ]
     }
   ],

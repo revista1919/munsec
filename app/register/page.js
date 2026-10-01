@@ -263,14 +263,14 @@ export default function Register() {
                           <span className="font-serif text-2xl font-bold text-[#003366] block mb-1">
                             ${CONFIG_INSCRIPCION.pago.valores.nacional.delegado.toLocaleString('es-CL')}
                           </span>
-                          <span className="text-[10px] uppercase tracking-wider text-slate-500">CLP por delegado</span>
+                          <span className="text-[10px] uppercase tracking-wider text-slate-500">CLP por delegación (1 o 2 estudiantes)</span>
                         </div>
                         <div className="bg-slate-50 p-5 border border-slate-200">
                           <span className="text-[9px] font-bold uppercase tracking-widest text-slate-400 block mb-2">Estudiantes extranjeros</span>
                           <span className="font-serif text-2xl font-bold text-[#003366] block mb-1">
                             US${CONFIG_INSCRIPCION.pago.valores.extranjero.delegado}
                           </span>
-                          <span className="text-[10px] uppercase tracking-wider text-slate-500">USD por delegado</span>
+                          <span className="text-[10px] uppercase tracking-wider text-slate-500">USD por delegación (1 o 2 estudiantes)</span>
                         </div>
                       </div>
                     </section>

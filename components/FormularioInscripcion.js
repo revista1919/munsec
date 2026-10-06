@@ -589,7 +589,7 @@ export default function FormularioInscripcion() {
     },
     2: {
       titulo: 'II. Profesor Responsable',
-      texto: 'La persona adulta que estará a cargo y será nuestro contacto directo.',
+      texto: 'La persona adulta que estará a cargo y será nuestro contacto directo. Puede ser un apoderado en caso de que el alumno no esté en un establecimiento',
     },
     3: {
       titulo: 'III. Delegaciones y Motivación',

@@ -538,47 +538,83 @@ export default function FormularioInscripcion() {
   const contarDelegados = () =>
     formData.delegaciones.reduce((acc, del) => acc + (del.tiene_pareja ? 2 : 1), 0);
 
-  const enviarFormulario = async () => {
-    const errores = obtenerErroresPaso(5);
-    if (Object.keys(errores).length > 0) {
-      setErroresCampos(errores);
-      setError('Debes aceptar las declaraciones antes de enviar.');
-      irAlPrimerError(errores);
-      return;
-    }
+const enviarFormulario = async () => {
+  const errores = obtenerErroresPaso(5);
+  if (Object.keys(errores).length > 0) {
+    setErroresCampos(errores);
+    setError('Debes aceptar las declaraciones antes de enviar.');
+    irAlPrimerError(errores);
+    return;
+  }
 
+  try {
+    setEnviando(true);
+    setErroresCampos({});
+    setError('');
+
+    // Sanitizar datos antes de enviar
+    const datosParaEnviar = {
+      ...formData,
+      pais_origen: obtenerPaisOrigenReal(),
+      __es_prueba: modoPrueba,
+      cantidad_delegaciones: Number(formData.cantidad_delegaciones) || formData.delegaciones.length,
+    };
+    delete datosParaEnviar.pais_origen_otro;
+
+    // Asegurar que no queden valores undefined
+    Object.keys(datosParaEnviar).forEach((k) => {
+      if (datosParaEnviar[k] === undefined) datosParaEnviar[k] = '';
+    });
+
+    console.log('[MUNSEC] Enviando postulación...', {
+      colegio: datosParaEnviar.nombre_establecimiento,
+      delegaciones: datosParaEnviar.cantidad_delegaciones,
+      es_prueba: modoPrueba,
+    });
+
+    const response = await fetch('/api/inscripciones', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(datosParaEnviar),
+    });
+
+    let data;
     try {
-      setEnviando(true);
-      setErroresCampos({});
-      setError('');
-
-      const datosParaEnviar = {
-        ...formData,
-        pais_origen: obtenerPaisOrigenReal(),
-        __es_prueba: modoPrueba,
-      };
-      delete datosParaEnviar.pais_origen_otro;
-
-      const response = await fetch('/api/inscripciones', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(datosParaEnviar),
-      });
-
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || 'Error de conexión con el servidor central.');
-      }
-      setEnviado(true);
-      localStorage.removeItem('munsec_inscripcion');
-      localStorage.removeItem('munsec_paso');
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setEnviando(false);
+      data = await response.json();
+    } catch (parseErr) {
+      console.error('[MUNSEC] Respuesta no es JSON válido:', parseErr);
+      throw new Error(
+        `El servidor respondió de forma inesperada (HTTP ${response.status}). ` +
+        `Abre la consola (F12) y busca [MUNSEC] para reportar el detalle.`
+      );
     }
-  };
 
+    if (!response.ok) {
+      console.error('[MUNSEC] Error del servidor:', data);
+      throw new Error(
+        data.error || data.message || `Error del servidor (código ${response.status}). Código: ${data.code || 'DESCONOCIDO'}`
+      );
+    }
+
+    console.log('[MUNSEC] Postulación guardada correctamente. ID:', data.id);
+    setEnviado(true);
+    localStorage.removeItem('munsec_inscripcion');
+    localStorage.removeItem('munsec_paso');
+  } catch (err) {
+    console.error('[MUNSEC] Error al enviar postulación:', err);
+    console.error('[MUNSEC] Mensaje:', err?.message);
+    console.error('[MUNSEC] Stack:', err?.stack);
+
+    const mensajeUsuario =
+      err?.message ||
+      'Ocurrió un error inesperado. Abre la consola del navegador (F12 → pestaña Console), ' +
+      'busca los mensajes que empiezan con [MUNSEC] y cópialos para reportar el problema.';
+
+    setError(mensajeUsuario);
+  } finally {
+    setEnviando(false);
+  }
+};
   // ============================================================
   // 🔴 CAMBIO: textos guía coherentes en plural
   // ============================================================
@@ -1059,15 +1095,15 @@ export default function FormularioInscripcion() {
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <OficialInput
-                      id="profesor_email"
-                      error={erroresCampos.profesor_email}
-                      label="Correo electrónico *"
-                      name="profesor_email"
-                      type="email"
-                      value={formData.profesor_email}
-                      onChange={handleChange}
-                      placeholder="usuario@colegio.cl"
-                    />
+  id="profesor_email"
+  error={erroresCampos.profesor_email}
+  label="Correo electrónico *"
+  name="profesor_email"
+  type="text"   // ← era "email". Esto elimina el mensaje "string did not match the expected pattern"
+  value={formData.profesor_email}
+  onChange={handleChange}
+  placeholder="usuario@colegio.cl"
+/>
                     <OficialInput
                       id="profesor_telefono"
                       error={erroresCampos.profesor_telefono}

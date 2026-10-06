@@ -3,12 +3,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
+import { db } from '@/lib/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import {
   CONFIG_INSCRIPCION,
   verificarEstadoInscripciones,
   esModoPrueba,
 } from '@/config/inscripcion';
-
 // ============================================================
 // COMPONENTES UI (FUERA del componente para evitar remounts)
 // ============================================================
@@ -538,7 +539,8 @@ export default function FormularioInscripcion() {
   const contarDelegados = () =>
     formData.delegaciones.reduce((acc, del) => acc + (del.tiene_pareja ? 2 : 1), 0);
 
-const enviarFormulario = async () => {
+ const enviarFormulario = async () => {
+  // 1. Validación de términos (paso 5)
   const errores = obtenerErroresPaso(5);
   if (Object.keys(errores).length > 0) {
     setErroresCampos(errores);
@@ -552,69 +554,162 @@ const enviarFormulario = async () => {
     setErroresCampos({});
     setError('');
 
-    // Sanitizar datos antes de enviar
-    const datosParaEnviar = {
-      ...formData,
-      pais_origen: obtenerPaisOrigenReal(),
-      __es_prueba: modoPrueba,
-      cantidad_delegaciones: Number(formData.cantidad_delegaciones) || formData.delegaciones.length,
-    };
-    delete datosParaEnviar.pais_origen_otro;
+    // 2. Verificar que las postulaciones estén abiertas (también en cliente)
+    const estado = verificarEstadoInscripciones(modoPrueba);
+    if (!estado.abiertas) {
+      throw new Error(estado.mensaje || 'Las postulaciones no están abiertas en este momento.');
+    }
 
-    // Asegurar que no queden valores undefined
-    Object.keys(datosParaEnviar).forEach((k) => {
-      if (datosParaEnviar[k] === undefined) datosParaEnviar[k] = '';
+    // 3. Sanitizar y preparar datos limpios
+    const paisReal = obtenerPaisOrigenReal();
+
+    const delegacionesProcesadas = formData.delegaciones.map((del, index) => {
+      const delegacion = {
+        numero: index + 1,
+        tiene_pareja: Boolean(del.tiene_pareja),
+        preferencias_pais: [
+          del.pais_preferencia_1,
+          del.pais_preferencia_2,
+          del.pais_preferencia_3,
+        ]
+          .filter(Boolean)
+          .map(String),
+        delegados: [
+          {
+            tipo: 'titular_1',
+            nombre: String(del.delegado_1?.nombre || ''),
+            rut: String(del.delegado_1?.rut || ''),
+            edad: String(del.delegado_1?.edad || ''),
+            curso: String(del.delegado_1?.curso || ''),
+          },
+        ],
+      };
+
+      if (del.tiene_pareja && del.delegado_2) {
+        delegacion.delegados.push({
+          tipo: 'titular_2',
+          nombre: String(del.delegado_2?.nombre || ''),
+          rut: String(del.delegado_2?.rut || ''),
+          edad: String(del.delegado_2?.edad || ''),
+          curso: String(del.delegado_2?.curso || ''),
+        });
+      }
+
+      return delegacion;
     });
 
-    console.log('[MUNSEC] Enviando postulación...', {
-      colegio: datosParaEnviar.nombre_establecimiento,
-      delegaciones: datosParaEnviar.cantidad_delegaciones,
+    const totalDelegados = delegacionesProcesadas.reduce(
+      (acc, d) => acc + d.delegados.length,
+      0
+    );
+
+    const inscripcion = {
+      // Establecimiento
+      tipo_establecimiento: String(formData.tipo_establecimiento || ''),
+      nombre_establecimiento: String(formData.nombre_establecimiento || ''),
+      pais_origen: String(paisReal),
+      ciudad: String(formData.ciudad || ''),
+      direccion: String(formData.direccion || ''),
+      telefono_establecimiento: String(formData.telefono_establecimiento || ''),
+
+      // Profesor
+      profesor: {
+        nombre: String(formData.profesor_nombre || ''),
+        apellido: String(formData.profesor_apellido || ''),
+        rut: String(formData.profesor_rut || ''),
+        email: String(formData.profesor_email || '').toLowerCase().trim(),
+        telefono: String(formData.profesor_telefono || ''),
+        edad: String(formData.profesor_edad || ''),
+        asignatura: String(formData.profesor_asignatura || ''),
+      },
+
+      // Delegaciones
+      cantidad_delegaciones: Number(formData.cantidad_delegaciones) || formData.delegaciones.length,
+      total_delegados: totalDelegados,
+      delegaciones: delegacionesProcesadas,
+
+      // Motivación
+      motivacion: String(formData.motivacion || ''),
+      experiencia_previa: formData.experiencia_previa === 'si' ? 'si' : 'no',
+      experiencia_detalle: String(formData.experiencia_detalle || ''),
+
+      // Apoyos
+      apoyos: {
+        requiere_apoyo: formData.requiere_apoyo === 'si' ? 'si' : 'no',
+        apoyo_delegado: String(formData.apoyo_delegado || ''),
+        apoyo_descripcion: String(formData.apoyo_descripcion || ''),
+        apoyo_coordinacion: formData.apoyo_coordinacion === 'si' ? 'si' : 'no',
+        apoyo_observaciones: String(formData.apoyo_observaciones || ''),
+      },
+
+      // Alimentación
+      alimentacion: {
+        tiene_restriccion: formData.tiene_restriccion === 'si' ? 'si' : 'no',
+        restriccion_delegado: String(formData.restriccion_delegado || ''),
+        restriccion_tipo: Array.isArray(formData.restriccion_tipo)
+          ? formData.restriccion_tipo.map(String)
+          : [],
+        restriccion_detalle: String(formData.restriccion_detalle || ''),
+      },
+
+      // Términos
+      terminos: {
+        acepta_terminos: Boolean(formData.acepta_terminos),
+        acepta_reglamento: Boolean(formData.acepta_reglamento),
+        acepta_datos: Boolean(formData.acepta_datos),
+        fecha_aceptacion: new Date().toISOString(),
+      },
+
+      // Metadata
+      año: CONFIG_INSCRIPCION?.año || new Date().getFullYear(),
+      estado: modoPrueba ? 'prueba' : 'postulacion',
+      estado_pago: 'no_aplica',
+      es_prueba: Boolean(modoPrueba),
+      fecha_postulacion: new Date().toISOString(),
+      timestamp: serverTimestamp(),
+    };
+
+    console.log('[MUNSEC] Enviando postulación directa a Firestore...', {
+      colegio: inscripcion.nombre_establecimiento,
+      delegaciones: inscripcion.cantidad_delegaciones,
       es_prueba: modoPrueba,
     });
 
-    const response = await fetch('/api/inscripciones', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(datosParaEnviar),
-    });
+    // 4. Guardar directamente en Firestore
+    const docRef = await addDoc(collection(db, 'inscripciones'), inscripcion);
 
-    let data;
-    try {
-      data = await response.json();
-    } catch (parseErr) {
-      console.error('[MUNSEC] Respuesta no es JSON válido:', parseErr);
-      throw new Error(
-        `El servidor respondió de forma inesperada (HTTP ${response.status}). ` +
-        `Abre la consola (F12) y busca [MUNSEC] para reportar el detalle.`
-      );
-    }
+    console.log('[MUNSEC] Postulación guardada correctamente. ID:', docRef.id);
 
-    if (!response.ok) {
-      console.error('[MUNSEC] Error del servidor:', data);
-      throw new Error(
-        data.error || data.message || `Error del servidor (código ${response.status}). Código: ${data.code || 'DESCONOCIDO'}`
-      );
-    }
-
-    console.log('[MUNSEC] Postulación guardada correctamente. ID:', data.id);
     setEnviado(true);
     localStorage.removeItem('munsec_inscripcion');
     localStorage.removeItem('munsec_paso');
   } catch (err) {
     console.error('[MUNSEC] Error al enviar postulación:', err);
     console.error('[MUNSEC] Mensaje:', err?.message);
+    console.error('[MUNSEC] Código Firebase:', err?.code);
     console.error('[MUNSEC] Stack:', err?.stack);
 
-    const mensajeUsuario =
-      err?.message ||
-      'Ocurrió un error inesperado. Abre la consola del navegador (F12 → pestaña Console), ' +
-      'busca los mensajes que empiezan con [MUNSEC] y cópialos para reportar el problema.';
+    let mensajeUsuario = 'Ocurrió un error al guardar la postulación.';
+
+    // Mensajes más claros según el tipo de error de Firebase
+    if (err?.code === 'permission-denied') {
+      mensajeUsuario =
+        'No se tiene permiso para guardar. Contacta al equipo de MUNSEC e indica el código: permission-denied';
+    } else if (err?.code === 'unavailable') {
+      mensajeUsuario = 'El servicio de base de datos no está disponible temporalmente. Intenta de nuevo en unos minutos.';
+    } else if (err?.message) {
+      mensajeUsuario = err.message;
+    }
+
+    mensajeUsuario +=
+      ' | Abre la consola (F12 → Console), busca las líneas que empiezan con [MUNSEC] y cópialas para reportar.';
 
     setError(mensajeUsuario);
   } finally {
     setEnviando(false);
   }
 };
+
   // ============================================================
   // 🔴 CAMBIO: textos guía coherentes en plural
   // ============================================================
@@ -1095,15 +1190,15 @@ const enviarFormulario = async () => {
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <OficialInput
-  id="profesor_email"
-  error={erroresCampos.profesor_email}
-  label="Correo electrónico *"
-  name="profesor_email"
-  type="text"   // ← era "email". Esto elimina el mensaje "string did not match the expected pattern"
-  value={formData.profesor_email}
-  onChange={handleChange}
-  placeholder="usuario@colegio.cl"
-/>
+                      id="profesor_email"
+                      error={erroresCampos.profesor_email}
+                      label="Correo electrónico *"
+                      name="profesor_email"
+                      type="email"
+                      value={formData.profesor_email}
+                      onChange={handleChange}
+                      placeholder="usuario@colegio.cl"
+                    />
                     <OficialInput
                       id="profesor_telefono"
                       error={erroresCampos.profesor_telefono}

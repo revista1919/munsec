@@ -38,14 +38,14 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-b from-slate-900/40 via-slate-900/80 to-[#0F172A]"></div>
         </div>
 
-        {/* Logo centrado */}
+        {/* Logo centrado - en su propia capa, por encima del título */}
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.3 }}
-          className="absolute top-6 left-0 right-0 flex justify-center z-20"
+          className="absolute top-6 left-0 right-0 flex justify-center z-30 pointer-events-none"
         >
-          <div className="relative w-16 h-16 md:w-20 md:h-20">
+          <div className="relative w-16 h-16 md:w-20 md:h-20 pointer-events-auto">
             <Image
               src="./munsec.png"
               alt="MUNSEC Logo"
@@ -60,7 +60,7 @@ export default function Home() {
           initial="initial"
           animate="animate"
           variants={staggerContainer}
-          className="relative z-10 text-center px-6 sm:px-4 max-w-5xl mx-auto w-full"
+          className="relative z-10 text-center px-6 sm:px-4 max-w-5xl mx-auto w-full pt-28 md:pt-32"
         >
           <motion.span 
             variants={fadeIn}

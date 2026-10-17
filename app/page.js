@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 
-// Animaciones más lentas y fluidas para un tono más sobrio
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
@@ -24,13 +23,12 @@ export default function Home() {
 
   return (
     <div className="overflow-hidden bg-[#F8FAFC]">
-      {/* Hero Section - Estilo Documental */}
+      {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center bg-[#0F172A]">
-        {/* Background Image con tratamiento de imagen "Documental" */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="./munsec.jpg" 
-            alt="Asamblea MUNSEC" 
+            src="./munsec.jpg"
+            alt="Asamblea MUNSEC"
             fill
             className="object-cover opacity-40 grayscale-[30%]"
             priority
@@ -38,8 +36,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-b from-slate-900/40 via-slate-900/80 to-[#0F172A]"></div>
         </div>
 
-        {/* Logo centrado */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.3 }}
@@ -55,40 +52,39 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* Content - Adaptado para móvil */}
-        <motion.div 
+        <motion.div
           initial="initial"
           animate="animate"
           variants={staggerContainer}
           className="relative z-10 text-center px-6 sm:px-4 max-w-5xl mx-auto w-full"
         >
-          <motion.span 
+          <motion.span
             variants={fadeIn}
             className="section-subtitle text-center mb-6 md:mb-8 block"
           >
             Modelo de Naciones Unidas para Secundarios
           </motion.span>
-          
-          <motion.h1 
+
+          <motion.h1
             variants={fadeIn}
             className="font-serif text-5xl sm:text-6xl md:text-8xl text-white mb-6 md:mb-8 tracking-tight"
           >
             MUNSEC
           </motion.h1>
-          
-          <motion.div 
+
+          <motion.div
             variants={fadeIn}
             className="w-12 h-[1px] bg-slate-500 mx-auto mb-8 md:mb-10"
           />
-          
-          <motion.p 
+
+          <motion.p
             variants={fadeIn}
             className="text-sm sm:text-base md:text-lg text-slate-300 font-light max-w-3xl mx-auto leading-relaxed px-4 md:px-0 mb-10 md:mb-12"
           >
             Somos el modelo de Naciones Unidas para estudiantes de secundaria en Chile. Un espacio donde jóvenes aprenden sobre diplomacia, política internacional y trabajo en equipo.
           </motion.p>
-          
-          <motion.div 
+
+          <motion.div
             variants={fadeIn}
             className="flex flex-col md:flex-row gap-4 md:gap-6 justify-center items-center px-4 md:px-0"
           >
@@ -141,8 +137,8 @@ export default function Home() {
             >
               <div className="aspect-[4/3] border border-slate-100 p-4 relative">
                 <Image
-                  src="./munsec-debate.jpg" 
-                  alt="Debate en MUNSEC" 
+                  src="./munsec-debate.jpg"
+                  alt="Debate en MUNSEC"
                   fill
                   className="object-cover grayscale hover:grayscale-0 transition-all duration-700"
                 />
@@ -151,7 +147,6 @@ export default function Home() {
                 <div className="w-10 h-[1px] bg-[#009EDB]"></div>
                 <p className="text-[10px] uppercase tracking-widest text-slate-400"></p>
               </div>
-              {/* Testimonio - Solo visible en desktop */}
               <div className="absolute -bottom-6 -right-6 bg-[#009EDB] p-8 max-w-xs hidden lg:block">
                 <p className="text-white font-serif text-xl italic">
                   "Lo mejor de MUNSEC es que te das cuenta que puedes hablar y que te escuchen, aunque seas de un liceo público."
@@ -208,7 +203,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Final */}
+      {/* CTA Final con lista de seleccionados 2026 CEPAL */}
       <section className="py-20 md:py-32 bg-white">
         <div className="container-custom max-w-4xl mx-auto">
           <motion.div
@@ -218,22 +213,20 @@ export default function Home() {
           >
             <div className="card-oficial border-slate-900 p-8 md:p-20 text-center">
               <span className="section-subtitle text-center mb-4 md:mb-6 block">
-                ¿Te interesa?
+                Modelo 2026 · CEPAL
               </span>
               <h2 className="section-title mb-6 md:mb-8">
-                Súmate a la próxima edición
+                Seleccionados para el modelo 2026 en CEPAL
               </h2>
               <p className="text-slate-600 mb-8 md:mb-12 max-w-xl mx-auto text-sm leading-relaxed px-4 md:px-0">
-                Revisa si las inscripciones para MUNSEC están abiertas. Si tienes entre 14 y 18 años y quieres vivir la experiencia, este es tu momento.
+                Revisa la lista oficial de estudiantes seleccionados para representar a MUNSEC en la sede de la CEPAL durante la edición 2026.
               </p>
-              <div className="flex flex-col md:flex-row gap-4 md:gap-8 justify-center items-stretch md:items-center px-4 md:px-0">
-                <Link href="/register" className="btn-navy text-[10px] uppercase tracking-[0.3em] w-full md:w-auto text-center">
-                  Inscribirme ahora
-                </Link>
-                <Link href="/contact" className="btn-outline text-[10px] uppercase tracking-[0.3em] text-center md:text-left">
-                  Tener más info
-                </Link>
-              </div>
+              <Link
+                href="/seleccionados-2026"
+                className="inline-block px-8 py-4 bg-[#0F172A] text-white border border-[#0F172A] text-[10px] uppercase tracking-[0.3em] font-medium transition-colors duration-300 hover:bg-[#009EDB] hover:border-[#009EDB]"
+              >
+                Ver lista de seleccionados
+              </Link>
             </div>
           </motion.div>
         </div>
